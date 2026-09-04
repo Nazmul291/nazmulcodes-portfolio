@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="avatarGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="50%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#10b981" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#090d16" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="200" height="200" rx="40" fill="#0f172a" />
+  <circle cx="100" cy="100" r="90" fill="url(#glow)" />
+  <circle cx="100" cy="80" r="36" fill="url(#avatarGrad)" />
+  <path d="M45 165 C45 125, 155 125, 155 165 Z" fill="url(#avatarGrad)" opacity="0.9" />
+  <text x="100" y="88" font-family="sans-serif" font-size="28" font-weight="bold" fill="#06111e" text-anchor="middle">NH</text>
+</svg>
