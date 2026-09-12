@@ -16,6 +16,7 @@ import "~/styles/animations.css";
 export const meta: MetaFunction = () => {
   return [
     { title: "NazmulCodes — Senior Shopify Expert & Full-Stack App Developer" },
+    { name: "naver-site-verification", content: "6d6b8020e11e505e8b2f69771bc6d31b6136636d" },
     {
       name: "description",
       content:
