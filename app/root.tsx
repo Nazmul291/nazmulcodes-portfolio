@@ -298,30 +298,6 @@ export default function App() {
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
 
-    // Load Google AdSense strictly on the canonical production domain (nazmulcodes.org).
-    // NEVER load on dev/staging (dev.nazmulcodes.org) or localhost, which eliminates
-    // 3rd-party ad cookies, Privacy Sandbox deprecation warnings, and ad script overhead.
-    const isProductionSite =
-      typeof window !== "undefined" &&
-      (window.location.hostname === "nazmulcodes.org" ||
-       window.location.hostname === "www.nazmulcodes.org");
-
-    if (isProductionSite && !document.querySelector('script[src*="adsbygoogle"]')) {
-      const loadAdSense = () => {
-        const adsScript = document.createElement("script");
-        adsScript.async = true;
-        adsScript.src =
-          "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
-        adsScript.crossOrigin = "anonymous";
-        document.head.appendChild(adsScript);
-      };
-
-      if ("requestIdleCallback" in window) {
-        (window as any).requestIdleCallback(loadAdSense, { timeout: 3500 });
-      } else {
-        setTimeout(loadAdSense, 3000);
-      }
-    }
   }, []);
 
   const toggleTheme = () => {
@@ -331,18 +307,16 @@ export default function App() {
     document.documentElement.setAttribute("data-theme", nextTheme);
   };
 
-  // ZERO raw elements in <head> or <body>.
-  // Everything is rendered through Remix-managed components:
-  //   <Meta />  — handles all <meta>, <title>, AND <script type="application/ld+json">
-  //   <Links /> — handles all <link> tags
-  //   <Scripts /> — handles Remix runtime scripts
-  // This guarantees server HTML === client HTML, regardless of
-  // ad-blockers, Cloudflare, or browser extensions.
   return (
     <html lang="en" data-theme={theme} suppressHydrationWarning>
       <head>
         <Meta />
         <Links />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         <Outlet context={{ theme, toggleTheme }} />
