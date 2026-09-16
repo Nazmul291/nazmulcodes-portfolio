@@ -129,10 +129,15 @@ export const HireSection: React.FC = () => {
                 background: 'var(--bg-tertiary)'
               }}>
                 <picture>
+                  <source media="(max-width: 640px)" srcSet="/assets/images/lifestyle/lifestyle-2-sm.webp" type="image/webp" />
                   <source srcSet="/assets/images/lifestyle/lifestyle-2.webp" type="image/webp" />
                   <img
-                    src="/assets/images/lifestyle/lifestyle-2.png"
+                    src="/assets/images/lifestyle/lifestyle-2.webp"
                     alt="Nazmul Hawlader — Senior Shopify Engineer"
+                    width={400}
+                    height={300}
+                    loading="lazy"
+                    decoding="async"
                     style={{
                       width: '100%',
                       height: '100%',
