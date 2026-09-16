@@ -255,19 +255,17 @@ export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
   {
     rel: "preload",
-    as: "style",
-    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=optional",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=optional",
-  },
-  {
-    rel: "preload",
     as: "image",
     href: "/assets/images/lifestyle/lifestyle-1-sm.webp",
     type: "image/webp",
     media: "(max-width: 640px)",
+  },
+  {
+    rel: "preload",
+    as: "image",
+    href: "/assets/images/lifestyle/lifestyle-1.webp",
+    type: "image/webp",
+    media: "(min-width: 641px)",
   },
 ];
 
@@ -293,6 +291,34 @@ export default function App() {
         <meta charSet="utf-8" />
         <Meta />
         <Links />
+
+        {/* Non-blocking Asynchronous Google Fonts (Sub-second FCP) */}
+        <link
+          rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=optional"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=optional"
+          media="print"
+          onLoad={(e) => {
+            (e.currentTarget as HTMLLinkElement).media = "all";
+          }}
+        />
+        <noscript>
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=optional"
+          />
+        </noscript>
+
+        {/* Official Google AdSense Site Verification & Activation Script */}
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         <Outlet context={{ theme, toggleTheme }} />
