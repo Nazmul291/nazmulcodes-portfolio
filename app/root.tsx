@@ -241,6 +241,10 @@ export const meta: MetaFunction = () => {
         "Hire Senior Shopify Developer Nazmul Hawlader. Official Shopify Apps, custom Liquid themes, Flow automations, checkout troubleshooting & 301 SEO redirects.",
     },
     { name: "twitter:image", content: "https://nazmulcodes.org/favicon.svg" },
+    // Structured Data — Remix first-class handler (renders inside <Meta />, zero hydration risk)
+    {
+      "script:ld+json": schemaGraph,
+    },
   ];
 };
 
@@ -274,9 +278,22 @@ export default function App() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
+    // Restore saved theme preference
     const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
+
+    // Load Google AdSense script post-hydration (client-only).
+    // This prevents ad-blockers from stripping a server-rendered <script>
+    // and causing a DOM index shift that breaks React hydration.
+    if (!document.querySelector('script[src*="adsbygoogle"]')) {
+      const adsScript = document.createElement("script");
+      adsScript.async = true;
+      adsScript.src =
+        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
+      adsScript.crossOrigin = "anonymous";
+      document.head.appendChild(adsScript);
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -286,28 +303,20 @@ export default function App() {
     document.documentElement.setAttribute("data-theme", nextTheme);
   };
 
+  // ZERO raw elements in <head> or <body>.
+  // Everything is rendered through Remix-managed components:
+  //   <Meta />  — handles all <meta>, <title>, AND <script type="application/ld+json">
+  //   <Links /> — handles all <link> tags
+  //   <Scripts /> — handles Remix runtime scripts
+  // This guarantees server HTML === client HTML, regardless of
+  // ad-blockers, Cloudflare, or browser extensions.
   return (
     <html lang="en" data-theme={theme} suppressHydrationWarning>
       <head>
         <Meta />
         <Links />
-
-        {/* Official Google AdSense Site Verification & Activation Script */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
-          crossOrigin="anonymous"
-          suppressHydrationWarning
-        />
       </head>
       <body>
-        {/* Google & Schema.org Verified Structured Data JSON-LD */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schemaGraph),
-          }}
-        />
         <Outlet context={{ theme, toggleTheme }} />
         <ScrollRestoration />
         <Scripts />
