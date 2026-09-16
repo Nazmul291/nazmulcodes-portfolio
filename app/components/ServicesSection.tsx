@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layers, Code2, Zap, Cpu, CheckCircle2, Sparkles, ArrowRight, Target, Palette, ExternalLink } from 'lucide-react';
+import { Layers, Code2, Zap, Cpu, CheckCircle2, Sparkles, ArrowRight, Target, Palette, ExternalLink, Workflow, Wrench, Link2 } from 'lucide-react';
 import { servicesData } from '~/data/services';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/BrandIcons';
@@ -9,10 +9,10 @@ export const ServicesSection: React.FC = () => {
     switch (iconName) {
       case 'Layers': return <Layers size={28} className="text-emerald" />;
       case 'Code2': return <Code2 size={28} className="text-cyan" />;
+      case 'Workflow': return <Workflow size={28} className="text-indigo" />;
+      case 'Wrench': return <Wrench size={28} className="text-rose" style={{ color: '#f43f5e' }} />;
+      case 'Link': return <Link2 size={28} className="text-cyan" />;
       case 'Zap': return <Zap size={28} className="text-amber" />;
-      case 'Target': return <Target size={28} className="text-rose" style={{ color: '#f43f5e' }} />;
-      case 'Cpu': return <Cpu size={28} className="text-indigo" />;
-      case 'Palette': return <Palette size={28} className="text-emerald" />;
       default: return <Sparkles size={28} className="text-emerald" />;
     }
   };
