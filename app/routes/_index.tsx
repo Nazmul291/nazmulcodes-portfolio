@@ -6,14 +6,20 @@ import { StocklySpotlight } from '~/components/StocklySpotlight';
 import { FeaturedApps } from '~/components/FeaturedApps';
 import { ProjectShowcase } from '~/components/ProjectShowcase';
 import { ServicesSection } from '~/components/ServicesSection';
-import { ProjectEstimator } from '~/components/ProjectEstimator';
 import { TechStackSection } from '~/components/TechStackSection';
 import { TestimonialsSection } from '~/components/TestimonialsSection';
 import { HireSection } from '~/components/HireSection';
 import { Footer } from '~/components/Footer';
-import { ProjectModal } from '~/components/ProjectModal';
 import { projectsData } from '~/data/projects';
 import { ProjectItem } from '~/types/project';
+
+const ProjectEstimator = React.lazy(() =>
+  import('~/components/ProjectEstimator').then((m) => ({ default: m.ProjectEstimator }))
+);
+
+const ProjectModal = React.lazy(() =>
+  import('~/components/ProjectModal').then((m) => ({ default: m.ProjectModal }))
+);
 
 export default function Index() {
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
@@ -33,7 +39,9 @@ export default function Index() {
         <FeaturedApps projects={projectsData} onSelectProject={setSelectedProject} />
         <ProjectShowcase projects={projectsData} onSelectProject={setSelectedProject} />
         <ServicesSection />
-        <ProjectEstimator />
+        <React.Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          <ProjectEstimator />
+        </React.Suspense>
         <TechStackSection />
         <TestimonialsSection />
         <HireSection />
@@ -42,11 +50,15 @@ export default function Index() {
       {/* Footer */}
       <Footer />
 
-      {/* Deep Dive Project Case Study Modal */}
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      {/* Deep Dive Project Case Study Modal (Deferred until project selected) */}
+      {selectedProject && (
+        <React.Suspense fallback={null}>
+          <ProjectModal
+            project={selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+        </React.Suspense>
+      )}
     </div>
   );
 }

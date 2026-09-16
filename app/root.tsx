@@ -252,11 +252,26 @@ export const links: LinksFunction = () => [
   { rel: "canonical", href: "https://nazmulcodes.org" },
   { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
   { rel: "alternate icon", href: "/favicon.ico" },
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
   {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=optional",
+    rel: "preload",
+    href: "/fonts/inter-latin-400.woff2",
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "preload",
+    href: "/fonts/inter-latin-700.woff2",
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "preload",
+    href: "/fonts/plus-jakarta-sans-latin.woff2",
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
   },
   {
     rel: "preload",
@@ -283,16 +298,29 @@ export default function App() {
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
 
-    // Load Google AdSense script post-hydration (client-only).
-    // This prevents ad-blockers from stripping a server-rendered <script>
-    // and causing a DOM index shift that breaks React hydration.
-    if (!document.querySelector('script[src*="adsbygoogle"]')) {
-      const adsScript = document.createElement("script");
-      adsScript.async = true;
-      adsScript.src =
-        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
-      adsScript.crossOrigin = "anonymous";
-      document.head.appendChild(adsScript);
+    // Load Google AdSense strictly on the canonical production domain (nazmulcodes.org).
+    // NEVER load on dev/staging (dev.nazmulcodes.org) or localhost, which eliminates
+    // 3rd-party ad cookies, Privacy Sandbox deprecation warnings, and ad script overhead.
+    const isProductionSite =
+      typeof window !== "undefined" &&
+      (window.location.hostname === "nazmulcodes.org" ||
+       window.location.hostname === "www.nazmulcodes.org");
+
+    if (isProductionSite && !document.querySelector('script[src*="adsbygoogle"]')) {
+      const loadAdSense = () => {
+        const adsScript = document.createElement("script");
+        adsScript.async = true;
+        adsScript.src =
+          "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
+        adsScript.crossOrigin = "anonymous";
+        document.head.appendChild(adsScript);
+      };
+
+      if ("requestIdleCallback" in window) {
+        (window as any).requestIdleCallback(loadAdSense, { timeout: 3500 });
+      } else {
+        setTimeout(loadAdSense, 3000);
+      }
     }
   }, []);
 
