@@ -20,6 +20,14 @@ export default defineConfig({
   build: {
     sourcemap: true,
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      sourcemap: "inline",
+    },
+  },
+  css: {
+    devSourcemap: true,
+  },
   server: {
     port: 3000,
     host: true,
