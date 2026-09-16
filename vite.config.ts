@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [
       remix({
-        presets: [vercelPreset()],
+        presets: process.env.VERCEL ? [vercelPreset()] : [],
         future: {
           v3_fetcherPersist: true,
           v3_relativeSplatPath: true,
