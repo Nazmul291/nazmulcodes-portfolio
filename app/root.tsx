@@ -247,10 +247,6 @@ export const meta: MetaFunction = () => {
         "Hire Senior Shopify Developer Nazmul Hawlader. Official Shopify Apps, custom Liquid themes, Flow automations, checkout troubleshooting & 301 SEO redirects.",
     },
     { name: "twitter:image", content: "https://nazmulcodes.org/favicon.svg" },
-    // Structured Data — Remix first-class handler (renders inside <Meta />, zero hydration risk)
-    {
-      "script:ld+json": schemaGraph,
-    },
   ];
 };
 
@@ -314,9 +310,14 @@ export default function App() {
 
   return (
     <html lang="en" data-theme={theme} suppressHydrationWarning>
-      <head>
+      <head suppressHydrationWarning>
         <Meta />
         <Links />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+          suppressHydrationWarning
+        />
       </head>
       <body>
         <Outlet context={{ theme, toggleTheme }} />
@@ -324,8 +325,12 @@ export default function App() {
         <Scripts />
 
         {/* Adsense */}
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
-          crossOrigin="anonymous" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
+          crossOrigin="anonymous"
+          suppressHydrationWarning
+        />
       </body>
     </html>
   );
