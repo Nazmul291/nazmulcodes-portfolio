@@ -30,7 +30,7 @@ export default function handleRequest(
   responseHeaders.set("X-DNS-Prefetch-Control", "on");
   responseHeaders.set(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()"
+    "camera=(), microphone=(), geolocation=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()"
   );
   responseHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
   responseHeaders.set("Cross-Origin-Resource-Policy", "same-origin");

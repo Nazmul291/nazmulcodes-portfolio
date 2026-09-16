@@ -84,7 +84,7 @@ export default defineConfig(({ mode }) => {
         "Referrer-Policy": "strict-origin-when-cross-origin",
         "X-DNS-Prefetch-Control": "on",
         "Permissions-Policy":
-          "camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()",
+          "camera=(), microphone=(), geolocation=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()",
         "Cross-Origin-Opener-Policy": "same-origin",
         "Cross-Origin-Resource-Policy": "same-origin",
       },
@@ -101,7 +101,7 @@ export default defineConfig(({ mode }) => {
         "Referrer-Policy": "strict-origin-when-cross-origin",
         "X-DNS-Prefetch-Control": "on",
         "Permissions-Policy":
-          "camera=(), microphone=(), geolocation=(), interest-cohort=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()",
+          "camera=(), microphone=(), geolocation=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()",
         "Cross-Origin-Opener-Policy": "same-origin",
         "Cross-Origin-Resource-Policy": "same-origin",
       },
