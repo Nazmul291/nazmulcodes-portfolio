@@ -20,6 +20,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               <img
                 src={project.logoUrl}
                 alt={project.title}
+                width={54}
+                height={54}
+                loading="lazy"
+                decoding="async"
                 style={{
                   width: '54px',
                   height: '54px',
