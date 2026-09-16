@@ -299,6 +299,30 @@ export default function App() {
     const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
+    // Load Google AdSense strictly after React hydration on production domain.
+    // Putting <script> directly in JSX runs AdSense before React hydrates, which
+    // mutates the DOM (injects iframes/styles) and triggers React Error #418 & #423.
+    const isProductionSite =
+      typeof window !== "undefined" &&
+      (window.location.hostname === "nazmulcodes.org" ||
+        window.location.hostname === "www.nazmulcodes.org");
+
+    if (isProductionSite && !document.querySelector('script[src*="adsbygoogle"]')) {
+      const loadAdSense = () => {
+        const adsScript = document.createElement("script");
+        adsScript.async = true;
+        adsScript.src =
+          "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
+        adsScript.crossOrigin = "anonymous";
+        document.head.appendChild(adsScript);
+      };
+
+      if ("requestIdleCallback" in window) {
+        (window as any).requestIdleCallback(loadAdSense, { timeout: 3500 });
+      } else {
+        setTimeout(loadAdSense, 3000);
+      }
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -323,14 +347,6 @@ export default function App() {
         <Outlet context={{ theme, toggleTheme }} />
         <ScrollRestoration />
         <Scripts />
-
-        {/* Adsense */}
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
-          crossOrigin="anonymous"
-          suppressHydrationWarning
-        />
       </body>
     </html>
   );
