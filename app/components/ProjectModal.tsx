@@ -131,10 +131,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* Overview & Description */}
           <div style={{ marginBottom: '2rem' }}>
-            <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.6rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Sparkles size={16} className="text-cyan" />
               <span>Project Overview</span>
-            </h4>
+            </h3>
             <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '0.95rem' }}>
               {project.description}
             </p>
@@ -148,9 +148,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               background: 'var(--bg-secondary)',
               border: '1px solid var(--border-subtle)'
             }}>
-              <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--accent-amber)' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--accent-amber)' }}>
                 Key Technical Challenges
-              </h4>
+              </h3>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                 {project.keyChallenges.map((c, idx) => (
                   <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
@@ -167,9 +167,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
               background: 'var(--bg-secondary)',
               border: '1px solid var(--border-subtle)'
             }}>
-              <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--accent-emerald)' }}>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.75rem', color: 'var(--accent-emerald)' }}>
                 Engineered Solutions
-              </h4>
+              </h3>
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
                 {project.solutions.map((s, idx) => (
                   <li key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
@@ -184,10 +184,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           {/* Technical Architecture */}
           {project.architecture && (
             <div style={{ marginBottom: '2rem' }}>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <Cpu size={16} className="text-emerald" />
                 <span>System Architecture</span>
-              </h4>
+              </h3>
               <div style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
@@ -228,10 +228,10 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           {/* Code Highlight */}
           {project.codeHighlight && (
             <div style={{ marginBottom: '2rem' }}>
-              <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <FileCode2 size={16} className="text-cyan" />
                 <span>Architecture Code Highlight ({project.codeHighlight.filename})</span>
-              </h4>
+              </h3>
               <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
                 {project.codeHighlight.explanation}
               </p>
@@ -243,9 +243,9 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
 
           {/* Deliverables List */}
           <div style={{ marginBottom: '2rem' }}>
-            <h4 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.75rem' }}>
               Key Deliverables
-            </h4>
+            </h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '0.6rem' }}>
               {project.deliverables.map((d, idx) => (
                 <div key={idx} style={{
