@@ -76,25 +76,25 @@ export const Footer: React.FC = () => {
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
               <li>
-                <a href="https://apps.shopify.com/demandmind-forecasting" target="_blank" rel="noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://apps.shopify.com/demandmind-forecasting" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Layers size={14} className="text-emerald" />
                   <span>DemandMind AI Forecasting</span>
                 </a>
               </li>
               <li>
-                <a href="https://apps.shopify.com/stock-alert-4" target="_blank" rel="noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://apps.shopify.com/stock-alert-4" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Layers size={14} className="text-cyan" />
                   <span>Stockly Real-Time Inventory App</span>
                 </a>
               </li>
               <li>
-                <a href="https://apps.shopify.com/shoppable-posts" target="_blank" rel="noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://apps.shopify.com/shoppable-posts" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Layers size={14} className="text-indigo" />
                   <span>Shoppable Posts Blog App</span>
                 </a>
               </li>
               <li>
-                <a href="https://clinique-dentaire-aurea-2.myshopify.com" target="_blank" rel="noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://clinique-dentaire-aurea-2.myshopify.com" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Globe size={14} className="text-emerald" />
                   <span>Clinique Dentaire Aurea</span>
                 </a>

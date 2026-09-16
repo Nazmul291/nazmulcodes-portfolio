@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Calculator, Check, Sparkles, Clock, DollarSign, ExternalLink, Copy } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
 
@@ -72,12 +71,18 @@ export const ProjectEstimator: React.FC<ProjectEstimatorProps> = () => {
 
   const currentEstimate = calculateEstimate();
 
-  const handleApplyAndHire = () => {
-    confetti({
-      particleCount: 90,
-      spread: 70,
-      origin: { y: 0.7 }
-    });
+  const handleApplyAndHire = async () => {
+    try {
+      const confettiModule = await import('canvas-confetti');
+      const confetti = confettiModule.default || confettiModule;
+      confetti({
+        particleCount: 90,
+        spread: 70,
+        origin: { y: 0.7 }
+      });
+    } catch {
+      // Ignored if confetti fails or is blocked
+    }
 
     const activeScope = scopeOptions.find(s => s.id === selectedScope)?.title || 'Custom Shopify Project';
     const brief = `Shopify Project Scope: ${activeScope} | Timeline: ~${currentEstimate.days} Days | Budget: ${currentEstimate.priceRange}`;
