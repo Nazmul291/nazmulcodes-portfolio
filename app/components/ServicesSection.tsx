@@ -2,6 +2,7 @@ import React from 'react';
 import { Layers, Code2, Zap, Cpu, CheckCircle2, Sparkles, ArrowRight, Target, Palette, ExternalLink } from 'lucide-react';
 import { servicesData } from '~/data/services';
 import { siteConfig } from '~/data/siteConfig';
+import { UpworkIcon } from '~/components/BrandIcons';
 
 export const ServicesSection: React.FC = () => {
   const getIcon = (iconName: string) => {
@@ -98,9 +99,12 @@ export const ServicesSection: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-secondary btn-sm"
-                  style={{ width: '100%', justifyContent: 'space-between' }}
+                  style={{ width: '100%', justifyContent: 'space-between', gap: '0.5rem' }}
                 >
-                  <span>Hire on Upwork for this Service</span>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
+                    <UpworkIcon size={14} color="#14a800" />
+                    <span>Hire on Upwork for this Service</span>
+                  </span>
                   <ExternalLink size={14} />
                 </a>
               </div>

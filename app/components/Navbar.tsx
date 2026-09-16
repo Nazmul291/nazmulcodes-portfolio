@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Moon, Sun, Menu, X, ArrowUpRight, Code, Sparkles } from 'lucide-react';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
+import { GithubIcon } from '~/components/BrandIcons';
 
 interface NavbarProps {
   theme: 'dark' | 'light';
@@ -15,7 +16,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     <nav className="navbar">
       <div className="site-container navbar-inner">
         {/* Brand Logo */}
-        <a href="#hero" className="brand-logo">
+        <a href="/#hero" className="brand-logo">
           <div className="brand-icon">
             <Code size={20} />
           </div>
@@ -27,13 +28,13 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         {/* Desktop Navigation Links */}
         <ul className="nav-links">
           <li>
-            <a href="#showcase" className="nav-link">Projects</a>
+            <a href="/#showcase" className="nav-link">Projects</a>
           </li>
           <li>
-            <a href="#services" className="nav-link">Services</a>
+            <a href="/#services" className="nav-link">Services</a>
           </li>
           <li>
-            <a href="#estimator" className="nav-link">Cost Estimator</a>
+            <a href="/#estimator" className="nav-link">Cost Estimator</a>
           </li>
         </ul>
 
@@ -44,6 +45,18 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             <span className="pulse-dot"></span>
             <span>Open for Q1/Q2 Projects</span>
           </div>
+
+          {/* GitHub Profile Link */}
+          <a
+            href={siteConfig.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="theme-toggle-btn"
+            aria-label="GitHub Profile (@Nazmul291)"
+            title="View GitHub Profile (@Nazmul291)"
+          >
+            <GithubIcon size={18} />
+          </a>
 
           {/* Theme Toggle Button (Visible on both Desktop & Mobile) */}
           <button
@@ -82,46 +95,64 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       {mobileMenuOpen && (
         <div className="mobile-menu-open">
           <a
-            href="#apps"
+            href="/#apps"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Shopify App Store Apps
           </a>
           <a
-            href="#showcase"
+            href="/#showcase"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             All 33+ Client Projects
           </a>
           <a
-            href="#services"
+            href="/#services"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Specialized Services
           </a>
           <a
-            href="#estimator"
+            href="/#estimator"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Project Cost Estimator
           </a>
           <a
-            href="#stack"
+            href="/#stack"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Tech Stack & Experience
           </a>
           <a
-            href="#reviews"
+            href="/#reviews"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Client Reviews
+          </a>
+          <a
+            href="/privacy"
+            className="nav-link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Privacy Policy
+          </a>
+          <a
+            href={siteConfig.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-link"
+            style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <GithubIcon size={16} />
+            <span>GitHub Profile (@Nazmul291)</span>
           </a>
 
           {/* Mobile Drawer Bottom Section: Status Pill & Upwork Button */}

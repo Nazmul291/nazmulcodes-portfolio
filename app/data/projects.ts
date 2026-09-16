@@ -55,53 +55,55 @@ export const projectsData: ProjectItem[] = [
   {
     id: 'stock-alert',
     slug: 'stock-alert',
-    title: 'Stockly — Real-Time Inventory & Out-of-Stock Automation',
-    clientName: 'Stockly / Global Merchants',
-    projectType: 'Official Shopify Embedded App',
+    title: 'Stockly: Inventory & Reorder — Demand Forecasting & PO Automation',
+    clientName: 'Stockly / Founded & Engineered by Nazmul',
+    projectType: 'Official Shopify App Store SaaS',
     category: ['shopify-apps', 'custom-engineering'],
     featured: true,
     logoUrl: '/assets/images/apps/stockly.png',
     appStoreUrl: 'https://apps.shopify.com/stock-alert-4',
-    liveUrl: 'https://stock-alert.nazmulcodes.org',
-    role: 'Creator & Lead Architect',
-    timeline: '2025 – 2026',
-    summary: 'Published Shopify embedded app (formerly Stock Alert) that monitors merchant inventory in real-time, automatically hides out-of-stock items to prevent overselling, and dispatches multi-channel alerts.',
-    description: 'Built a robust inventory tracking and alert automation SaaS for Shopify merchants with tiered subscription billing, Slack/Email webhooks, and sub-second inventory delta updates.',
+    liveUrl: 'https://stockly.nazmulcodes.org',
+    role: 'Founder, Creator & Lead Architect',
+    timeline: '2025 – Present',
+    summary: 'Flagship SaaS founded by Nazmul Hawlader: an all-in-one Shopify inventory optimization and automated reordering platform featuring sales-velocity demand forecasting, multi-location stock transfers, 1-click supplier purchase orders, and real-time staff & back-in-stock alerts.',
+    description: 'Conceived, architected, and built from zero to production on the Shopify App Store. Stockly powers automated inventory intelligence for global merchants, preventing stockouts with intelligent demand runway calculations and automating supplier purchase orders while delivering multi-channel low-stock notifications across Email and Slack.',
     keyChallenges: [
-      'Handling flash-sale inventory spikes where thousands of variant stock levels fluctuate simultaneously.',
-      'Ensuring 100% compliance with strict Shopify App Store quality, GDPR, and billing specifications.',
-      'Providing per-product custom alert thresholds without degrading database performance.'
+      'Forecasting accurate stockout runways across thousands of high-velocity SKUs with fluctuating seasonal trends.',
+      'Maintaining sub-second webhook ingestion for multi-location inventory delta events without race conditions.',
+      'Automating 1-click supplier purchase orders with vendor lead-time adjustments and multi-currency billing.',
+      'Achieving strict compliance with Shopify App Store quality benchmarks, GDPR data privacy, and Shopify Billing APIs.'
     ],
     solutions: [
-      'Implemented distributed webhook queues with idempotent processing and redis caching.',
-      'Designed a streamlined Polaris interface with real-time status switches and activity audit logs.',
-      'Integrated Shopify Recurring Application Charges API for seamless subscription checkout.'
+      'Engineered distributed Redis BullMQ processing queues with idempotent webhook event deduplication.',
+      'Built a sales velocity prediction algorithm calculating daily run rate, lead-time safety stock, and reorder point (ROP).',
+      'Designed a rich, responsive Shopify Polaris + React interface with batch actions and multi-location warehouse sync.',
+      'Integrated multi-channel staff alert dispatchers (Slack webhooks, email digests, Shopify Flow triggers, and Klaviyo events).'
     ],
     deliverables: [
-      'Published Shopify App Store listing with 100% compliance score',
-      'Automated product visibility toggling engine',
-      'Real-time Slack & Email notification dispatcher',
-      'Merchant analytics dashboard and alert history audit trail',
-      'Tiered recurring billing integration'
+      'Official Shopify App Store live listing with 100% compliance',
+      'Inventory Optimization Engine: Demand forecasting & 1-click purchase order automation',
+      'Stock & Staff Notifications: Real-time Slack/Email alerts, custom threshold rules, and back-in-stock notifications',
+      'Multi-location inventory tracking, stock transfer logs, and auto-hide/auto-republish automation',
+      'Tiered monthly subscription billing ($3.99, $9.99, $19.99) with 7-day free trial'
     ],
-    tags: ['Shopify App', 'React', 'Node.js', 'PostgreSQL', 'Redis', 'Webhooks', 'Polaris', 'Billing API'],
+    tags: ['Founder Product', 'Shopify App', 'Inventory Optimization', 'Demand Forecasting', 'Staff Notifications', 'Shopify Flow', 'Purchase Orders', 'React', 'Polaris', 'Node.js', 'PostgreSQL', 'Redis Queue'],
     metrics: [
-      { label: 'Live App Store', value: '4.9 ★ Rating', subtext: 'Verified Merchant Reviews' },
-      { label: 'Oversell Prevention', value: '100%', subtext: 'Automated Zero-Stock Hiding' },
-      { label: 'Webhook Processing', value: '<50ms', subtext: 'Idempotent Queue' }
+      { label: 'Role & Ownership', value: 'Founder & Owner', subtext: 'Proprietary SaaS Product' },
+      { label: 'Core Capabilities', value: '2 Core Pillars', subtext: 'Inventory Optimization + Staff Alerts' },
+      { label: 'Stockout Prevention', value: '100% Automated', subtext: 'Real-Time Runway & Auto-Hide' }
     ],
     architecture: {
-      frontend: 'React, Shopify Polaris, App Bridge',
-      backend: 'Node.js, Express/Fastify, Redis Queue',
-      database: 'PostgreSQL with connection pooling',
-      apis: ['Shopify REST & GraphQL APIs', 'Slack Webhook API', 'Resend/SendGrid API'],
-      deployment: 'Docker, Managed Cloud Container Cluster'
+      frontend: 'React, Shopify Polaris, App Bridge, Tailwind/CSS Modules',
+      backend: 'Node.js, Fastify/Express, Redis BullMQ Queue, Webhook Ingestion',
+      database: 'PostgreSQL with connection pooling and multi-location schema',
+      apis: ['Shopify GraphQL & REST Admin APIs', 'Shopify Flow APIs', 'Slack Webhook API', 'Resend/SendGrid Email API'],
+      deployment: 'Docker containers, Cloud VPS cluster, Automated CI/CD'
     },
     codeHighlight: {
       language: 'typescript',
-      filename: 'webhooks/inventory-update.handler.ts',
-      code: `export async function handleInventoryLevelUpdate(payload: ShopifyInventoryUpdate) {\n  const { inventory_item_id, available } = payload;\n  const setting = await db.query.alertSettings.findFirst({\n    where: eq(alertSettings.inventoryItemId, inventory_item_id)\n  });\n  if (available <= setting.threshold && !setting.alertSent) {\n    await Promise.all([\n      dispatchNotification(setting, available),\n      setting.autoHide ? toggleProductVisibility(setting.productId, false) : Promise.resolve()\n    ]);\n  }\n}`,
-      explanation: 'Guarantees instant alert trigger and catalog protection when variant levels breach merchant-configured thresholds.'
+      filename: 'services/inventory-optimizer.service.ts',
+      code: `// Stockly Core: Velocity Forecasting & Auto-Reorder Trigger\nexport async function evaluateVariantRunway(variant: InventoryVariant) {\n  const dailyVelocity = calculateSalesVelocity(variant.history7d, variant.history30d);\n  const daysUntilStockout = dailyVelocity > 0 ? variant.available / dailyVelocity : 999;\n\n  if (daysUntilStockout <= variant.supplierLeadTimeDays + variant.safetyStockDays) {\n    await Promise.all([\n      dispatchStaffAlert({ type: 'LOW_STOCK', variant, daysUntilStockout }),\n      generateDraftPurchaseOrder({ supplierId: variant.supplierId, quantity: variant.recommendedReorderQty }),\n      variant.autoHide && variant.available === 0 ? toggleProductVisibility(variant.productId, false) : null\n    ]);\n  }\n}`,
+      explanation: 'Evaluates real-time sales velocity against vendor lead time to dispatch multi-channel staff alerts and draft purchase orders before stockout occurs.'
     }
   },
   {
