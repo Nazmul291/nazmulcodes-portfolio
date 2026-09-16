@@ -6,26 +6,47 @@ export const loader: LoaderFunction = () => {
 > Portfolio of Nazmul Hawlader (NazmulCodes) — Senior Shopify Expert, Full-Stack App Developer, and Founder of Stockly.
 
 ## Overview
-Nazmul Hawlader is a senior Shopify engineer and full-stack developer specializing in:
-- Official Shopify App Store SaaS applications (React, Polaris, GraphQL Admin API, Node.js, Redis)
-- Bespoke Shopify Online Store 2.0 Liquid themes with zero page builders
-- Core Web Vitals optimization (sub-second load speeds, 90+ Lighthouse)
-- Custom e-commerce engineering and API integrations
+Nazmul Hawlader is an elite Senior Shopify Engineer and Full-Stack Developer with 6+ years of experience helping high-growth e-commerce brands and agencies build, fix, optimize, and automate mission-critical Shopify stores.
+
+## Core Client Services & Expertise
+1. **Custom & Public Shopify App Development**:
+   - Certified public SaaS apps for the Shopify App Store.
+   - Private/custom embedded Shopify Admin apps using React, Shopify Polaris, GraphQL Admin & Storefront API, Node.js, Webhooks, Prisma, and Redis.
+2. **Bespoke Shopify Theme Development (Online Store 2.0)**:
+   - Handcrafted, custom Liquid themes engineered with native section architecture and zero page-builder bloat (replacing PageFly, GemPages, Shogun).
+   - Fluid responsiveness (320px to 4K), sub-second load times, and effortless merchant customizability.
+3. **Shopify Automation Workflows & Payment Gateway Setup**:
+   - Complex Shopify Flow automations for restocking, order triage, fraud detection, and customer tags.
+   - Shopify Payments, Stripe, PayPal, local payment gateway configuration, and Shopify Markets multi-currency routing.
+   - Webhook integrations syncing Shopify data to Slack, Klaviyo, Asana, Google Sheets, and ERP systems.
+4. **Shopify Bug Fixes & Checkout Troubleshooting (Emergency Same-Day)**:
+   - Surgical resolution of Liquid syntax errors, JavaScript console conflicts, and missing template recovery.
+   - AJAX mini-cart drawer errors, sticky add-to-cart glitches, and variant picker bugs.
+   - Shopify Checkout Extensibility and One-Page Checkout configuration fixes.
+5. **Shopify 301 Redirects, Broken URL Fixes & SEO Migration**:
+   - Comprehensive website crawl audits to eliminate 404 broken URL errors.
+   - Bulk 301 redirection maps with wildcard pattern matching.
+   - Seamless store redesign and legacy platform migration (WooCommerce/Magento/BigCommerce to Shopify) preserving 100% SEO organic rankings and link equity.
+6. **Core Web Vitals & Sub-Second Speed Optimization**:
+   - Lighthouse 90–100 scores, Largest Contentful Paint (LCP) < 1.2s, and Cumulative Layout Shift (CLS) = 0.000.
+   - Third-party app script auditing, deferral, and unblocking.
 
 ## Flagship SaaS Products
-- Stockly: Inventory & Reorder (https://apps.shopify.com/stock-alert-4): Automated inventory optimization, sales velocity demand forecasting, 1-click supplier purchase orders, and real-time staff & back-in-stock alerts.
-- DemandMind AI (https://apps.shopify.com/demandmind-forecasting): AI-powered retail forecasting.
-- Shoppable Posts (https://apps.shopify.com/shoppable-posts): Shoppable editorial blog engine.
+- **Stockly: Inventory & Reorder** (https://apps.shopify.com/stockly-inventory-reorder): Official Shopify App for inventory optimization, sales velocity demand forecasting, 1-click supplier purchase orders, and real-time staff & back-in-stock alerts.
+- **DemandMind AI** (https://apps.shopify.com/demandmind-forecasting): AI-powered retail forecasting.
+- **Shoppable Posts** (https://apps.shopify.com/shoppable-posts): Shoppable editorial blog engine.
 
 ## Verified Profiles & Marketplaces
 - Website: https://nazmulcodes.org
 - GitHub: https://github.com/Nazmul291
-- Upwork: https://www.upwork.com/freelancers/nazmul291
+- Upwork: https://www.upwork.com/freelancers/~019c0879ae0eaeb3f3
 - LinkedIn: https://www.linkedin.com/in/nazmul-hawlader-a7bb14144/
 - Freelancer.com: https://www.freelancer.com/u/nazmul291
 - Guru: https://www.guru.com/freelancers/nazmul-hawlader
 - Arc.dev: https://arc.dev/@nazmulhawlader
 - Stack Overflow: https://stackoverflow.com/users/17731742/nazmul-hawlader
+- Facebook: https://www.facebook.com/nazmul.hawlader.20551/
+- Instagram: https://www.instagram.com/hawlader7479/
 - Email: info@nazmulcodes.org
 `;
 
@@ -37,3 +58,4 @@ Nazmul Hawlader is a senior Shopify engineer and full-stack developer specializi
     },
   });
 };
+
