@@ -254,8 +254,20 @@ export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
   {
+    rel: "preload",
+    as: "style",
+    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=optional",
+  },
+  {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=optional",
+  },
+  {
+    rel: "preload",
+    as: "image",
+    href: "/assets/images/lifestyle/lifestyle-1-sm.webp",
+    type: "image/webp",
+    media: "(max-width: 640px)",
   },
 ];
 
@@ -266,34 +278,6 @@ export default function App() {
     const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
-
-    // Only inject Google AdSense on official production domain and during browser idle time
-    // Never run in local development or dev subdomain to protect Lighthouse audits and avoid policy violations
-    const isProduction =
-      typeof window !== "undefined" &&
-      (window.location.hostname === "nazmulcodes.org" ||
-        window.location.hostname === "www.nazmulcodes.org");
-
-    if (isProduction && !document.querySelector('script[src*="adsbygoogle.js"]')) {
-      const loadAdScript = () => {
-        try {
-          const adScript = document.createElement("script");
-          adScript.src =
-            "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
-          adScript.async = true;
-          adScript.crossOrigin = "anonymous";
-          document.head.appendChild(adScript);
-        } catch {
-          // Ignored
-        }
-      };
-
-      if ("requestIdleCallback" in window) {
-        (window as any).requestIdleCallback(loadAdScript, { timeout: 4000 });
-      } else {
-        setTimeout(loadAdScript, 3000);
-      }
-    }
   }, []);
 
   const toggleTheme = () => {
