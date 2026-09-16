@@ -18,7 +18,7 @@ export default function handleRequest(
   // Enforce critical security & best practices headers across all environments (Vercel, local dev, staging)
   responseHeaders.set(
     "Content-Security-Policy",
-    "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http:; connect-src 'self' ws: wss: https://cloudflareinsights.com https://pagead2.googlesyndication.com https://adservice.google.com; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://*.adtrafficquality.google https://googleads.g.doubleclick.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http:; connect-src 'self' ws: wss: https://cloudflareinsights.com https://pagead2.googlesyndication.com https://adservice.google.com https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://*.google.com; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com https://*.adtrafficquality.google; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
   );
   responseHeaders.set(
     "Strict-Transport-Security",
@@ -30,27 +30,27 @@ export default function handleRequest(
   responseHeaders.set("X-DNS-Prefetch-Control", "on");
   responseHeaders.set(
     "Permissions-Policy",
-    "camera=(), microphone=(), geolocation=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()"
+    "camera=(), microphone=(), geolocation=()"
   );
-  responseHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
-  responseHeaders.set("Cross-Origin-Resource-Policy", "same-origin");
+  responseHeaders.set("Cross-Origin-Opener-Policy", "same-origin-allow-popups");
+  responseHeaders.set("Cross-Origin-Resource-Policy", "cross-origin");
 
   let prohibitOutOfOrderStreaming =
     isBotRequest(request.headers.get("user-agent")) || remixContext.isSpaMode;
 
   return prohibitOutOfOrderStreaming
     ? handleBotRequest(
-        request,
-        responseStatusCode,
-        responseHeaders,
-        remixContext
-      )
+      request,
+      responseStatusCode,
+      responseHeaders,
+      remixContext
+    )
     : handleBrowserRequest(
-        request,
-        responseStatusCode,
-        responseHeaders,
-        remixContext
-      );
+      request,
+      responseStatusCode,
+      responseHeaders,
+      remixContext
+    );
 }
 
 // We have some Remix apps in the wild already running with isbot@3 so we need
@@ -123,6 +123,8 @@ function handleBotRequest(
     setTimeout(abort, ABORT_DELAY);
   });
 }
+
+
 
 function handleBrowserRequest(
   request: Request,

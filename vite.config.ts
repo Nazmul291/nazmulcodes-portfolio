@@ -6,6 +6,36 @@ import tsconfigPaths from "vite-tsconfig-paths";
 export default defineConfig(({ mode }) => {
   const isProd = mode === "production" || process.env.NODE_ENV === "production";
 
+  // ─── Content Security Policy ──────────────────────────────────────────────
+  const cspHeader = [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com https://*.adtrafficquality.google https://googleads.g.doubleclick.net",
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' https://fonts.gstatic.com data:",
+    "img-src 'self' data: blob: https: http:",
+    "connect-src 'self' ws: wss: https://cloudflareinsights.com https://pagead2.googlesyndication.com https://adservice.google.com https://*.adtrafficquality.google https://googleads.g.doubleclick.net https://*.google.com",
+    // Fix: Added *.adtrafficquality.google to frame-src to allow verification frames
+    "frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com https://www.google.com https://*.adtrafficquality.google",
+    "object-src 'none'",
+    "base-uri 'self'",
+    "form-action 'self'",
+    "frame-ancestors 'self'",
+    "upgrade-insecure-requests",
+  ].join("; ");
+
+  const securityHeaders = {
+    "Content-Security-Policy": cspHeader,
+    "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-DNS-Prefetch-Control": "on",
+    // Fix: Unblock AdSense privacy sandbox features while protecting sensitive hardware
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+    "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
+    "Cross-Origin-Resource-Policy": "cross-origin",
+  };
+
   return {
     plugins: [
       remix({
@@ -21,15 +51,10 @@ export default defineConfig(({ mode }) => {
       tsconfigPaths(),
     ],
     build: {
-      // ─── Sourcemaps ──────────────────────────────────────────────────────────
-      // Completely disabled in production to eliminate exposed source code
-      // and achieve 100/100 Lighthouse Best Practices.
       sourcemap: !isProd,
-
-    // ─── Minification ────────────────────────────────────────────────────────
-    minify: isProd ? "terser" : "esbuild",
-    terserOptions: isProd
-      ? {
+      minify: isProd ? "terser" : "esbuild",
+      terserOptions: isProd
+        ? {
           compress: {
             drop_console: true,
             drop_debugger: true,
@@ -38,74 +63,39 @@ export default defineConfig(({ mode }) => {
           mangle: { safari10: true },
           format: { comments: false },
         }
-      : undefined,
-
-    // ─── Chunk Splitting ──────────────────────────────────────────────────────
-    // Split lucide-react into its own cacheable chunk so it doesn't inflate
-    // the main route bundle and can be cached independently.
-    rollupOptions: {
-      output: {
-        manualChunks(id) {
-          if (id.includes("lucide-react")) {
-            return "icons";
-          }
-          if (id.includes("canvas-confetti")) {
-            return "confetti";
-          }
+        : undefined,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("lucide-react")) {
+              return "icons";
+            }
+            if (id.includes("canvas-confetti")) {
+              return "confetti";
+            }
+          },
         },
       },
     },
-  },
-
-  // ─── Dependency Pre-bundling ──────────────────────────────────────────────
-  // Force lucide-react through ESM so Vite's tree-shaker eliminates
-  // the ~4,000 unused icon modules at build time.
-  optimizeDeps: {
-    include: ["lucide-react"],
-    esbuildOptions: {
-      sourcemap: isProd ? false : "inline",
+    optimizeDeps: {
+      include: ["lucide-react"],
+      esbuildOptions: {
+        sourcemap: isProd ? false : "inline",
+      },
     },
-  },
-
-  css: {
-    devSourcemap: !isProd,
-  },
-
+    css: {
+      devSourcemap: !isProd,
+    },
     server: {
       port: 3000,
       host: true,
       allowedHosts: true,
-      headers: {
-        "Content-Security-Policy":
-          "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http:; connect-src 'self' ws: wss: https://cloudflareinsights.com https://pagead2.googlesyndication.com https://adservice.google.com; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests",
-        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "SAMEORIGIN",
-        "Referrer-Policy": "strict-origin-when-cross-origin",
-        "X-DNS-Prefetch-Control": "on",
-        "Permissions-Policy":
-          "camera=(), microphone=(), geolocation=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()",
-        "Cross-Origin-Opener-Policy": "same-origin",
-        "Cross-Origin-Resource-Policy": "same-origin",
-      },
+      headers: securityHeaders,
     },
     preview: {
       port: 3000,
       host: true,
-      headers: {
-        "Content-Security-Policy":
-          "default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com https://pagead2.googlesyndication.com https://partner.googleadservices.com https://tpc.googlesyndication.com https://www.googletagservices.com https://adservice.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https: http:; connect-src 'self' ws: wss: https://cloudflareinsights.com https://pagead2.googlesyndication.com https://adservice.google.com; frame-src 'self' https://googleads.g.doubleclick.net https://tpc.googlesyndication.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests",
-        "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload",
-        "X-Content-Type-Options": "nosniff",
-        "X-Frame-Options": "SAMEORIGIN",
-        "Referrer-Policy": "strict-origin-when-cross-origin",
-        "X-DNS-Prefetch-Control": "on",
-        "Permissions-Policy":
-          "camera=(), microphone=(), geolocation=(), browsing-topics=(), run-ad-auction=(), join-ad-interest-group=()",
-        "Cross-Origin-Opener-Policy": "same-origin",
-        "Cross-Origin-Resource-Policy": "same-origin",
-      },
+      headers: securityHeaders,
     },
   };
 });
-
