@@ -272,22 +272,24 @@ export default function App() {
   };
 
   return (
-    <html lang="en" data-theme={theme}>
+    <html lang="en" data-theme={theme} suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <Meta />
         <Links />
+      </head>
+      <body>
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
         />
         <script
           async
+          suppressHydrationWarning
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
           crossOrigin="anonymous"
         />
-      </head>
-      <body>
         <Outlet context={{ theme, toggleTheme }} />
         <ScrollRestoration />
         <Scripts />
