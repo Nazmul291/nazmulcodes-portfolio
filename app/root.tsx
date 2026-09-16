@@ -298,6 +298,30 @@ export default function App() {
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
 
+    // Load Google AdSense strictly after React hydration on production domain.
+    // Loading in raw <head> causes React error #418 & #423 (hydration mismatch)
+    // because AdSense mutates DOM elements before React can hydrate.
+    const isProductionSite =
+      typeof window !== "undefined" &&
+      (window.location.hostname === "nazmulcodes.org" ||
+       window.location.hostname === "www.nazmulcodes.org");
+
+    if (isProductionSite && !document.querySelector('script[src*="adsbygoogle"]')) {
+      const loadAdSense = () => {
+        const adsScript = document.createElement("script");
+        adsScript.async = true;
+        adsScript.src =
+          "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
+        adsScript.crossOrigin = "anonymous";
+        document.head.appendChild(adsScript);
+      };
+
+      if ("requestIdleCallback" in window) {
+        (window as any).requestIdleCallback(loadAdSense, { timeout: 3500 });
+      } else {
+        setTimeout(loadAdSense, 3000);
+      }
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -312,11 +336,6 @@ export default function App() {
       <head>
         <Meta />
         <Links />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
-          crossOrigin="anonymous"
-        />
       </head>
       <body>
         <Outlet context={{ theme, toggleTheme }} />

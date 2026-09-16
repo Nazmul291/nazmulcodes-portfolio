@@ -126,7 +126,7 @@ export const Hero: React.FC = () => {
                       alt="Nazmul Hawlader — Senior Shopify & Full-Stack Engineer"
                       width={480}
                       height={480}
-                      fetchPriority="high"
+                      {...{ fetchpriority: "high" }}
                       loading="eager"
                       decoding="async"
                     style={{
