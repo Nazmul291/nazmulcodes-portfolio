@@ -198,6 +198,7 @@ const schemaGraph = {
 
 export const meta: MetaFunction = () => {
   return [
+    { charSet: "utf-8" },
     { title: "NazmulCodes — Senior Shopify Expert, App Developer & Custom Theme Architect" },
     { name: "google-adsense-account", content: "ca-pub-3337739847756959" },
     { name: "naver-site-verification", content: "6d6b8020e11e505e8b2f69771bc6d31b6136636d" },
@@ -240,6 +241,10 @@ export const meta: MetaFunction = () => {
         "Hire Senior Shopify Developer Nazmul Hawlader. Official Shopify Apps, custom Liquid themes, Flow automations, checkout troubleshooting & 301 SEO redirects.",
     },
     { name: "twitter:image", content: "https://nazmulcodes.org/favicon.svg" },
+    // Structured Data
+    {
+      "script:ld+json": schemaGraph,
+    },
   ];
 };
 
@@ -287,19 +292,9 @@ export default function App() {
 
   return (
     <html lang="en" data-theme={theme} suppressHydrationWarning>
-      <head suppressHydrationWarning>
-        <meta charSet="utf-8" />
+      <head>
         <Meta />
         <Links />
-
-        {/* Structured Data JSON-LD with Hydration Shield */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schemaGraph),
-          }}
-          suppressHydrationWarning
-        />
 
         {/* Official Google AdSense Site Verification & Activation Script */}
         <script
