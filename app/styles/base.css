@@ -123,6 +123,18 @@ code, pre {
   padding-bottom: clamp(4rem, 8vw, 7rem);
 }
 
+/* Off-screen Rendering Optimization for Mobile Performance */
+#apps,
+#showcase,
+#services,
+#estimator,
+#tech-stack,
+#testimonials,
+#hire {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 600px;
+}
+
 .text-gradient {
   background: var(--gradient-text);
   -webkit-background-clip: text;
