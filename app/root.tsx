@@ -13,65 +13,6 @@ import "~/styles/base.css";
 import "~/styles/components.css";
 import "~/styles/animations.css";
 
-export const meta: MetaFunction = () => {
-  return [
-    { title: "NazmulCodes — Senior Shopify Expert, App Developer & Custom Theme Architect" },
-    { name: "google-adsense-account", content: "ca-pub-3337739847756959" },
-    { name: "naver-site-verification", content: "6d6b8020e11e505e8b2f69771bc6d31b6136636d" },
-    {
-      name: "description",
-      content:
-        "Hire Nazmul Hawlader (NazmulCodes) — Senior Shopify Expert & App Developer. Bespoke Online Store 2.0 themes, custom & public Shopify Apps, Flow automations, payment gateway setup, 24/7 bug fixes, 301 SEO redirects & Core Web Vitals speed optimization.",
-    },
-    {
-      name: "keywords",
-      content:
-        "Shopify developer, hire Shopify expert, Shopify theme development, custom Shopify theme developer, Shopify app development, Shopify public app developer, Shopify custom app, Shopify Flow automation, Shopify workflow setup, Shopify payment gateway integration, Shopify bug fixes, Shopify theme troubleshooting, Shopify checkout fixes, Shopify 301 redirects, broken URL fixes, Shopify SEO migration, Shopify Core Web Vitals, Shopify speed optimization, Nazmul Hawlader, NazmulCodes, Stockly Shopify app",
-    },
-    { name: "author", content: "Nazmul Hawlader (NazmulCodes)" },
-    { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
-    { name: "googlebot", content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" },
-    { name: "viewport", content: "width=device-width, initial-scale=1" },
-    { name: "theme-color", content: "#080c14" },
-    // Open Graph / Facebook
-    { property: "og:site_name", content: "NazmulCodes — Senior Shopify Expert" },
-    { property: "og:title", content: "NazmulCodes — Senior Shopify Expert, App Developer & Custom Theme Architect" },
-    {
-      property: "og:description",
-      content:
-        "Specialized in bespoke Shopify Liquid themes, official Shopify App Store apps, Flow automations, payment gateway routing, emergency bug fixes, and SEO 301 redirects.",
-    },
-    { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://nazmulcodes.org" },
-    { property: "og:image", content: "https://nazmulcodes.org/favicon.svg" },
-    { property: "og:image:alt", content: "NazmulCodes — Senior Shopify Expert & Full-Stack App Developer" },
-    { property: "og:locale", content: "en_US" },
-    // Twitter
-    { name: "twitter:card", content: "summary" },
-    { name: "twitter:site", content: "@Nazmul291" },
-    { name: "twitter:creator", content: "@Nazmul291" },
-    { name: "twitter:title", content: "NazmulCodes — Senior Shopify Expert & Full-Stack App Developer" },
-    {
-      name: "twitter:description",
-      content:
-        "Hire Senior Shopify Developer Nazmul Hawlader. Official Shopify Apps, custom Liquid themes, Flow automations, checkout troubleshooting & 301 SEO redirects.",
-    },
-    { name: "twitter:image", content: "https://nazmulcodes.org/favicon.svg" },
-  ];
-};
-
-export const links: LinksFunction = () => [
-  { rel: "canonical", href: "https://nazmulcodes.org" },
-  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-  { rel: "alternate icon", href: "/favicon.svg" },
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap",
-  },
-];
-
 const schemaGraph = {
   "@context": "https://schema.org",
   "@graph": [
@@ -255,6 +196,69 @@ const schemaGraph = {
   ],
 };
 
+export const meta: MetaFunction = () => {
+  return [
+    { title: "NazmulCodes — Senior Shopify Expert, App Developer & Custom Theme Architect" },
+    { name: "google-adsense-account", content: "ca-pub-3337739847756959" },
+    { name: "naver-site-verification", content: "6d6b8020e11e505e8b2f69771bc6d31b6136636d" },
+    {
+      name: "description",
+      content:
+        "Hire Nazmul Hawlader (NazmulCodes) — Senior Shopify Expert & App Developer. Bespoke Online Store 2.0 themes, custom & public Shopify Apps, Flow automations, payment gateway setup, 24/7 bug fixes, 301 SEO redirects & Core Web Vitals speed optimization.",
+    },
+    {
+      name: "keywords",
+      content:
+        "Shopify developer, hire Shopify expert, Shopify theme development, custom Shopify theme developer, Shopify app development, Shopify public app developer, Shopify custom app, Shopify Flow automation, Shopify workflow setup, Shopify payment gateway integration, Shopify bug fixes, Shopify theme troubleshooting, Shopify checkout fixes, Shopify 301 redirects, broken URL fixes, Shopify SEO migration, Shopify Core Web Vitals, Shopify speed optimization, Nazmul Hawlader, NazmulCodes, Stockly Shopify app",
+    },
+    { name: "author", content: "Nazmul Hawlader (NazmulCodes)" },
+    { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" },
+    { name: "googlebot", content: "index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" },
+    { name: "viewport", content: "width=device-width, initial-scale=1" },
+    { name: "theme-color", content: "#080c14" },
+    // Open Graph / Facebook
+    { property: "og:site_name", content: "NazmulCodes — Senior Shopify Expert" },
+    { property: "og:title", content: "NazmulCodes — Senior Shopify Expert, App Developer & Custom Theme Architect" },
+    {
+      property: "og:description",
+      content:
+        "Specialized in bespoke Shopify Liquid themes, official Shopify App Store apps, Flow automations, payment gateway routing, emergency bug fixes, and SEO 301 redirects.",
+    },
+    { property: "og:type", content: "website" },
+    { property: "og:url", content: "https://nazmulcodes.org" },
+    { property: "og:image", content: "https://nazmulcodes.org/favicon.svg" },
+    { property: "og:image:alt", content: "NazmulCodes — Senior Shopify Expert & Full-Stack App Developer" },
+    { property: "og:locale", content: "en_US" },
+    // Twitter
+    { name: "twitter:card", content: "summary" },
+    { name: "twitter:site", content: "@Nazmul291" },
+    { name: "twitter:creator", content: "@Nazmul291" },
+    { name: "twitter:title", content: "NazmulCodes — Senior Shopify Expert & Full-Stack App Developer" },
+    {
+      name: "twitter:description",
+      content:
+        "Hire Senior Shopify Developer Nazmul Hawlader. Official Shopify Apps, custom Liquid themes, Flow automations, checkout troubleshooting & 301 SEO redirects.",
+    },
+    { name: "twitter:image", content: "https://nazmulcodes.org/favicon.svg" },
+    // Official Remix First-Class JSON-LD Handler (zero hydration mismatch)
+    {
+      "script:ld+json": schemaGraph,
+    },
+  ];
+};
+
+export const links: LinksFunction = () => [
+  { rel: "canonical", href: "https://nazmulcodes.org" },
+  { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+  { rel: "alternate icon", href: "/favicon.svg" },
+  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+  {
+    rel: "stylesheet",
+    href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap",
+  },
+];
+
 export default function App() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
@@ -262,6 +266,20 @@ export default function App() {
     const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
+
+    // Safely inject Google AdSense script client-side without interfering with SSR hydration
+    try {
+      if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
+        const adScript = document.createElement("script");
+        adScript.src =
+          "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
+        adScript.async = true;
+        adScript.crossOrigin = "anonymous";
+        document.head.appendChild(adScript);
+      }
+    } catch {
+      // Ignored if blocked
+    }
   }, []);
 
   const toggleTheme = () => {
@@ -279,17 +297,6 @@ export default function App() {
         <Links />
       </head>
       <body>
-        <script
-          type="application/ld+json"
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
-        />
-        <script
-          async
-          suppressHydrationWarning
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
-          crossOrigin="anonymous"
-        />
         <Outlet context={{ theme, toggleTheme }} />
         <ScrollRestoration />
         <Scripts />
