@@ -42,6 +42,10 @@ export const FeaturedApps: React.FC<FeaturedAppsProps> = ({ onSelectProject, pro
                         src={app.logoUrl}
                         alt={app.title}
                         className="app-logo-img"
+                        width={48}
+                        height={48}
+                        loading="lazy"
+                        decoding="async"
                       />
                     ) : (
                       <div className="app-logo-fallback">

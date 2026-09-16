@@ -20,6 +20,10 @@ export const Hero: React.FC = () => {
                 <img
                   src={siteConfig.avatarUrl}
                   alt={siteConfig.name}
+                  width={48}
+                  height={48}
+                  loading="eager"
+                  decoding="async"
                   style={{
                     width: '48px',
                     height: '48px',
@@ -115,10 +119,16 @@ export const Hero: React.FC = () => {
                 background: 'var(--bg-tertiary)'
               }}>
                 <picture>
+                  <source media="(max-width: 640px)" srcSet="/assets/images/lifestyle/lifestyle-1-sm.webp" type="image/webp" />
                   <source srcSet="/assets/images/lifestyle/lifestyle-1.webp" type="image/webp" />
                   <img
-                    src="/assets/images/lifestyle/lifestyle-1.png"
+                    src="/assets/images/lifestyle/lifestyle-1.webp"
                     alt="Nazmul Hawlader — Senior Shopify & Full-Stack Engineer"
+                    width={480}
+                    height={480}
+                    fetchPriority="high"
+                    loading="eager"
+                    decoding="async"
                     style={{
                       width: '100%',
                       height: '100%',

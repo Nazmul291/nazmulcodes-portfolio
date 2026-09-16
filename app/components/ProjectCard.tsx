@@ -20,6 +20,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
               src={project.logoUrl}
               alt={project.title}
               className="app-logo-img"
+              width={42}
+              height={42}
+              loading="lazy"
+              decoding="async"
               style={{ width: '42px', height: '42px', borderRadius: 'var(--radius-sm)' }}
             />
           )}

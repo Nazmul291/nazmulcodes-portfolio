@@ -114,8 +114,12 @@ export const StocklySpotlight: React.FC<StocklySpotlightProps> = ({ project, onS
               flexShrink: 0
             }}>
               <img
-                src="/assets/images/apps/stockly.png"
+                src="/assets/images/apps/stockly.webp"
                 alt="Stockly App Icon"
+                width={92}
+                height={92}
+                loading="lazy"
+                decoding="async"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>

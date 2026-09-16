@@ -16,5 +16,5 @@ export const siteConfig = {
   title: 'NazmulCodes — Senior Shopify Expert & Full-Stack App Developer',
   description: 'Senior Shopify Developer specializing in official Shopify Apps (React/Polaris/GraphQL), bespoke Liquid themes (0 page builders), and Core Web Vitals optimization.',
   availability: 'Open for Q1/Q2 Projects',
-  avatarUrl: '/assets/images/profile/nazmul.png'
+  avatarUrl: '/assets/images/profile/nazmul.webp'
 };
