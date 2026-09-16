@@ -206,6 +206,7 @@ export const meta: MetaFunction = () => {
   return [
     { charSet: "utf-8" },
     { title: "NazmulCodes — Senior Shopify Expert, App Developer & Custom Theme Architect" },
+    { name: "google-adsense-account", content: "ca-pub-3337739847756959" },
     { name: "naver-site-verification", content: "6d6b8020e11e505e8b2f69771bc6d31b6136636d" },
     {
       name: "description",
