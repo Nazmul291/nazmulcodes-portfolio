@@ -17,6 +17,9 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  build: {
+    sourcemap: true,
+  },
   server: {
     port: 3000,
     host: true,
