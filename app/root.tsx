@@ -241,10 +241,6 @@ export const meta: MetaFunction = () => {
         "Hire Senior Shopify Developer Nazmul Hawlader. Official Shopify Apps, custom Liquid themes, Flow automations, checkout troubleshooting & 301 SEO redirects.",
     },
     { name: "twitter:image", content: "https://nazmulcodes.org/favicon.svg" },
-    // Structured Data
-    {
-      "script:ld+json": schemaGraph,
-    },
   ];
 };
 
@@ -305,6 +301,13 @@ export default function App() {
         />
       </head>
       <body>
+        {/* Google & Schema.org Verified Structured Data JSON-LD */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(schemaGraph),
+          }}
+        />
         <Outlet context={{ theme, toggleTheme }} />
         <ScrollRestoration />
         <Scripts />
