@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useOutletContext } from '@remix-run/react';
 import { Navbar } from '~/components/Navbar';
 import { Hero } from '~/components/Hero';
+import { StocklySpotlight } from '~/components/StocklySpotlight';
 import { FeaturedApps } from '~/components/FeaturedApps';
 import { ProjectShowcase } from '~/components/ProjectShowcase';
 import { ServicesSection } from '~/components/ServicesSection';
@@ -17,6 +18,7 @@ import { ProjectItem } from '~/types/project';
 export default function Index() {
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
+  const stocklyProject = projectsData.find(p => p.id === 'stock-alert');
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -26,6 +28,8 @@ export default function Index() {
       {/* Main Content Sections */}
       <main style={{ flex: 1 }}>
         <Hero />
+        {/* Flagship SaaS: Founder Spotlight */}
+        <StocklySpotlight project={stocklyProject} onSelectProject={setSelectedProject} />
         <FeaturedApps projects={projectsData} onSelectProject={setSelectedProject} />
         <ProjectShowcase projects={projectsData} onSelectProject={setSelectedProject} />
         <ServicesSection />

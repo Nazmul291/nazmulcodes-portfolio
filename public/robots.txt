@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# Google AdSense and Search Crawlers
+User-agent: Mediapartners-Google
+Allow: /
+
+User-agent: AdsBot-Google
+Allow: /
+
+Sitemap: https://nazmulcodes.org/sitemap.xml

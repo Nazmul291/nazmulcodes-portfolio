@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ExternalLink, Check, Copy, ShieldCheck, Sparkles, Mail, Award, Clock, Star, Code2 } from 'lucide-react';
 import { siteConfig } from '~/data/siteConfig';
+import { UpworkIcon, FreelancerIcon, GuruIcon, ArcDevIcon, LinkedinIcon, GithubIcon } from '~/components/BrandIcons';
 
 export const HireSection: React.FC = () => {
   const [copied, setCopied] = useState(false);
@@ -24,7 +25,7 @@ export const HireSection: React.FC = () => {
             {/* Left Column: Direct Upwork Value Proposition */}
             <div>
               <div className="section-badge" style={{ marginBottom: '1.25rem' }}>
-                <Award size={14} />
+                <UpworkIcon size={16} />
                 <span>Upwork Verified Shopify Expert</span>
               </div>
 
@@ -40,7 +41,7 @@ export const HireSection: React.FC = () => {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '2.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.95rem' }}>
                   <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0 }} />
-                  <span><strong>100% Escrow Protection</strong> — Release funds only upon verified delivery & QA</span>
+                  <span><strong>100% Escrow Protection</strong> — Release funds only upon verified delivery &amp; QA</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.95rem' }}>
                   <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0 }} />
@@ -48,7 +49,7 @@ export const HireSection: React.FC = () => {
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.95rem' }}>
                   <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0 }} />
-                  <span><strong>100% Code Ownership</strong> — Complete IP transfer & theme documentation included</span>
+                  <span><strong>100% Code Ownership</strong> — Complete IP transfer &amp; theme documentation included</span>
                 </div>
               </div>
 
@@ -61,7 +62,7 @@ export const HireSection: React.FC = () => {
                   className="btn btn-primary btn-lg"
                   style={{ gap: '0.75rem' }}
                 >
-                  <Sparkles size={20} />
+                  <UpworkIcon size={20} />
                   <span>Hire Nazmul on Upwork</span>
                   <ExternalLink size={18} />
                 </a>
@@ -75,6 +76,35 @@ export const HireSection: React.FC = () => {
                   {copied ? <Check size={18} className="text-emerald" /> : <Copy size={18} />}
                   <span>{copied ? 'Email Copied!' : 'Copy info@nazmulcodes.org'}</span>
                 </button>
+              </div>
+
+              {/* Also Verified Across Top Marketplaces */}
+              <div style={{ marginTop: '1.75rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                  Also available for contract hire &amp; technical review on:
+                </span>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <a href={siteConfig.freelancerUrl} target="_blank" rel="noopener noreferrer" className="platform-pill">
+                    <FreelancerIcon size={14} color="#29b2fe" />
+                    <span>Freelancer.com</span>
+                  </a>
+                  <a href={siteConfig.guruUrl} target="_blank" rel="noopener noreferrer" className="platform-pill">
+                    <GuruIcon size={15} color="#57bb63" />
+                    <span>Guru</span>
+                  </a>
+                  <a href={siteConfig.arcDevUrl} target="_blank" rel="noopener noreferrer" className="platform-pill">
+                    <ArcDevIcon size={14} color="#06b6d4" />
+                    <span>Arc.dev</span>
+                  </a>
+                  <a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer" className="platform-pill">
+                    <LinkedinIcon size={14} color="#0a66c2" />
+                    <span>LinkedIn</span>
+                  </a>
+                  <a href={siteConfig.githubUrl} target="_blank" rel="noopener noreferrer" className="platform-pill">
+                    <GithubIcon size={14} />
+                    <span>GitHub</span>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -191,8 +221,9 @@ export const HireSection: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-secondary btn-sm"
-                style={{ width: '100%', justifyContent: 'center', marginTop: '0.25rem' }}
+                style={{ width: '100%', justifyContent: 'center', marginTop: '0.25rem', gap: '0.5rem' }}
               >
+                <UpworkIcon size={15} />
                 <span>View Full Upwork Profile</span>
                 <ExternalLink size={14} />
               </a>
