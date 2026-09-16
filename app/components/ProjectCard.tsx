@@ -71,7 +71,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
           </span>
         ))}
         {project.tags.length > 3 && (
-          <span className="tag-badge" style={{ color: 'var(--text-muted)' }}>
+          <span className="tag-badge" style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>
             +{project.tags.length - 3}
           </span>
         )}
@@ -90,6 +90,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
           onClick={() => onSelect(project)}
           className="btn btn-secondary btn-sm"
           style={{ width: '100%', justifyContent: 'center' }}
+          aria-label={`View technical case study for ${project.title}`}
         >
           <span>Case Study</span>
           <ArrowRight size={14} />
@@ -102,7 +103,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
             rel="noopener noreferrer"
             className="btn btn-primary btn-sm"
             style={{ width: '100%', justifyContent: 'center' }}
-            title="View live listing on Shopify App Store"
+            title={`View ${project.title} on Shopify App Store`}
+            aria-label={`Install ${project.title} from Shopify App Store`}
           >
             <span>App Store</span>
             <ExternalLink size={14} />
@@ -114,7 +116,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onSelect }) =
             rel="noopener noreferrer"
             className="btn btn-primary btn-sm"
             style={{ width: '100%', justifyContent: 'center' }}
-            title="Visit live store website"
+            title={`Visit ${project.title} live storefront`}
+            aria-label={`Visit ${project.title} live storefront`}
           >
             <span>Live Site</span>
             <ExternalLink size={14} />

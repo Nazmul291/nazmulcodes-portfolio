@@ -114,6 +114,7 @@ export const FeaturedApps: React.FC<FeaturedAppsProps> = ({ onSelectProject, pro
                   onClick={() => onSelectProject(app)}
                   className="btn btn-secondary btn-sm"
                   style={{ width: '100%', justifyContent: 'center' }}
+                  aria-label={`View technical case study for ${app.title}`}
                 >
                   <span>Case Study</span>
                   <ArrowRight size={14} />
@@ -126,7 +127,8 @@ export const FeaturedApps: React.FC<FeaturedAppsProps> = ({ onSelectProject, pro
                     rel="noopener noreferrer"
                     className="btn btn-primary btn-sm"
                     style={{ width: '100%', justifyContent: 'center' }}
-                    title="View live listing on Shopify App Store"
+                    title={`View ${app.title} on Shopify App Store`}
+                    aria-label={`Install ${app.title} from Shopify App Store`}
                   >
                     <span>App Store</span>
                     <ExternalLink size={14} />

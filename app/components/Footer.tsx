@@ -50,9 +50,9 @@ export const Footer: React.FC = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }}>
               Core Navigation
-            </h4>
+            </h3>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
               <li><a href="/#hero" className="nav-link">Home</a></li>
               <li><a href="/#apps" className="nav-link">Shopify App Store Apps</a></li>
@@ -71,9 +71,9 @@ export const Footer: React.FC = () => {
 
           {/* Featured Highlights */}
           <div>
-            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', color: 'var(--text-primary)' }}>
               Featured Case Studies
-            </h4>
+            </h3>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
               <li>
                 <a href="https://apps.shopify.com/demandmind-forecasting" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
@@ -104,9 +104,9 @@ export const Footer: React.FC = () => {
 
           {/* Get in Touch & Social Profiles */}
           <div>
-            <h4 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.85rem', color: 'var(--text-primary)' }}>
+            <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '0.85rem', color: 'var(--text-primary)' }}>
               Let’s Connect
-            </h4>
+            </h3>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginBottom: '1rem' }}>
               Direct email: <a href={`mailto:${siteConfig.email}`} className="text-emerald">{siteConfig.email}</a>
             </p>

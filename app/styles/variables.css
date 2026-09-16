@@ -9,9 +9,9 @@
   --bg-card: #0d1424;
   --bg-card-hover: #121c32;
   
-  --text-primary: #f1f5f9;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
   --text-inverse: #090d16;
 
   --accent-emerald: #10b981;
@@ -63,8 +63,8 @@
   --bg-card-hover: #f8fafc;
 
   --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #64748b;
+  --text-secondary: #334155;
+  --text-muted: #475569;
   --text-inverse: #f8fafc;
 
   --accent-emerald: #059669;
