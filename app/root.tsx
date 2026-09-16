@@ -67,9 +67,10 @@ const schemaGraph = {
       priceRange: "$$$",
       currenciesAccepted: "USD, EUR, GBP, AUD, CAD",
       paymentAccepted: "Credit Card, Stripe, PayPal, Upwork Escrow, Wire Transfer",
-      areaServed: {
-        "@type": "AdministrativeArea",
-        name: "Worldwide",
+      areaServed: "Worldwide",
+      address: {
+        "@type": "PostalAddress",
+        addressCountry: "BD",
       },
       hasOfferCatalog: {
         "@type": "OfferCatalog",
@@ -142,6 +143,11 @@ const schemaGraph = {
       author: { "@id": "https://nazmulcodes.org/#person" },
       description:
         "Official Shopify App for inventory reorder forecasting, automated low-stock and back-in-stock alerts, and multi-channel staff restock notifications.",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "USD",
+      },
     },
     {
       "@type": "FAQPage",
@@ -317,7 +323,7 @@ export default function App() {
         <ScrollRestoration />
         <Scripts />
 
-        {/* এক্সটার্নাল স্ক্রিপ্ট - পেজ ইন্টার‍্যাক্টিভ হওয়ার পর লোড হবে */}
+        {/* Adsense */}
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
           crossOrigin="anonymous" />
       </body>
