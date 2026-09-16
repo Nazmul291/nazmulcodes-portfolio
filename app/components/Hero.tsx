@@ -121,14 +121,14 @@ export const Hero: React.FC = () => {
                 <picture>
                   <source media="(max-width: 640px)" srcSet="/assets/images/lifestyle/lifestyle-1-sm.webp" type="image/webp" />
                   <source srcSet="/assets/images/lifestyle/lifestyle-1.webp" type="image/webp" />
-                  <img
-                    src="/assets/images/lifestyle/lifestyle-1.webp"
-                    alt="Nazmul Hawlader — Senior Shopify & Full-Stack Engineer"
-                    width={480}
-                    height={480}
-                    {...({ fetchpriority: "high" } as any)}
-                    loading="eager"
-                    decoding="async"
+                    <img
+                      src="/assets/images/lifestyle/lifestyle-1.webp"
+                      alt="Nazmul Hawlader — Senior Shopify & Full-Stack Engineer"
+                      width={480}
+                      height={480}
+                      fetchPriority="high"
+                      loading="eager"
+                      decoding="async"
                     style={{
                       width: '100%',
                       height: '100%',

@@ -52,6 +52,16 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, onSe
     });
   }, [projects, selectedCategory, selectedTag, searchQuery]);
 
+  const INITIAL_PROJECT_COUNT = 12;
+  const [visibleCount, setVisibleCount] = useState(INITIAL_PROJECT_COUNT);
+
+  const displayedProjects = useMemo(() => {
+    if (searchQuery.trim() !== '' || selectedTag !== null || selectedCategory !== 'all') {
+      return filteredProjects;
+    }
+    return filteredProjects.slice(0, visibleCount);
+  }, [filteredProjects, visibleCount, searchQuery, selectedTag, selectedCategory]);
+
   return (
     <section id="showcase" className="section-padding">
       <div className="site-container">
@@ -152,14 +162,14 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, onSe
         {/* Results Counter */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
           <div>
-            Showing <strong style={{ color: 'var(--text-primary)' }}>{filteredProjects.length}</strong> of {projects.length} verified client projects
+            Showing <strong style={{ color: 'var(--text-primary)' }}>{displayedProjects.length}</strong> of {filteredProjects.length} {filteredProjects.length !== projects.length ? `(filtered from ${projects.length})` : 'verified client projects'}
           </div>
         </div>
 
         {/* Grid View */}
         {viewMode === 'grid' && (
           <div className="projects-grid">
-            {filteredProjects.map((project) => (
+            {displayedProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 project={project}
@@ -189,7 +199,7 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, onSe
                 </tr>
               </thead>
               <tbody>
-                {filteredProjects.map((project) => (
+                {displayedProjects.map((project) => (
                   <tr
                     key={project.id}
                     style={{ borderBottom: '1px solid var(--border-subtle)', transition: 'background var(--transition-fast)' }}
@@ -256,6 +266,21 @@ export const ProjectShowcase: React.FC<ProjectShowcaseProps> = ({ projects, onSe
                 ))}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Load More Button for DOM optimization */}
+        {filteredProjects.length > displayedProjects.length && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2.5rem' }}>
+            <button
+              onClick={() => setVisibleCount(filteredProjects.length)}
+              className="btn btn-secondary"
+              style={{ padding: '0.85rem 2.2rem', fontSize: '0.95rem', gap: '0.6rem' }}
+              aria-label="Load remaining portfolio projects"
+            >
+              <Layers size={16} />
+              <span>Load More Projects ({filteredProjects.length - displayedProjects.length} remaining)</span>
+            </button>
           </div>
         )}
       </div>
