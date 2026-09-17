@@ -15,12 +15,7 @@ export const HireSection: React.FC = () => {
   return (
     <section id="contact" className="section-padding" style={{ background: 'var(--bg-secondary)', position: 'relative' }}>
       <div className="site-container">
-        <div className="glass-card" style={{
-          padding: 'clamp(1.75rem, 5vw, 3.5rem)',
-          border: '1px solid var(--border-glow)',
-          background: 'linear-gradient(135deg, rgba(15, 22, 38, 0.95) 0%, rgba(13, 20, 36, 0.98) 100%)',
-          boxShadow: 'var(--shadow-lg), 0 0 60px rgba(16, 185, 129, 0.12)'
-        }}>
+        <div className="hire-card">
           <div className="hire-grid">
             {/* Left Column: Direct Upwork Value Proposition */}
             <div>
@@ -29,58 +24,59 @@ export const HireSection: React.FC = () => {
                 <span>Upwork Verified Shopify Expert</span>
               </div>
 
-              <h2 className="section-title" style={{ textAlign: 'left', lineHeight: 1.2 }}>
+              <h2 className="hire-title">
                 Ready to Build on <span className="text-gradient">Upwork with Confidence</span>?
               </h2>
 
-              <p style={{ fontSize: '1.02rem', color: 'var(--text-secondary)', lineHeight: 1.7, marginBottom: '2rem', maxWidth: '600px' }}>
+              <p style={{ fontSize: '0.98rem', color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '1.75rem', maxWidth: '600px' }}>
                 All contracts, project milestones, and custom Shopify engineering engagements are securely processed through Upwork. Enjoy full escrow protection, transparent deliverables, and direct communication.
               </p>
 
               {/* Upwork Trust Guarantees */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', marginBottom: '2.5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.95rem' }}>
-                  <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0 }} />
+              <div className="hire-guarantees">
+                <div className="hire-guarantee-item">
+                  <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <span><strong>100% Escrow Protection</strong> — Release funds only upon verified delivery &amp; QA</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.95rem' }}>
-                  <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0 }} />
+                <div className="hire-guarantee-item">
+                  <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <span><strong>Milestone-Based Billing</strong> — Fixed-price sprints or flexible hourly retainers</span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', fontSize: '0.95rem' }}>
-                  <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0 }} />
+                <div className="hire-guarantee-item">
+                  <ShieldCheck size={18} className="text-emerald" style={{ flexShrink: 0, marginTop: '2px' }} />
                   <span><strong>100% Code Ownership</strong> — Complete IP transfer &amp; theme documentation included</span>
                 </div>
               </div>
 
               {/* Primary Actions */}
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <div className="hire-actions">
                 <a
                   href={siteConfig.upworkUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-primary btn-lg"
-                  style={{ gap: '0.75rem' }}
+                  className="btn btn-primary"
+                  style={{ gap: '0.65rem' }}
                 >
-                  <UpworkIcon size={20} />
+                  <UpworkIcon size={18} />
                   <span>Hire Nazmul on Upwork</span>
-                  <ExternalLink size={18} />
+                  <ExternalLink size={16} />
                 </a>
 
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="btn btn-secondary btn-lg"
+                  className="btn btn-secondary"
+                  style={{ gap: '0.65rem' }}
                   title="Copy business email"
                 >
-                  {copied ? <Check size={18} className="text-emerald" /> : <Copy size={18} />}
+                  {copied ? <Check size={16} className="text-emerald" /> : <Copy size={16} />}
                   <span>{copied ? 'Email Copied!' : 'Copy info@nazmulcodes.org'}</span>
                 </button>
               </div>
 
               {/* Also Verified Across Top Marketplaces */}
               <div style={{ marginTop: '1.75rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)', fontWeight: 600 }}>
+                <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontWeight: 600 }}>
                   Also available for contract hire &amp; technical review on:
                 </span>
                 <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
@@ -109,16 +105,7 @@ export const HireSection: React.FC = () => {
             </div>
 
             {/* Right Column: Premium Lifestyle-2 Profile & Contact Dossier */}
-            <div style={{
-              background: 'var(--bg-primary)',
-              borderRadius: 'var(--radius-xl)',
-              padding: '1.5rem',
-              border: '1px solid var(--border-medium)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '1.25rem',
-              boxShadow: '0 12px 40px rgba(0, 0, 0, 0.4)'
-            }}>
+            <div className="hire-dossier">
               {/* Lifestyle-2 Image Spotlight */}
               <div style={{
                 position: 'relative',
