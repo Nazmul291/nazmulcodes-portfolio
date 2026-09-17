@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from '@remix-run/react';
 import { Moon, Sun, Menu, X, ArrowUpRight, Code, Sparkles } from 'lucide-react';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
@@ -39,29 +40,31 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         {/* Desktop Navigation Links */}
         <ul className="nav-links">
           <li>
-            <a href="/#showcase" className="nav-link">Projects</a>
-          </li>
-          <li>
             <a href="/#services" className="nav-link">Services</a>
           </li>
           <li>
-            <a href="/blog" className="nav-link">Blog</a>
+            <Link to="/blog" className="nav-link">Blogs</Link>
           </li>
           <li>
-            <a href="/about" className="nav-link">My Story</a>
+            <Link to="/about" className="nav-link">My Story</Link>
           </li>
           <li>
-            <a href="/#estimator" className="nav-link">Cost Estimator</a>
+            <Link to="/contact" className="nav-link">Contact Us</Link>
           </li>
         </ul>
 
         {/* Actions */}
         <div className="nav-actions">
-          {/* Live Availability Status (Desktop Only) */}
-          <div className="status-pill desktop-only" title="Currently open for high-impact contracts & custom development">
+          {/* Live Availability / Contact Me Pill (Desktop Only) */}
+          <Link
+            to="/contact"
+            className="status-pill desktop-only"
+            title="Get in touch for custom development"
+            style={{ textDecoration: 'none', cursor: 'pointer' }}
+          >
             <span className="pulse-dot"></span>
-            <span>Open for Q1/Q2 Projects</span>
-          </div>
+            <span>Contact Me</span>
+          </Link>
 
           {/* GitHub Profile Link (Desktop Only in Top Bar, Available in Mobile Menu Drawer) */}
           <a
@@ -112,40 +115,41 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       {mobileMenuOpen && (
         <div className="mobile-menu-open">
           <a
-            href="/blog"
+            href="/#services"
+            className="nav-link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Services
+          </a>
+          <Link
+            to="/blog"
             className="nav-link"
             style={{ color: 'var(--accent-emerald)', fontWeight: 700 }}
             onClick={() => setMobileMenuOpen(false)}
           >
-            Engineering Blog (35+ Guides)
-          </a>
-          <a
-            href="/about"
+            Blogs
+          </Link>
+          <Link
+            to="/about"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
-            About & My Story
-          </a>
+            My Story
+          </Link>
+          <Link
+            to="/contact"
+            className="nav-link"
+            style={{ color: 'var(--accent-cyan)', fontWeight: 600 }}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Contact Us
+          </Link>
           <a
             href="/#apps"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Shopify App Store Apps
-          </a>
-          <a
-            href="/#showcase"
-            className="nav-link"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            All 33+ Client Projects
-          </a>
-          <a
-            href="/#services"
-            className="nav-link"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Specialized Services
           </a>
           <a
             href="/#estimator"
@@ -155,26 +159,19 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             Project Cost Estimator
           </a>
           <a
-            href="/#stack"
-            className="nav-link"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Tech Stack & Experience
-          </a>
-          <a
             href="/#reviews"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Client Reviews
           </a>
-          <a
-            href="/privacy"
+          <Link
+            to="/privacy"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Privacy Policy
-          </a>
+          </Link>
           <a
             href={siteConfig.githubUrl}
             target="_blank"
@@ -196,10 +193,15 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             flexDirection: 'column',
             gap: '0.85rem'
           }}>
-            <div className="status-pill" style={{ width: '100%', justifyContent: 'center' }}>
+            <Link
+              to="/contact"
+              className="status-pill"
+              style={{ width: '100%', justifyContent: 'center', textDecoration: 'none' }}
+              onClick={() => setMobileMenuOpen(false)}
+            >
               <span className="pulse-dot"></span>
-              <span>Open for Q1/Q2 Projects</span>
-            </div>
+              <span>Contact Me</span>
+            </Link>
 
             <a
               href={siteConfig.upworkUrl}

@@ -56,6 +56,11 @@ export const Footer: React.FC = () => {
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
               <li><a href="/#hero" className="nav-link">Home</a></li>
               <li>
+                <Link to="/contact" className="nav-link" style={{ color: 'var(--accent-cyan)', fontWeight: 600 }}>
+                  Contact Us / Start Project
+                </Link>
+              </li>
+              <li>
                 <Link to="/about" className="nav-link">My Story & Biography</Link>
               </li>
               <li>
@@ -286,6 +291,9 @@ export const Footer: React.FC = () => {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+            <Link to="/contact" className="nav-link" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              Contact Us
+            </Link>
             <Link to="/privacy" className="nav-link" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
               Privacy Policy
             </Link>
