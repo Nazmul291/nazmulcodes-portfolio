@@ -2,54 +2,102 @@ import { ProjectItem } from '~/types/project';
 
 export const projectsData: ProjectItem[] = [
   {
+    id: 'kilo-media-compression',
+    slug: 'kilo-media-compression',
+    title: 'Kilo — Fast Media Compression & Format Converter',
+    clientName: 'Independent Tool / Stockly Ecosystem Companion',
+    projectType: 'High-Performance Web App & Shopify Image Optimizer',
+    category: ['shopify-apps', 'speed-performance', 'custom-engineering'],
+    featured: true,
+    liveUrl: 'https://kilo.nazmulcodes.org/',
+    role: 'Founder & Full-Stack Engineer',
+    timeline: 'Feb 2026 – Present',
+    summary: 'A 100% private, client-side media compression web app and Stockly companion tool that turns heavy megabytes into fast-loading kilobytes, with 1-click batch image optimization for Shopify merchants.',
+    description: 'Engineered Kilo (https://kilo.nazmulcodes.org/) to tackle image weight and Core Web Vitals degradation. Built with pure client-side Canvas and WebAssembly compression engines for zero server uploads, privacy, and speed. Integrated directly with Stockly as an ecosystem companion tool, empowering merchants to sync and batch compress product catalog images in one click.',
+    keyChallenges: [
+      'Executing lossless and lossy image compression (WebP, PNG, JPEG, AVIF, ICO) entirely in browser memory without sending private assets to remote servers.',
+      'Integrating with Shopify Admin GraphQL API to batch compress merchant product images via the Stockly ecosystem.',
+      'Generating multi-resolution favicon ICO packages and modern WebP formats in milliseconds with zero UI freeze.'
+    ],
+    solutions: [
+      'Engineered zero-latency client-side compression pipeline utilizing OffscreenCanvas and Web Workers.',
+      'Built Shopify batch optimizer integration allowing Stockly users to optimize their store catalog seamlessly.',
+      'Implemented zero-CLS responsive UI with instant downloads, file size diff calculators, and privacy-first architecture.'
+    ],
+    deliverables: [
+      'Live web application deployed at https://kilo.nazmulcodes.org/',
+      'Client-side multi-format converter (PNG, JPEG, WebP, AVIF, ICO, SVG)',
+      'Shopify batch optimizer integration for Stockly ecosystem',
+      'Open-source repository at github.com/Nazmul291/kilo'
+    ],
+    tags: ['React', 'TypeScript', 'Web Performance', 'Canvas API', 'WebP/AVIF', 'Shopify Sync', 'Image Optimization', 'Stockly Companion'],
+    metrics: [
+      { label: 'Privacy', value: '100% Client-Side', subtext: 'Zero Server Uploads' },
+      { label: 'Compression Ratio', value: 'Up to 85%', subtext: 'Turn MBs to KBs' },
+      { label: 'Shopify Integration', value: '1-Click Sync', subtext: 'Stockly Companion Tool' }
+    ],
+    architecture: {
+      frontend: 'React, Vite, Tailwind CSS, Lucide Icons, Canvas API',
+      backend: 'Client-Side WebAssembly & OffscreenCanvas (Zero Server Storage)',
+      database: 'Local Browser Memory (Private & Ephemeral)',
+      apis: ['Shopify Admin GraphQL API (via Stockly)', 'HTML5 File API', 'Canvas API'],
+      deployment: 'Cloudflare / Vercel Edge CDN'
+    },
+    codeHighlight: {
+      language: 'typescript',
+      filename: 'services/compressor.ts',
+      code: `export async function compressToWebP(file: File, quality = 0.82): Promise<Blob> {\n  const bitmap = await createImageBitmap(file);\n  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);\n  const ctx = canvas.getContext('2d');\n  ctx?.drawImage(bitmap, 0, 0);\n  return canvas.convertToBlob({ type: 'image/webp', quality });\n}`,
+      explanation: 'Uses browser OffscreenCanvas to compress images into high-efficiency WebP format in memory with zero server lag.'
+    }
+  },
+  {
     id: 'demandmind-forecasting',
     slug: 'demandmind-forecasting',
-    title: 'DemandMind — AI & ML Sales Forecasting App',
-    clientName: 'DemandMind Technologies',
-    projectType: 'Official Shopify Embedded App (AI/ML)',
+    title: 'DemandMind — Shopify Forecasting Admin Frontend',
+    clientName: 'DemandMind Technologies (Client Contract)',
+    projectType: 'Official Shopify Embedded App Frontend (Client Project)',
     category: ['shopify-apps', 'custom-engineering'],
     featured: true,
     logoUrl: '/assets/images/apps/demandmind.webp',
     appStoreUrl: 'https://apps.shopify.com/demandmind-forecasting',
-    role: 'Lead Full-Stack Shopify App Engineer',
+    role: 'Frontend Shopify App Engineer (Client Contract)',
     timeline: 'Nov 2025 – Jan 2026',
-    summary: 'An AI/ML-driven inventory & sales prediction app embedded in Shopify Admin, processing merchant sales history to generate daily/monthly forecast models.',
-    description: 'Developed a production-grade Shopify embedded app using React, Polaris, and Shopify App Bridge on the frontend, with a high-throughput Python FastAPI backend on Fly.io running predictive models (Prophet/scikit-learn) and PostgreSQL.',
+    summary: 'Engineered the responsive, high-performance embedded admin frontend for a merchant forecasting app in Shopify Admin using React, Shopify Polaris, and App Bridge.',
+    description: 'Contracted by DemandMind Technologies to build the merchant-facing UI and Shopify Admin integration. Developed a modular, accessible Polaris frontend connected to the client’s backend reporting APIs with GraphQL data fetching and responsive interactive data visualizations.',
     keyChallenges: [
-      'Synchronizing multi-year high-volume historical sales data via Shopify Admin GraphQL without rate limits.',
-      'Training and serving merchant-specific seasonal ML forecasting models with dynamic date toolkit matching (custom MM-DD boundaries).',
-      'Seamless multi-store data isolation and background processing with webhook sync.'
+      'Rendering complex seasonal forecasting tables and multi-series charts smoothly within Shopify Admin iframe.',
+      'Ensuring strict Polaris WCAG AA accessibility and dark/light mode consistency.',
+      'Designing intuitive date-range selection and replenishment schedule interfaces for merchants.'
     ],
     solutions: [
-      'Engineered chunked GraphQL queries with automatic exponential backoff and cursor pagination.',
-      'Constructed Supabase/PostgreSQL schema supporting customizable seasonal families and CSV/Excel file upload ingestion.',
-      'Embedded responsive Polaris UI with interactive chart visualizations and stock replenishment recommendations.'
+      'Structured reusable Polaris Page, Layout, and Card components conforming strictly to Shopify design guidelines.',
+      'Implemented optimistic UI states and responsive data grids for large inventory rosters.',
+      'Integrated App Bridge v3 navigation and modal controllers for seamless merchant UX.'
     ],
     deliverables: [
-      'Shopify Embedded Admin App with Polaris design system',
-      'Python FastAPI backend microservice deployed on Fly.io',
-      'Predictive ML model pipeline for sales forecasting',
-      'Automated inventory recommendation engine',
-      'Multi-store isolation & GraphQL webhook listeners'
+      'Shopify Embedded Admin App Frontend with Polaris design system',
+      'Interactive forecasting chart dashboard components',
+      'Merchant replenishment settings and threshold configuration views',
+      'Full App Bridge navigation and session token integration'
     ],
-    tags: ['Shopify App', 'React', 'Shopify Polaris', 'Python', 'FastAPI', 'Machine Learning', 'PostgreSQL', 'Fly.io', 'GraphQL'],
+    tags: ['Shopify App', 'React', 'Shopify Polaris', 'App Bridge', 'TypeScript', 'GraphQL', 'Client Project'],
     metrics: [
-      { label: 'Platform', value: 'Shopify App Store', subtext: 'Live Published' },
-      { label: 'Prediction Engine', value: 'ML / AI', subtext: 'Daily & Monthly Models' },
-      { label: 'Backend Latency', value: '<120ms', subtext: 'FastAPI on Fly.io' }
+      { label: 'Platform', value: 'Shopify App Store', subtext: 'Client Published' },
+      { label: 'Frontend Stack', value: 'React & Polaris', subtext: 'Embedded App Bridge' },
+      { label: 'Role', value: 'Frontend Engineer', subtext: 'Contract Delivery' }
     ],
     architecture: {
       frontend: 'React 18, Shopify Polaris, Shopify App Bridge v3',
-      backend: 'Python 3.11, FastAPI, scikit-learn, Prophet',
-      database: 'PostgreSQL / Supabase with row-level security',
-      apis: ['Shopify Admin GraphQL API', 'Shopify Webhooks', 'REST Analytics API'],
-      deployment: 'Fly.io (Backend), Shopify Cloud CDN (Frontend)'
+      backend: 'Client Backend APIs (Python/FastAPI)',
+      database: 'Client Database (PostgreSQL)',
+      apis: ['Shopify Admin GraphQL API', 'Client Analytics REST Endpoints'],
+      deployment: 'Shopify Cloud CDN (Frontend)'
     },
     codeHighlight: {
-      language: 'python',
-      filename: 'services/forecaster.py',
-      code: `async def generate_merchant_forecast(store_id: str, horizon_days: int = 90):\n    historical_data = await fetch_cleaned_sales(store_id)\n    model = Prophet(yearly_seasonality=True, weekly_seasonality=True)\n    model.fit(historical_data)\n    future = model.make_future_dataframe(periods=horizon_days)\n    forecast = model.predict(future)\n    return format_polaris_series(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']])`,
-      explanation: 'Generates seasonal sales trajectories and confidence intervals mapped directly to Polaris interactive visualization components.'
+      language: 'typescript',
+      filename: 'components/ForecastingTable.tsx',
+      code: `import { IndexTable, Card, Text, Badge } from '@shopify/polaris';\n\nexport function ForecastingTable({ items }: { items: ForecastItem[] }) {\n  return (\n    <Card padding="400">\n      <IndexTable\n        itemCount={items.length}\n        headings={[{ title: 'Product SKU' }, { title: 'Projected Demand' }, { title: 'Stock Status' }]}\n      >\n        {/* Polaris row rendering with accessible status badges */}\n      </IndexTable>\n    </Card>\n  );\n}`,
+      explanation: 'Modular Polaris component rendering merchant demand forecasts directly in the Shopify Admin dashboard.'
     }
   },
   {

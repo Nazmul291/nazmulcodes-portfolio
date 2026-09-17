@@ -17,9 +17,10 @@ Nazmul Hawlader (NazmulCodes) is an elite Senior Shopify Engineer with 6+ years 
 - [Shopify 301 Redirects & SEO Migration](https://nazmulcodes.org/#services): Comprehensive crawl audits, bulk 301 URL redirection maps, and zero-traffic-loss platform migrations from WooCommerce/Magento to Shopify.
 - [Core Web Vitals & Speed Optimization](https://nazmulcodes.org/#services): Lighthouse 90-100 score guarantees, sub-1.2s LCP, 0.000 CLS, and critical rendering path optimization.
 
-## Flagship SaaS Products
-- [Stockly: Inventory & Reorder](https://apps.shopify.com/stockly-inventory-reorder): Official Shopify App for sales-velocity demand forecasting, automated low-stock and back-in-stock alerts, 1-click purchase orders, and staff restock notifications.
-- [DemandMind AI](https://apps.shopify.com/demandmind-forecasting): AI/ML-powered retail sales forecasting app embedded in Shopify Admin.
+## Flagship SaaS Products & Tools
+- [Stockly: Inventory & Reorder](https://apps.shopify.com/stock-alert-4): Official Shopify App for sales-velocity inventory tracking, automated low-stock and back-in-stock alerts, 1-click purchase orders, and staff restock notifications.
+- [Kilo Media Compressor](https://kilo.nazmulcodes.org/): High-speed client-side media compression and WebP converter web app. Companion tool for Stockly providing 1-click Shopify catalog image optimization.
+- [DemandMind (Client Project)](https://apps.shopify.com/demandmind-forecasting): Embedded Shopify Admin frontend engineered for client DemandMind Technologies.
 - [Shoppable Posts](https://apps.shopify.com/shoppable-posts): Shoppable editorial blog engine for high-growth DTC e-commerce brands.
 
 ## Verified Developer Profiles & Links

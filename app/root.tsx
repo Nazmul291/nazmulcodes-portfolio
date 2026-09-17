@@ -205,13 +205,13 @@ const schemaGraph = {
 export const meta: MetaFunction = () => {
   return [
     { charSet: "utf-8" },
-    { title: "NazmulCodes — Senior Shopify Expert, App Developer & Custom Theme Architect" },
+    { title: "NazmulCodes | Senior Shopify Expert, App Developer & Custom Theme Architect" },
     { name: "google-adsense-account", content: "ca-pub-3337739847756959" },
     { name: "naver-site-verification", content: "6d6b8020e11e505e8b2f69771bc6d31b6136636d" },
     {
       name: "description",
       content:
-        "Hire Nazmul Hawlader (NazmulCodes) — Senior Shopify Expert & App Developer. Bespoke Online Store 2.0 themes, custom & public Shopify Apps, Flow automations, payment gateway setup, 24/7 bug fixes, 301 SEO redirects & Core Web Vitals speed optimization.",
+        "Hire Nazmul Hawlader (NazmulCodes) - Senior Shopify Expert & App Developer. Bespoke Online Store 2.0 themes, custom & public Shopify Apps, Flow automations, payment gateway setup, 24/7 bug fixes, 301 SEO redirects & Core Web Vitals speed optimization.",
     },
     {
       name: "keywords",
@@ -224,8 +224,8 @@ export const meta: MetaFunction = () => {
     { name: "viewport", content: "width=device-width, initial-scale=1" },
     { name: "theme-color", content: "#080c14" },
     // Open Graph / Facebook
-    { property: "og:site_name", content: "NazmulCodes — Senior Shopify Expert" },
-    { property: "og:title", content: "NazmulCodes — Senior Shopify Expert, App Developer & Custom Theme Architect" },
+    { property: "og:site_name", content: "NazmulCodes | Senior Shopify Expert" },
+    { property: "og:title", content: "NazmulCodes | Senior Shopify Expert, App Developer & Custom Theme Architect" },
     {
       property: "og:description",
       content:
@@ -234,13 +234,13 @@ export const meta: MetaFunction = () => {
     { property: "og:type", content: "website" },
     { property: "og:url", content: "https://nazmulcodes.org" },
     { property: "og:image", content: "https://nazmulcodes.org/favicon.svg" },
-    { property: "og:image:alt", content: "NazmulCodes — Senior Shopify Expert & Full-Stack App Developer" },
+    { property: "og:image:alt", content: "NazmulCodes | Senior Shopify Expert & Full-Stack App Developer" },
     { property: "og:locale", content: "en_US" },
     // Twitter
     { name: "twitter:card", content: "summary" },
     { name: "twitter:site", content: "@Nazmul291" },
     { name: "twitter:creator", content: "@Nazmul291" },
-    { name: "twitter:title", content: "NazmulCodes — Senior Shopify Expert & Full-Stack App Developer" },
+    { name: "twitter:title", content: "NazmulCodes | Senior Shopify Expert & Full-Stack App Developer" },
     {
       name: "twitter:description",
       content:
@@ -299,6 +299,19 @@ export default function App() {
     const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
     setTheme(savedTheme);
     document.documentElement.setAttribute("data-theme", savedTheme);
+
+    // Inject Google AdSense only after client hydration completes
+    // to prevent third-party scripts from injecting iframes or attributes into the DOM prematurely
+    const scriptId = "google-adsense-script";
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement("script");
+      script.id = scriptId;
+      script.async = true;
+      script.crossOrigin = "anonymous";
+      script.src =
+        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
+      document.head.appendChild(script);
+    }
   }, []);
 
   const toggleTheme = () => {

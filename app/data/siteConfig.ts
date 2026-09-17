@@ -13,7 +13,7 @@ export const siteConfig = {
   arcDevUrl: 'https://arc.dev/@nazmulhawlader',
   facebookUrl: 'https://www.facebook.com/nazmul.hawlader.20551/',
   instagramUrl: 'https://www.instagram.com/hawlader7479/',
-  title: 'NazmulCodes — Senior Shopify Expert & Full-Stack App Developer',
+  title: 'NazmulCodes | Senior Shopify Expert & Full-Stack App Developer',
   description: 'Senior Shopify Developer specializing in official Shopify Apps (React/Polaris/GraphQL), bespoke Liquid themes (0 page builders), and Core Web Vitals optimization.',
   availability: 'Open for Q1/Q2 Projects',
   avatarUrl: '/assets/images/profile/nazmul.webp'

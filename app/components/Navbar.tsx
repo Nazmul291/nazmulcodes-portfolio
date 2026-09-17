@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Moon, Sun, Menu, X, ArrowUpRight, Code, Sparkles } from 'lucide-react';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
@@ -11,6 +11,17 @@ interface NavbarProps {
 
 export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   return (
     <nav className="navbar">
@@ -34,6 +45,12 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             <a href="/#services" className="nav-link">Services</a>
           </li>
           <li>
+            <a href="/blog" className="nav-link">Blog</a>
+          </li>
+          <li>
+            <a href="/about" className="nav-link">My Story</a>
+          </li>
+          <li>
             <a href="/#estimator" className="nav-link">Cost Estimator</a>
           </li>
         </ul>
@@ -46,12 +63,12 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             <span>Open for Q1/Q2 Projects</span>
           </div>
 
-          {/* GitHub Profile Link */}
+          {/* GitHub Profile Link (Desktop Only in Top Bar, Available in Mobile Menu Drawer) */}
           <a
             href={siteConfig.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="theme-toggle-btn"
+            className="theme-toggle-btn desktop-only"
             aria-label="GitHub Profile (@Nazmul291)"
             title="View GitHub Profile (@Nazmul291)"
           >
@@ -94,6 +111,21 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       {/* Mobile Drawer Menu */}
       {mobileMenuOpen && (
         <div className="mobile-menu-open">
+          <a
+            href="/blog"
+            className="nav-link"
+            style={{ color: 'var(--accent-emerald)', fontWeight: 700 }}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Engineering Blog (35+ Guides)
+          </a>
+          <a
+            href="/about"
+            className="nav-link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            About & My Story
+          </a>
           <a
             href="/#apps"
             className="nav-link"
