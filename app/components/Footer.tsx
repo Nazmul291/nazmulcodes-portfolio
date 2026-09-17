@@ -7,6 +7,7 @@ import {
   StackOverflowIcon,
   FacebookIcon,
   InstagramIcon,
+  TwitterIcon,
   UpworkIcon,
   FreelancerIcon,
   GuruIcon,
@@ -55,6 +56,19 @@ export const Footer: React.FC = () => {
             </h3>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
               <li><a href="/#hero" className="nav-link">Home</a></li>
+              <li>
+                <Link to="/contact" className="nav-link" style={{ color: 'var(--accent-cyan)', fontWeight: 600 }}>
+                  Contact Us / Start Project
+                </Link>
+              </li>
+              <li>
+                <Link to="/about" className="nav-link">My Story & Biography</Link>
+              </li>
+              <li>
+                <Link to="/blog" className="nav-link" style={{ color: 'var(--accent-emerald)', fontWeight: 600 }}>
+                  Engineering Blog (35+ Guides)
+                </Link>
+              </li>
               <li><a href="/#apps" className="nav-link">Shopify App Store Apps</a></li>
               <li><a href="/#showcase" className="nav-link">Project Portfolio (33+)</a></li>
               <li><a href="/#services" className="nav-link">Engineering Services</a></li>
@@ -76,15 +90,21 @@ export const Footer: React.FC = () => {
             </h3>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
               <li>
-                <a href="https://apps.shopify.com/demandmind-forecasting" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://kilo.nazmulcodes.org/" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Layers size={14} className="text-emerald" />
-                  <span>DemandMind AI Forecasting</span>
+                  <span>Kilo — Fast Media Compressor</span>
                 </a>
               </li>
               <li>
                 <a href="https://apps.shopify.com/stock-alert-4" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Layers size={14} className="text-cyan" />
                   <span>Stockly Real-Time Inventory App</span>
+                </a>
+              </li>
+              <li>
+                <a href="https://apps.shopify.com/demandmind-forecasting" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <Layers size={14} className="text-indigo" />
+                  <span>DemandMind (Client Project Frontend)</span>
                 </a>
               </li>
               <li>
@@ -98,6 +118,18 @@ export const Footer: React.FC = () => {
                   <Globe size={14} className="text-emerald" />
                   <span>Clinique Dentaire Aurea</span>
                 </a>
+              </li>
+              <li>
+                <Link to="/blog/my-story-from-zero-to-shopify-app-founder" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="text-emerald">★</span>
+                  <span>My Story: From Zero to Founder</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/blog/how-i-achieve-95-mobile-lighthouse-scores-on-heavy-ecommerce-stores" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="text-cyan">★</span>
+                  <span>95+ Mobile Lighthouse Guide</span>
+                </Link>
               </li>
             </ul>
           </div>
@@ -146,6 +178,16 @@ export const Footer: React.FC = () => {
                   aria-label="LinkedIn Profile"
                 >
                   <LinkedinIcon size={16} />
+                </a>
+                <a
+                  href={siteConfig.twitterUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-icon-btn"
+                  title="X (Twitter) Profile"
+                  aria-label="X (Twitter) Profile"
+                >
+                  <TwitterIcon size={15} />
                 </a>
                 <a
                   href={siteConfig.stackoverflowUrl}
@@ -260,6 +302,9 @@ export const Footer: React.FC = () => {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', flexWrap: 'wrap' }}>
+            <Link to="/contact" className="nav-link" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
+              Contact Us
+            </Link>
             <Link to="/privacy" className="nav-link" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
               Privacy Policy
             </Link>

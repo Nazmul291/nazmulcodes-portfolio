@@ -7,14 +7,15 @@ import { siteConfig } from "~/data/siteConfig";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Privacy Policy — NazmulCodes" },
+    { charSet: "utf-8" },
+    { title: "Privacy Policy | NazmulCodes" },
     {
       name: "description",
       content:
         "Privacy policy and data protection practices for NazmulCodes (nazmulcodes.org), including cookie policies and Google AdSense compliance disclosures.",
     },
     { name: "robots", content: "index, follow" },
-    { property: "og:title", content: "Privacy Policy — NazmulCodes" },
+    { property: "og:title", content: "Privacy Policy | NazmulCodes" },
     {
       property: "og:description",
       content:

@@ -62,7 +62,7 @@ export const Hero: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '2rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.95rem' }}>
                 <CheckCircle2 size={18} className="text-emerald" style={{ flexShrink: 0 }} />
-                <span><strong>Official Shopify App Store Developer</strong> — DemandMind AI & Stockly</span>
+                <span><strong>Official Shopify App & Tool Creator</strong> — Stockly & Kilo (kilo.nazmulcodes.org)</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.95rem' }}>
                 <CheckCircle2 size={18} className="text-emerald" style={{ flexShrink: 0 }} />

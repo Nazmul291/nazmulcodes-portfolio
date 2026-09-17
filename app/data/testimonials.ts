@@ -15,11 +15,11 @@ export const testimonialsData: TestimonialItem[] = [
     id: 't-2',
     role: 'Product & Engineering Lead',
     company: 'DemandMind Technologies',
-    content: 'Working with Nazmul on our Shopify App Store application was seamless. He bridged our Python machine learning prediction backend with a beautiful React Polaris frontend in Shopify admin, handled GraphQL rate limits like a master, and built dynamic seasonal toolkits. Truly an elite Shopify App Engineer.',
-    projectRef: 'DemandMind AI Forecasting App',
+    content: 'Working with Nazmul on our Shopify App Store application was seamless. He engineered a beautiful React Polaris frontend in Shopify Admin, connected to our prediction endpoints, handled GraphQL queries cleanly, and built responsive data tables. Truly a top-tier Shopify frontend engineer.',
+    projectRef: 'DemandMind Shopify Frontend Engineering',
     rating: 5,
-    projectTypeTag: 'Shopify App Store Launch',
-    highlight: 'Full-Stack Polaris & FastAPI'
+    projectTypeTag: 'Shopify Embedded App Frontend',
+    highlight: 'Embedded Polaris & GraphQL'
   },
   {
     id: 't-3',
