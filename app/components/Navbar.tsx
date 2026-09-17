@@ -40,6 +40,9 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         {/* Desktop Navigation Links */}
         <ul className="nav-links">
           <li>
+            <a href="/#showcase" className="nav-link">Projects</a>
+          </li>
+          <li>
             <a href="/#services" className="nav-link">Services</a>
           </li>
           <li>
@@ -47,9 +50,6 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           </li>
           <li>
             <Link to="/about" className="nav-link">My Story</Link>
-          </li>
-          <li>
-            <Link to="/contact" className="nav-link">Contact Us</Link>
           </li>
         </ul>
 
@@ -115,6 +115,13 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       {mobileMenuOpen && (
         <div className="mobile-menu-open">
           <a
+            href="/#showcase"
+            className="nav-link"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Projects
+          </a>
+          <a
             href="/#services"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
@@ -135,14 +142,6 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             onClick={() => setMobileMenuOpen(false)}
           >
             My Story
-          </Link>
-          <Link
-            to="/contact"
-            className="nav-link"
-            style={{ color: 'var(--accent-cyan)', fontWeight: 600 }}
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Contact Us
           </Link>
           <a
             href="/#apps"
