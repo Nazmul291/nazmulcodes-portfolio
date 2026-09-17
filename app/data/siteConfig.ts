@@ -13,8 +13,24 @@ export const siteConfig = {
   arcDevUrl: 'https://arc.dev/@nazmulhawlader',
   facebookUrl: 'https://www.facebook.com/nazmul.hawlader.20551/',
   instagramUrl: 'https://www.instagram.com/hawlader7479/',
+  twitterUrl: 'https://x.com/Nazmul291',
+  phone: '+880 1700-000000',
+  phoneDisplay: '+880 1700-000000',
+  whatsappUrl: 'https://wa.me/8801700000000',
+  address: {
+    street: 'Banani / Gulshan Hub',
+    city: 'Dhaka',
+    postalCode: '1212',
+    country: 'Bangladesh',
+    fullAddress: 'Dhaka, Bangladesh',
+    googleMapsUrl: 'https://maps.google.com/?q=Dhaka,+Bangladesh',
+    timezone: 'Asia/Dhaka (GMT+6)',
+    officeHours: 'Sunday – Thursday: 10:00 AM – 8:00 PM (GMT+6)',
+    consultationNote: 'Direct in-person meetings available in Dhaka by prior appointment.',
+  },
   title: 'NazmulCodes | Senior Shopify Expert & Full-Stack App Developer',
   description: 'Senior Shopify Developer specializing in official Shopify Apps (React/Polaris/GraphQL), bespoke Liquid themes (0 page builders), and Core Web Vitals optimization.',
   availability: 'Open for Q1/Q2 Projects',
   avatarUrl: '/assets/images/profile/nazmul.webp'
 };
+
