@@ -1,5 +1,10 @@
 import { BlogPost, BlogCategory } from '~/types/blog';
 import { siteConfig } from '~/data/siteConfig';
+import { myStoryPost } from './posts/myStory';
+import { shopifyAppsRemixPost } from './posts/shopifyAppsRemix';
+import { zeroPageBuilderLiquidPost } from './posts/zeroPageBuilderLiquid';
+import { webhookReliabilityPost } from './posts/webhookReliability';
+import { bulkOperationsPost } from './posts/bulkOperations';
 
 const defaultAuthor = {
   name: siteConfig.name,
@@ -18,205 +23,13 @@ export const blogCategories: { name: BlogCategory; description: string; count?: 
 
 export const blogPosts: BlogPost[] = [
   // ─── 1. FLAGSHIP: MY STORY ──────────────────────────────────────────
-  {
-    id: 'my-story-journey',
-    slug: 'my-story-from-zero-to-shopify-app-founder',
-    title: 'My Story: From Self-Taught Developer in Bangladesh to Official Shopify App Founder & Top-Rated Freelancer',
-    excerpt: 'The authentic journey of how I started with a modest computer, taught myself full-stack software development, built 33+ international client projects, and published official apps on the Shopify App Store.',
-    category: 'Founder Journey',
-    tags: ['My Story', 'Shopify App Store', 'Freelancing', 'Self-Taught', 'Career Growth'],
-    publishedAt: '2026-09-15',
-    readTime: '12 min read',
-    featured: true,
-    author: defaultAuthor,
-    learningOutcomes: [
-      'How to build a high-income engineering career through self-directed learning without a traditional tech background.',
-      'The exact steps taken to launch published products and companion tools (Stockly & Kilo).',
-      'How to land high-ticket international enterprise clients on Upwork by prioritizing measurable business outcomes over hourly labor.',
-      'Core mindset shifts needed to navigate setbacks, bug crises, and product validation.'
-    ],
-    introduction: 'Every developer has a starting point. For me, that beginning was marked not by high-end silicon or elite mentors, but by persistent curiosity and a determination to build software that solves real economic problems for businesses across the globe. Today, as a Senior Full-Stack Engineer, founder of published Shopify apps, and a Top-Rated developer with over 33 completed client projects, I want to share the unfiltered timeline of my journey.',
-    sections: [
-      {
-        heading: '1. The Early Days: The Curiosity That Started It All',
-        content: 'I did not grow up with immediate access to tech conferences or modern development bootcamps. When I wrote my first line of code, my primary resource was documentation, online communities, and trial-and-error debugging late into the night. I quickly realized that copying tutorials gave an illusion of competence; true mastery only occurred when I broke things, inspected browser network tabs, and wrestled with memory leaks until I understood why the system behaved as it did.',
-        tip: 'Never judge your learning pace by tutorial completion. Measure it by your ability to diagnose a runtime error without asking an AI or forum.'
-      },
-      {
-        heading: '2. Choosing E-Commerce & Deep Technical Specialization',
-        content: 'Early in my freelance career, I noticed a huge divide in the market. Many developers were generic generalists offering basic website templates. Meanwhile, merchants running multi-million dollar e-commerce operations were suffering from terrible page speeds, bloated visual page builders, and broken third-party apps. I made a deliberate choice: rather than being an average generalist, I would become an authority on Shopify App architecture, native Liquid engineering, and Core Web Vitals.',
-        codeSnippet: {
-          language: 'liquid',
-          filename: 'theme-philosophy.liquid',
-          code: '{%- comment -%}\n  Zero-bloat philosophy: Every DOM node and byte must have a measurable ROI.\n  No external heavy jQuery libraries, no unoptimized third-party sliders.\n{%- endcomment -%}\n<section class="native-storefront-hero" data-section-id="{{ section.id }}">\n  {{ section.settings.headline | escape }}\n</section>',
-          explanation: 'Focusing on clean, native code over visual drag-and-drop builders gave my clients a distinct competitive speed advantage.'
-        }
-      },
-      {
-        heading: '3. Building SaaS: Launching Stockly & Developing Kilo',
-        content: 'Freelancing gave me client insight, but building products gave me true product empathy. I engineered and launched Stockly (an inventory restock alert and demand management engine published on the Shopify App Store) and developed Kilo (https://kilo.nazmulcodes.org/)—a 100% client-side media compression tool that allows anyone to compress heavy images publicly and lets Stockly users batch compress their Shopify catalog images in one click. Alongside my products, I took on specialized client contracts like DemandMind, engineering responsive Shopify Admin embedded frontends.',
-        tip: 'Shopify’s Automated App Scanner inspects your OAuth flow, CSP headers, and webhook verification. Build these right from day zero.'
-      },
-      {
-        heading: '4. The Upwork Journey: From Zero Reviews to 100% Job Success',
-        content: 'Winning your first contract as a remote developer in Bangladesh is tough due to global competition. I did not compete on low price; I competed on deep diagnostic communication. Before submitting a proposal, I audited the client’s live store, identified exact network bottlenecks, and provided actionable solutions upfront. Clients immediately saw that I operated as an engineering partner invested in their revenue, not just an order-taker.',
-        tip: 'High-ticket clients care about conversion rates, uptime, and delivery reliability—not which syntax flavor you personally prefer.'
-      },
-      {
-        heading: '5. What Lies Ahead',
-        content: 'Engineering is a continuous evolution. Whether it is mastering Remix single-fetch pipelines, building custom Shopify Function extensions in WebAssembly, or mentoring other rising developers, my commitment remains unchanged: build resilient software that creates undeniable economic value.'
-      }
-    ],
-    conclusion: 'To anyone reading this who is currently teaching themselves to code or trying to land their first engineering role: consistent, high-leverage practice compounded daily will take you further than talent alone. Focus on solving real business problems, write clean code, and hold yourself to the highest standards of integrity.'
-  },
+  myStoryPost,
 
   // ─── 2. SHOPIFY & E-COMMERCE (10 posts) ──────────────────────────────
-  {
-    id: 'shopify-remix-graphql-app-guide',
-    slug: 'building-official-shopify-apps-with-remix-polaris-and-graphql',
-    title: 'Building Official Shopify Apps: Architecture with Remix, Polaris & GraphQL',
-    excerpt: 'A comprehensive architectural guide to creating production-ready embedded Shopify applications using Remix, App Bridge v4, Polaris UI, and GraphQL Admin API.',
-    category: 'Shopify & E-Commerce',
-    tags: ['Shopify', 'Remix', 'GraphQL', 'Polaris', 'SaaS'],
-    publishedAt: '2026-09-14',
-    readTime: '10 min read',
-    featured: true,
-    author: defaultAuthor,
-    learningOutcomes: [
-      'Master the embedded Shopify app architecture with App Bridge v4 and Remix loaders/actions.',
-      'Execute performant GraphQL queries and mutations using the official @shopify/shopify-app-remix package.',
-      'Implement Shopify Managed Pricing via the Billing API (recurring subscriptions and usage credits).',
-      'Pass the official Shopify App Store security and performance review checklist on your first submission.'
-    ],
-    introduction: 'Building an embedded app for the Shopify ecosystem is one of the most rewarding engineering challenges in modern web development. With Shopify standardizing on Remix as the primary framework, developers can build server-rendered, blazing-fast apps with first-class TypeScript support.',
-    sections: [
-      {
-        heading: '1. App Bridge v4 and Embedded Authentication',
-        content: 'Legacy Shopify apps required complex OAuth redirect dance routines and session tokens stored in local cookies. App Bridge v4 introduces automatic token exchange using the Fetch API, eliminating third-party cookie blocking in Safari and Chrome.',
-        codeSnippet: {
-          language: 'typescript',
-          filename: 'app/routes/app._index.tsx',
-          code: 'import { json, type LoaderFunctionArgs } from "@remix-run/node";\nimport { useLoaderData } from "@remix-run/react";\nimport { authenticate } from "~/shopify.server";\n\nexport const loader = async ({ request }: LoaderFunctionArgs) => {\n  const { admin, session } = await authenticate.admin(request);\n  const response = await admin.graphql(`\n    query getShopDetails {\n      shop {\n        name\n        email\n        plan {\n          displayName\n        }\n      }\n    }\n  `);\n  const data = await response.json();\n  return json({ shop: data.data.shop });\n};',
-          explanation: 'authenticate.admin validates session tokens on the server and generates a authenticated GraphQL client with automatic rate-limit management.'
-        }
-      },
-      {
-        heading: '2. Designing merchant-grade UIs with Polaris',
-        content: 'Shopify merchants expect apps to feel native to their admin dashboard. Polaris provides accessibility-tested React components adhering to Shopify’s design tokens. Consistency builds trust and directly drives lower churn rates for your SaaS.',
-        tip: 'Always use Polaris Page, Layout, and Card components as your layout backbone to ensure automatic responsiveness on tablet and mobile admin screens.'
-      },
-      {
-        heading: '3. Handling Mandatory GDPR Webhooks',
-        content: 'Every published Shopify app must implement three mandatory compliance endpoints: customers/data_request, customers/redact, and shop/redact. Failure to respond with HTTP 200 within 5 seconds will result in automatic app review rejection.'
-      }
-    ],
-    conclusion: 'Adhering to Shopify’s modern architecture ensures your app is secure, future-proof, and capable of scaling seamlessly to thousands of merchant stores.'
-  },
-
-  {
-    id: 'shopify-zero-page-builder-liquid',
-    slug: 'zero-page-builder-philosophy-high-speed-shopify-liquid',
-    title: 'The Zero Page Builder Philosophy: How to Build 100/100 Speed Shopify Themes',
-    excerpt: 'Why visual drag-and-drop page builders destroy e-commerce conversion rates, and how to build fully modular, merchant-customizable Online Store 2.0 native Liquid themes.',
-    category: 'Shopify & E-Commerce',
-    tags: ['Shopify', 'Liquid', 'Web Performance', 'Conversion Rate', 'Frontend'],
-    publishedAt: '2026-09-12',
-    readTime: '8 min read',
-    author: defaultAuthor,
-    learningOutcomes: [
-      'Understand the hidden DOM weight and JavaScript payload penalties caused by page builder plugins.',
-      'Architect modular Online Store 2.0 sections with configurable JSON schema settings.',
-      'Implement native CSS grid and flexbox designs that require zero external JavaScript dependencies.',
-      'Achieve sub-1-second LCP and zero Cumulative Layout Shift on complex product detail pages.'
-    ],
-    introduction: 'E-commerce store owners are frequently sold the promise of visual page builders. Unfortunately, the hidden cost is severe: 3MB JavaScript payloads, hundreds of nested div elements, and mobile Lighthouse scores plummeting into the 30s. Here is how I build native Liquid storefronts that merchants love editing and search engines love indexing.',
-    sections: [
-      {
-        heading: '1. The Real Cost of Page Builder Plugins',
-        content: 'Third-party page builders inject global scripts, font bundles, and massive CSS trees onto every page—even pages where the builder is not used. This creates massive Total Blocking Time (TBT) and delays the First Contentful Paint (FCP).',
-        tip: 'Every 100ms delay in page load time costs an e-commerce merchant up to 1% in conversion rate.'
-      },
-      {
-        heading: '2. Unleashing Online Store 2.0 JSON Templates',
-        content: 'Shopify OS 2.0 allows merchants to add, remove, and reorder any section on any page natively. By writing clean schema definitions, merchants get 100% of the visual customizability with 0% of the runtime speed penalty.',
-        codeSnippet: {
-          language: 'json',
-          filename: 'sections/featured-products.liquid (schema)',
-          code: '{\n  "name": "Featured Grid",\n  "settings": [\n    {\n      "type": "text",\n      "id": "heading",\n      "label": "Heading",\n      "default": "Bestsellers"\n    },\n    {\n      "type": "range",\n      "id": "columns",\n      "min": 2,\n      "max": 4,\n      "step": 1,\n      "label": "Products per row",\n      "default": 3\n    }\n  ],\n  "presets": [\n    { "name": "Featured Grid" }\n  ]\n}',
-          explanation: 'Native schema gives non-technical store managers full layout freedom without installing a single third-party plugin.'
-        }
-      }
-    ],
-    conclusion: 'By prioritizing native Liquid sections over third-party builder bloat, you give your clients an undeniable competitive edge in mobile conversion and Google organic search ranking.'
-  },
-
-  {
-    id: 'shopify-webhook-reliability-scale',
-    slug: 'resilient-shopify-webhook-processing-at-scale-nodejs-redis',
-    title: 'Resilient Shopify Webhook Processing: Ingesting Millions of Events with Node.js & Redis',
-    excerpt: 'How to build an indestructible webhook ingestion pipeline that handles flash sales, Black Friday volume, HMAC validation, and zero dropped events.',
-    category: 'Shopify & E-Commerce',
-    tags: ['Shopify', 'Webhooks', 'Redis', 'Node.js', 'System Design'],
-    publishedAt: '2026-09-10',
-    readTime: '9 min read',
-    author: defaultAuthor,
-    learningOutcomes: [
-      'Verify Shopify HMAC-SHA256 signatures with raw request buffers to prevent tampering.',
-      'Decouple webhook receipt from background processing using BullMQ and Redis queues.',
-      'Implement idempotency keys to safely ignore duplicate webhook events sent by Shopify.',
-      'Achieve sub-50ms HTTP 200 response times to prevent Shopify endpoint delisting.'
-    ],
-    introduction: 'Shopify expects webhook consumers to return an HTTP 200 within 5 seconds. If your endpoint times out or fails 19 times consecutively, Shopify permanently removes the webhook subscription. During Black Friday or a flash sale, processing heavy business logic synchronously inside the webhook route will crash your server.',
-    sections: [
-      {
-        heading: '1. Verifying HMAC Signatures Accurately',
-        content: 'Before parsing JSON, you must compute the HMAC-SHA256 digest of the raw binary payload using your app client secret. If you parse body to JSON first, subtle serialization differences will break HMAC verification.',
-        codeSnippet: {
-          language: 'typescript',
-          filename: 'server/webhooks/verify.ts',
-          code: 'import crypto from "crypto";\n\nexport function verifyShopifyWebhook(rawBody: Buffer, hmacHeader: string, secret: string): boolean {\n  const hash = crypto\n    .createHmac("sha256", secret)\n    .update(rawBody)\n    .digest("base64");\n  return crypto.timingSafeEqual(Buffer.from(hash), Buffer.from(hmacHeader));\n}',
-          explanation: 'Using crypto.timingSafeEqual protects your authentication layer from timing attacks.'
-        }
-      },
-      {
-        heading: '2. Immediate Queue Enqueueing Pattern',
-        content: 'The only task your HTTP handler should perform is HMAC verification and enqueuing the job into Redis. Once enqueued, immediately send HTTP 200. Background worker processes handle inventory updates, email alerts, or ERP sync independently.'
-      }
-    ],
-    conclusion: 'Decoupling webhook ingestion from data processing is the gold standard for production Shopify integrations that withstand high-traffic flash sales.'
-  },
-
-  {
-    id: 'shopify-graphql-bulk-operations',
-    slug: 'mastering-shopify-bulk-operations-querying-millions-of-records',
-    title: 'Mastering Shopify Bulk Operations: Extracting Millions of Products & Orders Without Rate Limits',
-    excerpt: 'Learn how to bypass REST and standard GraphQL rate limits using asynchronous GraphQL Bulk Operations for large-scale data migrations and inventory audits.',
-    category: 'Shopify & E-Commerce',
-    tags: ['Shopify', 'GraphQL', 'Data Migration', 'Big Data', 'APIs'],
-    publishedAt: '2026-09-08',
-    readTime: '8 min read',
-    author: defaultAuthor,
-    learningOutcomes: [
-      'Understand Shopify’s 1,000 cost-point GraphQL leaky bucket rate limit.',
-      'Trigger asynchronous Bulk Operation queries that export entire catalog histories.',
-      'Stream and parse multi-gigabyte JSONL results with Node.js stream pipelines.',
-      'Reconstruct hierarchical parent-child relationships (e.g. Products to Variants to Metafields).'
-    ],
-    introduction: 'When syncing an inventory catalog containing 150,000 variants across 5 warehouses, paginating with standard GraphQL cursors will take hours and constantly trigger HTTP 429 errors. Shopify Bulk Operations execute server-side in Shopify’s data warehouse and output a single JSONL file for rapid ingestion.',
-    sections: [
-      {
-        heading: '1. Writing the Bulk Query Mutation',
-        content: 'Bulk operations accept standard GraphQL queries wrapped in a bulkOperationRunQuery mutation. Note that you must omit pagination arguments like first and after.',
-        codeSnippet: {
-          language: 'graphql',
-          filename: 'queries/bulkExport.graphql',
-          code: 'mutation {\n  bulkOperationRunQuery(\n    query: """\n    {\n      products {\n        edges {\n          node {\n            id\n            title\n            variants {\n              edges {\n                node {\n                  id\n                  sku\n                  price\n                  inventoryQuantity\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n    """\n  ) {\n    bulkOperation {\n      id\n      status\n    }\n    userErrors {\n      field\n      message\n    }\n  }\n}',
-          explanation: 'Shopify processes this query asynchronously and posts a webhook when the JSONL artifact is ready on S3.'
-        }
-      }
-    ],
-    conclusion: 'Bulk Operations are an essential tool for enterprise data synchronization, bulk inventory audits, and seamless ERP migrations.'
-  },
+  shopifyAppsRemixPost,
+  zeroPageBuilderLiquidPost,
+  webhookReliabilityPost,
+  bulkOperationsPost,
 
   {
     id: 'shopify-checkout-extensions-functions',

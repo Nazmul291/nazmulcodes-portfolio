@@ -50,17 +50,25 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { post } = data;
   const canonicalUrl = `https://nazmulcodes.org/blog/${post.slug}`;
 
+  const keywords = Array.from(
+    new Set([
+      ...(post.primaryKeyword ? [post.primaryKeyword] : []),
+      ...(post.secondaryKeywords || []),
+      ...post.tags,
+    ])
+  ).join(', ');
+
   return [
     { charSet: 'utf-8' },
     { title: `${post.title} | NazmulCodes` },
     { name: 'description', content: post.excerpt },
-    { name: 'keywords', content: post.tags.join(', ') },
+    { name: 'keywords', content: keywords },
     { name: 'author', content: post.author.name },
     { name: 'robots', content: 'index, follow' },
     { property: 'og:title', content: `${post.title} | NazmulCodes` },
     { property: 'og:description', content: post.excerpt },
     { property: 'og:type', content: 'article' },
-    { property: 'og:url', content: canonicalUrl },
+    { property: 'og:url', canonicalUrl },
     { property: 'article:published_time', content: post.publishedAt },
     { property: 'article:section', content: post.category },
     { property: 'article:tag', content: post.tags.join(',') },
@@ -95,6 +103,22 @@ export default function BlogPostDetail() {
     },
   };
 
+  const faqSchemaData =
+    post.faqs && post.faqs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: post.faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
+
   const handleCopyCode = (code: string, index: number) => {
     navigator.clipboard.writeText(code);
     setCopiedCodeIndex(index);
@@ -121,6 +145,15 @@ export default function BlogPostDetail() {
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
             suppressHydrationWarning
           />
+
+          {/* JSON-LD FAQ Structured Data (Rich Snippets) */}
+          {faqSchemaData && (
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
+              suppressHydrationWarning
+            />
+          )}
 
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumbs" style={{ marginBottom: '2rem' }}>
@@ -219,19 +252,48 @@ export default function BlogPostDetail() {
           {/* Article Body */}
           <div className="article-prose">
             {/* Introduction */}
-            <p style={{ fontSize: '1.15rem', color: 'var(--text-primary)', fontWeight: 400 }}>
-              {post.introduction}
-            </p>
+            {post.introduction.split('\n\n').map((para, pIdx) => (
+              <p key={pIdx} style={{ fontSize: '1.12rem', color: 'var(--text-primary)', fontWeight: 400, lineHeight: 1.85, marginBottom: '1.5rem' }}>
+                {para}
+              </p>
+            ))}
 
             {/* Sections */}
             {post.sections.map((section, idx) => (
-              <section key={idx} style={{ marginBottom: '2rem' }}>
+              <section key={idx} style={{ marginBottom: '2.75rem' }}>
                 <h2>{section.heading}</h2>
-                <p>{section.content}</p>
+
+                {section.content.split('\n\n').map((block, bIdx) => {
+                  const trimmed = block.trim();
+                  if (trimmed.startsWith('### ')) {
+                    return (
+                      <h3 key={bIdx} style={{ fontSize: '1.3rem', fontWeight: 600, color: 'var(--text-primary)', margin: '1.75rem 0 0.75rem 0' }}>
+                        {trimmed.replace(/^###\s+/, '')}
+                      </h3>
+                    );
+                  }
+                  if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+                    const items = trimmed.split('\n').filter(Boolean);
+                    return (
+                      <ul key={bIdx} style={{ paddingLeft: '1.25rem', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                        {items.map((item, iIdx) => (
+                          <li key={iIdx} style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}>
+                            {item.replace(/^[-*]\s+/, '')}
+                          </li>
+                        ))}
+                      </ul>
+                    );
+                  }
+                  return (
+                    <p key={bIdx} style={{ marginBottom: '1.4rem', lineHeight: 1.8 }}>
+                      {trimmed}
+                    </p>
+                  );
+                })}
 
                 {/* Optional Code Snippet */}
                 {section.codeSnippet && (
-                  <div className="code-container">
+                  <div className="code-container" style={{ margin: '1.75rem 0' }}>
                     <div className="code-header">
                       <span>{section.codeSnippet.filename || `${section.codeSnippet.language.toUpperCase()} SNIPPET`}</span>
                       <button
@@ -273,7 +335,7 @@ export default function BlogPostDetail() {
 
                 {/* Optional Pro Tip */}
                 {section.tip && (
-                  <div className="pro-tip-box">
+                  <div className="pro-tip-box" style={{ margin: '1.5rem 0' }}>
                     <Lightbulb size={20} style={{ color: 'var(--accent-cyan)', flexShrink: 0, marginTop: '2px' }} />
                     <div>
                       <strong style={{ color: 'var(--text-primary)' }}>Pro Tip:</strong> {section.tip}
@@ -284,8 +346,41 @@ export default function BlogPostDetail() {
             ))}
 
             {/* Conclusion */}
-            <h2 style={{ marginTop: '3rem' }}>Summary & Key Conclusion</h2>
-            <p>{post.conclusion}</p>
+            <section style={{ marginTop: '3rem', marginBottom: '2.5rem' }}>
+              <h2>Summary & Key Conclusion</h2>
+              {post.conclusion.split('\n\n').map((cPara, cIdx) => (
+                <p key={cIdx} style={{ marginBottom: '1.35rem', lineHeight: 1.8 }}>
+                  {cPara}
+                </p>
+              ))}
+            </section>
+
+            {/* FAQs Section */}
+            {post.faqs && post.faqs.length > 0 && (
+              <section style={{ marginTop: '3.5rem', marginBottom: '3rem' }}>
+                <h2>Frequently Asked Questions</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1.5rem' }}>
+                  {post.faqs.map((faq, fIdx) => (
+                    <div
+                      key={fIdx}
+                      className="glass-card"
+                      style={{
+                        padding: '1.5rem',
+                        borderRadius: 'var(--radius-lg)',
+                        border: '1px solid var(--border-subtle)',
+                      }}
+                    >
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: 0, marginBottom: '0.6rem' }}>
+                        {faq.question}
+                      </h3>
+                      <p style={{ margin: 0, color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '0.98rem' }}>
+                        {faq.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            )}
           </div>
 
           {/* Bottom In-Article AdSense Slot */}

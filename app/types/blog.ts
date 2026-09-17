@@ -20,6 +20,11 @@ export interface BlogSection {
   tip?: string;
 }
 
+export interface BlogFaq {
+  question: string;
+  answer: string;
+}
+
 export interface BlogPost {
   id: string;
   slug: string;
@@ -40,4 +45,7 @@ export interface BlogPost {
   introduction: string;
   sections: BlogSection[];
   conclusion: string;
+  faqs?: BlogFaq[];
+  primaryKeyword?: string;
+  secondaryKeywords?: string[];
 }
