@@ -2,31 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Core Top-Level Routes -->
   <url>
-    <loc>https://nazmulcodes.org/</loc>
+    <loc>https://www.nazmulcodes.org/</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog</loc>
+    <loc>https://www.nazmulcodes.org/blog</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/about</loc>
+    <loc>https://www.nazmulcodes.org/contact</loc>
+    <lastmod>2026-09-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.nazmulcodes.org/about</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/privacy</loc>
+    <loc>https://www.nazmulcodes.org/privacy</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/privacy-policy</loc>
+    <loc>https://www.nazmulcodes.org/privacy-policy</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -34,7 +40,7 @@
 
   <!-- Founder Journey & Flagship Story -->
   <url>
-    <loc>https://nazmulcodes.org/blog/my-story-from-zero-to-shopify-app-founder</loc>
+    <loc>https://www.nazmulcodes.org/blog/my-story-from-zero-to-shopify-app-founder</loc>
     <lastmod>2026-09-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
@@ -42,61 +48,61 @@
 
   <!-- Shopify & E-Commerce Engineering Articles -->
   <url>
-    <loc>https://nazmulcodes.org/blog/building-official-shopify-apps-with-remix-polaris-and-graphql</loc>
+    <loc>https://www.nazmulcodes.org/blog/building-official-shopify-apps-with-remix-polaris-and-graphql</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/zero-page-builder-philosophy-high-speed-shopify-liquid</loc>
+    <loc>https://www.nazmulcodes.org/blog/zero-page-builder-philosophy-high-speed-shopify-liquid</loc>
     <lastmod>2026-09-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/resilient-shopify-webhook-processing-at-scale-nodejs-redis</loc>
+    <loc>https://www.nazmulcodes.org/blog/resilient-shopify-webhook-processing-at-scale-nodejs-redis</loc>
     <lastmod>2026-09-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/mastering-shopify-bulk-operations-querying-millions-of-records</loc>
+    <loc>https://www.nazmulcodes.org/blog/mastering-shopify-bulk-operations-querying-millions-of-records</loc>
     <lastmod>2026-09-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/modern-shopify-checkout-extensibility-and-functions-guide</loc>
+    <loc>https://www.nazmulcodes.org/blog/modern-shopify-checkout-extensibility-and-functions-guide</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/architecting-complex-data-models-with-shopify-metafields-and-metaobjects</loc>
+    <loc>https://www.nazmulcodes.org/blog/architecting-complex-data-models-with-shopify-metafields-and-metaobjects</loc>
     <lastmod>2026-09-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/monetizing-shopify-apps-recurring-billing-and-usage-charges</loc>
+    <loc>https://www.nazmulcodes.org/blog/monetizing-shopify-apps-recurring-billing-and-usage-charges</loc>
     <lastmod>2026-08-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/engineering-shopify-plus-b2b-wholesale-storefronts</loc>
+    <loc>https://www.nazmulcodes.org/blog/engineering-shopify-plus-b2b-wholesale-storefronts</loc>
     <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/headless-shopify-with-hydrogen-and-oxygen-vs-liquid-themes</loc>
+    <loc>https://www.nazmulcodes.org/blog/headless-shopify-with-hydrogen-and-oxygen-vs-liquid-themes</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/case-study-building-stockly-inventory-alert-saas</loc>
+    <loc>https://www.nazmulcodes.org/blog/case-study-building-stockly-inventory-alert-saas</loc>
     <lastmod>2026-08-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -104,49 +110,49 @@
 
   <!-- Performance & Core Web Vitals Articles -->
   <url>
-    <loc>https://nazmulcodes.org/blog/how-i-achieve-95-mobile-lighthouse-scores-on-heavy-ecommerce-stores</loc>
+    <loc>https://www.nazmulcodes.org/blog/how-i-achieve-95-mobile-lighthouse-scores-on-heavy-ecommerce-stores</loc>
     <lastmod>2026-09-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/eliminating-cumulative-layout-shift-cls-in-dynamic-web-applications</loc>
+    <loc>https://www.nazmulcodes.org/blog/eliminating-cumulative-layout-shift-cls-in-dynamic-web-applications</loc>
     <lastmod>2026-09-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/modern-web-font-optimization-woff2-subsetting-and-zero-fout</loc>
+    <loc>https://www.nazmulcodes.org/blog/modern-web-font-optimization-woff2-subsetting-and-zero-fout</loc>
     <lastmod>2026-09-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/mastering-inp-debugging-and-optimizing-interaction-to-next-paint</loc>
+    <loc>https://www.nazmulcodes.org/blog/mastering-inp-debugging-and-optimizing-interaction-to-next-paint</loc>
     <lastmod>2026-08-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/critical-css-inlining-vs-async-loading-in-modern-frameworks</loc>
+    <loc>https://www.nazmulcodes.org/blog/critical-css-inlining-vs-async-loading-in-modern-frameworks</loc>
     <lastmod>2026-08-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/next-gen-image-optimization-pipelines-webp-avif-and-responsive-srcsets</loc>
+    <loc>https://www.nazmulcodes.org/blog/next-gen-image-optimization-pipelines-webp-avif-and-responsive-srcsets</loc>
     <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/optimizing-third-party-scripts-google-adsense-and-analytics-without-lag</loc>
+    <loc>https://www.nazmulcodes.org/blog/optimizing-third-party-scripts-google-adsense-and-analytics-without-lag</loc>
     <lastmod>2026-08-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/high-throughput-http-caching-stale-while-revalidate-and-edge-cdns</loc>
+    <loc>https://www.nazmulcodes.org/blog/high-throughput-http-caching-stale-while-revalidate-and-edge-cdns</loc>
     <lastmod>2026-08-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -154,61 +160,61 @@
 
   <!-- React & Frontend Architecture Articles -->
   <url>
-    <loc>https://nazmulcodes.org/blog/remix-v2-single-fetch-architecture-why-it-beats-traditional-spas</loc>
+    <loc>https://www.nazmulcodes.org/blog/remix-v2-single-fetch-architecture-why-it-beats-traditional-spas</loc>
     <lastmod>2026-09-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/state-management-in-complex-react-apps-zustand-vs-context-vs-server-state</loc>
+    <loc>https://www.nazmulcodes.org/blog/state-management-in-complex-react-apps-zustand-vs-context-vs-server-state</loc>
     <lastmod>2026-09-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/building-accessible-wcag-aa-compliant-ui-components-in-react</loc>
+    <loc>https://www.nazmulcodes.org/blog/building-accessible-wcag-aa-compliant-ui-components-in-react</loc>
     <lastmod>2026-08-31</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/advanced-typescript-patterns-for-production-saas-applications</loc>
+    <loc>https://www.nazmulcodes.org/blog/advanced-typescript-patterns-for-production-saas-applications</loc>
     <lastmod>2026-08-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/modern-css-mastery-container-queries-subgrid-and-cascade-layers</loc>
+    <loc>https://www.nazmulcodes.org/blog/modern-css-mastery-container-queries-subgrid-and-cascade-layers</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/front-end-security-hardening-preventing-xss-csrf-and-securing-csp</loc>
+    <loc>https://www.nazmulcodes.org/blog/front-end-security-hardening-preventing-xss-csrf-and-securing-csp</loc>
     <lastmod>2026-08-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/resilient-forms-and-progressive-enhancement-in-modern-react</loc>
+    <loc>https://www.nazmulcodes.org/blog/resilient-forms-and-progressive-enhancement-in-modern-react</loc>
     <lastmod>2026-08-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/flawless-dark-mode-implementation-zero-flash-and-css-design-tokens</loc>
+    <loc>https://www.nazmulcodes.org/blog/flawless-dark-mode-implementation-zero-flash-and-css-design-tokens</loc>
     <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/delightful-micro-interactions-high-performance-css-vs-framer-motion</loc>
+    <loc>https://www.nazmulcodes.org/blog/delightful-micro-interactions-high-performance-css-vs-framer-motion</loc>
     <lastmod>2026-07-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/architecting-scalable-design-systems-with-vanilla-css-and-react</loc>
+    <loc>https://www.nazmulcodes.org/blog/architecting-scalable-design-systems-with-vanilla-css-and-react</loc>
     <lastmod>2026-07-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -216,37 +222,37 @@
 
   <!-- Full-Stack & APIs Articles -->
   <url>
-    <loc>https://nazmulcodes.org/blog/designing-resilient-rest-and-graphql-apis-with-node-and-typescript</loc>
+    <loc>https://www.nazmulcodes.org/blog/designing-resilient-rest-and-graphql-apis-with-node-and-typescript</loc>
     <lastmod>2026-09-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/background-job-processing-with-redis-and-bullmq-at-scale</loc>
+    <loc>https://www.nazmulcodes.org/blog/background-job-processing-with-redis-and-bullmq-at-scale</loc>
     <lastmod>2026-08-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/postgresql-indexing-strategies-and-query-optimization-for-high-throughput-apps</loc>
+    <loc>https://www.nazmulcodes.org/blog/postgresql-indexing-strategies-and-query-optimization-for-high-throughput-apps</loc>
     <lastmod>2026-08-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/production-docker-best-practices-multi-stage-builds-and-minimal-images</loc>
+    <loc>https://www.nazmulcodes.org/blog/production-docker-best-practices-multi-stage-builds-and-minimal-images</loc>
     <lastmod>2026-08-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/clean-architecture-and-domain-driven-design-in-typescript</loc>
+    <loc>https://www.nazmulcodes.org/blog/clean-architecture-and-domain-driven-design-in-typescript</loc>
     <lastmod>2026-08-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/distributed-caching-patterns-cache-aside-write-through-and-thundering-herd</loc>
+    <loc>https://www.nazmulcodes.org/blog/distributed-caching-patterns-cache-aside-write-through-and-thundering-herd</loc>
     <lastmod>2026-08-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -254,43 +260,43 @@
 
   <!-- Freelancing, Career & Founder Insights -->
   <url>
-    <loc>https://nazmulcodes.org/blog/how-i-built-a-top-rated-freelance-career-on-upwork-from-bangladesh</loc>
+    <loc>https://www.nazmulcodes.org/blog/how-i-built-a-top-rated-freelance-career-on-upwork-from-bangladesh</loc>
     <lastmod>2026-09-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/pricing-software-development-value-based-pricing-vs-hourly-rates</loc>
+    <loc>https://www.nazmulcodes.org/blog/pricing-software-development-value-based-pricing-vs-hourly-rates</loc>
     <lastmod>2026-09-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/managing-project-scope-creep-without-damaging-client-relationships</loc>
+    <loc>https://www.nazmulcodes.org/blog/managing-project-scope-creep-without-damaging-client-relationships</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/overcoming-imposter-syndrome-as-a-self-taught-software-engineer</loc>
+    <loc>https://www.nazmulcodes.org/blog/overcoming-imposter-syndrome-as-a-self-taught-software-engineer</loc>
     <lastmod>2026-08-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/remote-work-mastery-deep-work-productivity-and-burnout-prevention</loc>
+    <loc>https://www.nazmulcodes.org/blog/remote-work-mastery-deep-work-productivity-and-burnout-prevention</loc>
     <lastmod>2026-08-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/hard-won-lessons-from-launching-stockly-and-kilo-in-shopify-ecosystem</loc>
+    <loc>https://www.nazmulcodes.org/blog/hard-won-lessons-from-launching-stockly-and-kilo-in-shopify-ecosystem</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://nazmulcodes.org/blog/building-kilo-client-side-image-compression-and-shopify-sync</loc>
+    <loc>https://www.nazmulcodes.org/blog/building-kilo-client-side-image-compression-and-shopify-sync</loc>
     <lastmod>2026-09-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
