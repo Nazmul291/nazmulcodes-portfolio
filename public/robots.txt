@@ -8,4 +8,4 @@ Allow: /
 User-agent: AdsBot-Google
 Allow: /
 
-Sitemap: https://nazmulcodes.org/sitemap.xml
+Sitemap: https://www.nazmulcodes.org/sitemap.xml

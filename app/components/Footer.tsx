@@ -62,7 +62,7 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="nav-link">My Story & Biography</Link>
+                <Link to="/about" className="nav-link">About Me</Link>
               </li>
               <li>
                 <Link to="/blog" className="nav-link" style={{ color: 'var(--accent-emerald)', fontWeight: 600 }}>

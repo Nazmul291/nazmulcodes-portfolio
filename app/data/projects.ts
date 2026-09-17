@@ -9,6 +9,7 @@ export const projectsData: ProjectItem[] = [
     projectType: 'High-Performance Web App & Shopify Image Optimizer',
     category: ['shopify-apps', 'speed-performance', 'custom-engineering'],
     featured: true,
+    logoUrl: '/assets/images/apps/kilo.webp',
     liveUrl: 'https://kilo.nazmulcodes.org/',
     role: 'Founder & Full-Stack Engineer',
     timeline: 'Feb 2026 – Present',
