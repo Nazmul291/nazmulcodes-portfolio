@@ -352,6 +352,53 @@ export default function AboutPage() {
               As Stockly grew, I noticed another pervasive issue: merchants were constantly uploading raw 10MB JPEG and PNG product photos directly from photographers into their Shopify catalogs, destroying their store speed. To solve this problem without charging merchants expensive cloud fees or risking their privacy, I engineered <strong>Kilo</strong> (<a href="https://kilo.nazmulcodes.org/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-cyan)', fontWeight: 600 }}>kilo.nazmulcodes.org</a>).
             </p>
 
+            {/* Kilo Brand Card with Logo */}
+            <div
+              className="glass-card"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '1.25rem',
+                padding: '1.25rem 1.75rem',
+                borderRadius: 'var(--radius-lg)',
+                border: '1px solid rgba(6, 182, 212, 0.3)',
+                background: 'rgba(6, 182, 212, 0.05)',
+                margin: '1.5rem 0 2rem 0',
+              }}
+            >
+              <img
+                src="/assets/images/apps/kilo.webp"
+                alt="Kilo Logo"
+                width={56}
+                height={56}
+                loading="lazy"
+                decoding="async"
+                style={{ borderRadius: 'var(--radius-md)', flexShrink: 0, width: '56px', height: '56px', objectFit: 'contain' }}
+              />
+              <div style={{ flex: 1 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)' }}>
+                    Kilo — Fast Media Compression &amp; Format Converter
+                  </h4>
+                  <span className="tag-badge" style={{ fontSize: '0.72rem' }}>
+                    100% Client-Side Web App
+                  </span>
+                </div>
+                <p style={{ margin: '0.35rem 0 0.5rem 0', fontSize: '0.88rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+                  In-browser image optimization &amp; WebP converter with zero server uploads and 1-click Shopify catalog sync.
+                </p>
+                <a
+                  href="https://kilo.nazmulcodes.org/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ fontSize: '0.84rem', color: 'var(--accent-cyan)', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}
+                >
+                  <span>Launch Kilo (kilo.nazmulcodes.org)</span>
+                  <ExternalLink size={13} />
+                </a>
+              </div>
+            </div>
+
             <h3>The Architectural Philosophy Behind Kilo: 100% Client-Side Privacy</h3>
             <p>
               Traditional image optimization tools follow an outdated server-heavy paradigm: the user uploads gigabytes of proprietary product photography to a remote cloud server, where expensive backend CPU clusters compress the files before sending them back. This model introduces severe privacy vulnerabilities, bandwidth costs, and sluggish upload queues.
