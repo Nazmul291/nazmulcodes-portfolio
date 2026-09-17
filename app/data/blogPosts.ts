@@ -5,6 +5,7 @@ import { shopifyAppsRemixPost } from './posts/shopifyAppsRemix';
 import { zeroPageBuilderLiquidPost } from './posts/zeroPageBuilderLiquid';
 import { webhookReliabilityPost } from './posts/webhookReliability';
 import { bulkOperationsPost } from './posts/bulkOperations';
+import { checkoutExtensibilityPost } from './posts/checkoutExtensibility';
 
 const defaultAuthor = {
   name: siteConfig.name,
@@ -30,32 +31,7 @@ export const blogPosts: BlogPost[] = [
   zeroPageBuilderLiquidPost,
   webhookReliabilityPost,
   bulkOperationsPost,
-
-  {
-    id: 'shopify-checkout-extensions-functions',
-    slug: 'modern-shopify-checkout-extensibility-and-functions-guide',
-    title: 'Migrating to Shopify Checkout Extensibility: Building Custom Functions with WebAssembly',
-    excerpt: 'The complete migration path away from deprecated checkout.liquid to modern Shopify Functions, UI Extensions, and WebAssembly-powered checkout validation.',
-    category: 'Shopify & E-Commerce',
-    tags: ['Shopify', 'Checkout Extensibility', 'WebAssembly', 'Rust', 'TypeScript'],
-    publishedAt: '2026-09-05',
-    readTime: '9 min read',
-    author: defaultAuthor,
-    learningOutcomes: [
-      'Understand why Shopify deprecated checkout.liquid in favor of Checkout Extensibility.',
-      'Write custom discount and payment customization rules using Shopify Functions.',
-      'Compile TypeScript or Rust code into WebAssembly runs executed in under 5ms on Shopify infrastructure.',
-      'Deploy checkout UI components that seamlessly inherit merchant branding and fonts.'
-    ],
-    introduction: 'Shopify Checkout Extensibility is the most significant architectural evolution for Shopify Plus merchants in years. Replacing fragile DOM script injections with isolated, WebAssembly-driven Functions guarantees security and blazing checkout performance.',
-    sections: [
-      {
-        heading: '1. Why Functions Beat Traditional Scripts',
-        content: 'Shopify Functions run directly on Shopify server infrastructure during checkout evaluation. Because they compile to WebAssembly, they execute in under 5 milliseconds and scale to thousands of checkouts per minute during global sales events.'
-      }
-    ],
-    conclusion: 'Mastering Checkout Extensibility positions developers to capture high-value contracts with modern Shopify Plus enterprise merchants.'
-  },
+  checkoutExtensibilityPost,
 
   {
     id: 'shopify-metafields-metaobjects-architecture',
