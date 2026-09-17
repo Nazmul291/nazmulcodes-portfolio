@@ -49,7 +49,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             <Link to="/blog" className="nav-link">Blogs</Link>
           </li>
           <li>
-            <Link to="/about" className="nav-link">My Story</Link>
+            <Link to="/about" className="nav-link">About Me</Link>
           </li>
         </ul>
 
@@ -141,7 +141,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
-            My Story
+            About Me
           </Link>
           <a
             href="/#apps"
