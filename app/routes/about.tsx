@@ -247,16 +247,16 @@ export default function AboutPage() {
               I saw an undeniable opportunity to provide massive, tangible business value: <strong>I would specialize deeply and uncompromisingly in high-performance Shopify engineering.</strong> I rejected visual page builders entirely and mastered native Shopify Liquid, the Online Store 2.0 component architecture, and headless integrations. I learned how to build bespoke, modular storefronts that gave merchants 100% visual customizability inside the native Shopify Theme Editor while delivering sub-second page loads and 95+ mobile Google Lighthouse scores.
             </p>
 
-            {/* Full Uncropped Photo & Caption */}
+            {/* Full Uncropped Photo & Caption (Half Text Width) */}
             <div
               style={{
-                margin: '3rem auto',
-                maxWidth: '680px',
+                margin: '2.5rem auto',
+                maxWidth: '420px',
                 borderRadius: 'var(--radius-xl)',
                 overflow: 'hidden',
                 border: '1px solid var(--border-medium)',
                 background: 'var(--bg-surface)',
-                boxShadow: '0 12px 35px rgba(0, 0, 0, 0.35)',
+                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
               }}
             >
               <img
@@ -275,8 +275,8 @@ export default function AboutPage() {
               />
               <div
                 style={{
-                  padding: '1rem 1.25rem',
-                  fontSize: '0.86rem',
+                  padding: '0.85rem 1rem',
+                  fontSize: '0.82rem',
                   color: 'var(--text-muted)',
                   fontStyle: 'italic',
                   borderTop: '1px solid var(--border-subtle)',
