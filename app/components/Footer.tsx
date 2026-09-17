@@ -7,6 +7,7 @@ import {
   StackOverflowIcon,
   FacebookIcon,
   InstagramIcon,
+  TwitterIcon,
   UpworkIcon,
   FreelancerIcon,
   GuruIcon,
@@ -177,6 +178,16 @@ export const Footer: React.FC = () => {
                   aria-label="LinkedIn Profile"
                 >
                   <LinkedinIcon size={16} />
+                </a>
+                <a
+                  href={siteConfig.twitterUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-icon-btn"
+                  title="X (Twitter) Profile"
+                  aria-label="X (Twitter) Profile"
+                >
+                  <TwitterIcon size={15} />
                 </a>
                 <a
                   href={siteConfig.stackoverflowUrl}

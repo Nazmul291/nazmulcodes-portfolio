@@ -238,8 +238,8 @@ export const meta: MetaFunction = () => {
     { property: "og:locale", content: "en_US" },
     // Twitter
     { name: "twitter:card", content: "summary" },
-    { name: "twitter:site", content: "@Nazmul291" },
-    { name: "twitter:creator", content: "@Nazmul291" },
+    { name: "twitter:site", content: "@NHawlader79489" },
+    { name: "twitter:creator", content: "@NHawlader79489" },
     { name: "twitter:title", content: "NazmulCodes | Senior Shopify Expert & Full-Stack App Developer" },
     {
       name: "twitter:description",
