@@ -654,6 +654,20 @@ export default function ContactPage() {
                   <div>🌍 <strong>Timezone Overlap:</strong> Daily 3–5 hours guaranteed overlap with US EST/PST and EU CET business hours.</div>
                   <div>🤝 <strong>In-Person Meetings:</strong> {siteConfig.address.consultationNote}</div>
                 </div>
+
+                <div style={{ marginTop: '1.25rem' }}>
+                  <a
+                    href={siteConfig.address.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-secondary btn-sm"
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem' }}
+                  >
+                    <Navigation size={14} />
+                    <span>Open in Google Maps</span>
+                    <ExternalLink size={12} />
+                  </a>
+                </div>
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>

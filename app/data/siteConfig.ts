@@ -19,12 +19,10 @@ export const siteConfig = {
   phoneDisplay: '+880 1700-000000',
   whatsappUrl: 'https://wa.me/8801700000000',
   address: {
-    street: 'Banani / Gulshan Hub',
     city: 'Dhaka',
-    postalCode: '1212',
     country: 'Bangladesh',
     fullAddress: 'Dhaka, Bangladesh',
-    googleMapsUrl: 'https://maps.google.com/?q=Dhaka,+Bangladesh',
+    googleMapsUrl: 'https://maps.app.goo.gl/A6pLtNUWYMF5ARha7',
     timezone: 'Asia/Dhaka (GMT+6)',
     officeHours: 'Sunday – Thursday: 10:00 AM – 8:00 PM (GMT+6)',
     consultationNote: 'Direct in-person meetings available in Dhaka by prior appointment.',
