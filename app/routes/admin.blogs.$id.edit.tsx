@@ -1,5 +1,4 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
-import { json, redirect } from '@remix-run/node';
 import { useActionData, useLoaderData } from '@remix-run/react';
 import { BlogEditor } from '~/components/BlogEditor';
 import {
@@ -22,7 +21,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
   if (!post) throw new Response('Post not found', { status: 404 });
 
-  return json({ post, adjacentPosts });
+  return { post, adjacentPosts };
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
@@ -54,7 +53,7 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   if (!excerpt) errors.excerpt = 'Excerpt is required.';
 
   if (Object.keys(errors).length > 0) {
-    return json({ errors }, { status: 400 });
+    return Response.json({ errors }, { status: 400 });
   }
 
   // Parse tags and content blocks
@@ -80,21 +79,32 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
   });
 
   if (!updated) {
-    return json({ errors: { title: 'Failed to update — post not found.' } }, { status: 404 });
+    return Response.json(
+      { errors: { title: 'Failed to update — post not found.' } },
+      { status: 404 }
+    );
   }
 
-  return redirect('/admin/blogs');
+  return {
+    success: true,
+    message: 'Post updated successfully!',
+    post: updated
+  };
 };
 
 export default function AdminBlogsEdit() {
   const { post, adjacentPosts } = useLoaderData<typeof loader>();
-  const actionData = useActionData<{ errors?: Record<string, string> }>();
+  const actionData = useActionData<typeof action>();
+
+  const errors = actionData && 'errors' in actionData ? actionData.errors : undefined;
+  const successMessage = actionData && 'success' in actionData ? actionData.message : undefined;
 
   return (
     <BlogEditor
       key={post.id}
       post={post}
-      errors={actionData?.errors}
+      errors={errors}
+      successMessage={successMessage}
       adjacentPosts={adjacentPosts}
     />
   );

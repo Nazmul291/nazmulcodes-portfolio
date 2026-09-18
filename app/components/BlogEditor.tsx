@@ -55,6 +55,7 @@ interface BlogEditorProps {
    * Previous and next posts for in-editor navigation.
    * Only present when editing an existing post (not on the "new" route).
    */
+  successMessage?: string | undefined;
   adjacentPosts?: {
     prev: AdjacentAdminPost | null;
     next: AdjacentAdminPost | null;
@@ -117,7 +118,7 @@ function snapshotsEqual(a: FormSnapshot, b: FormSnapshot): boolean {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export function BlogEditor({ post, errors, adjacentPosts }: BlogEditorProps) {
+export function BlogEditor({ post, errors, adjacentPosts, successMessage }: BlogEditorProps) {
   const navigation = useNavigation();
   const navigate = useNavigate();
   const isSubmitting = navigation.state === 'submitting';
@@ -269,8 +270,8 @@ export function BlogEditor({ post, errors, adjacentPosts }: BlogEditorProps) {
   const previewTitle = !canPreview
     ? 'Save the post first to enable preview'
     : isDirty
-    ? 'You have unsaved changes — save first to preview the latest version'
-    : `Open /blog/${post!.slug} in a new tab`;
+      ? 'You have unsaved changes — save first to preview the latest version'
+      : `Open /blog/${post!.slug} in a new tab`;
 
   const prevPost = adjacentPosts?.prev ?? null;
   const nextPost = adjacentPosts?.next ?? null;
