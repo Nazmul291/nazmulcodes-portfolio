@@ -1,7 +1,6 @@
 import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
-import { useActionData, useLoaderData, Link } from '@remix-run/react';
-import { ArrowLeft } from 'lucide-react';
+import { useActionData, useLoaderData } from '@remix-run/react';
 import { BlogEditor } from '~/components/BlogEditor';
 import { getPostById, updatePost, isSlugTaken } from '~/models/blog.server';
 import type { ContentBlock } from '~/types/blog';
@@ -81,18 +80,5 @@ export default function AdminBlogsEdit() {
   const { post } = useLoaderData<typeof loader>();
   const actionData = useActionData<{ errors?: Record<string, string> }>();
 
-  return (
-    <div>
-      <div className="admin-page-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <Link to="/admin/blogs" className="admin-block-action-btn" title="Back to list">
-            <ArrowLeft size={18} />
-          </Link>
-          <h1 className="admin-page-title">Edit Article</h1>
-        </div>
-      </div>
-
-      <BlogEditor post={post} errors={actionData?.errors} />
-    </div>
-  );
+  return <BlogEditor post={post} errors={actionData?.errors} />;
 }

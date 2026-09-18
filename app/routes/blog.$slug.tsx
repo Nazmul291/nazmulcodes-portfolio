@@ -121,143 +121,158 @@ export default function BlogPostDetail() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Global Navbar — sticky top: 0, z-index: 50 (see .navbar in components.css) */}
       <Navbar theme={theme} toggleTheme={toggleTheme} />
 
-      <main style={{ flex: 1, paddingTop: '5.5rem', paddingBottom: '5rem' }}>
-        <article className="site-container" style={{ maxWidth: '860px', margin: '0 auto' }}>
+      <main style={{ flex: 1 }}>
+        {/* ── Sticky Sub-Navigation Bar (Breadcrumb + Prev / Next) ────────────────
+            Placed directly inside <main> so it spans the full page width and
+            sticks correctly.
+            top: 4rem   = navbar height on mobile  (64px)
+            top: 4.5rem = navbar height on tablet+ (72px)  via CSS media query
+            z-index: 40 = below Navbar (50) but above all article content          */}
+        <nav
+          aria-label="Article navigation and breadcrumbs"
+          style={{
+            position: 'sticky',
+            top: '4rem', /* 64px — mobile navbar height */
+            zIndex: 40,
+            backdropFilter: 'blur(20px) saturate(160%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+            backgroundColor: theme === 'dark'
+              ? 'rgba(8, 12, 20, 0.85)'
+              : 'rgba(248, 250, 252, 0.88)',
+            borderBottom: '1px solid var(--border-subtle)',
+            padding: '0.6rem clamp(1rem, 3vw, 2.5rem)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            boxShadow: '0 4px 24px -6px rgba(0, 0, 0, 0.18)',
+          }}
+        >
+          {/* Left: Breadcrumbs */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontSize: '0.85rem', minWidth: 0 }}>
+            <Link
+              to="/blog"
+              className="btn btn-secondary btn-sm"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                padding: '0.35rem 0.65rem',
+                fontSize: '0.8rem',
+              }}
+            >
+              <ArrowLeft size={13} />
+              <span>All Articles</span>
+            </Link>
+            <span style={{ color: 'var(--text-muted)' }}>/</span>
+            <span
+              className="text-emerald"
+              style={{
+                fontWeight: 500,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: 'clamp(80px, 20vw, 200px)',
+              }}
+            >
+              {post.category}
+            </span>
+          </div>
+
+          {/* Right: Adjacent Posts Navigation (Prev / Next Buttons) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+            {adjacentPosts.prev ? (
+              <Link
+                to={`/blog/${adjacentPosts.prev.slug}`}
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                }}
+                title={`Previous: ${adjacentPosts.prev.title}`}
+              >
+                <ChevronLeft size={14} />
+                <span>Prev</span>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                  opacity: 0.38,
+                  cursor: 'not-allowed',
+                  pointerEvents: 'none',
+                }}
+              >
+                <ChevronLeft size={14} />
+                <span>Prev</span>
+              </button>
+            )}
+
+            {adjacentPosts.next ? (
+              <Link
+                to={`/blog/${adjacentPosts.next.slug}`}
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                }}
+                title={`Next: ${adjacentPosts.next.title}`}
+              >
+                <span>Next</span>
+                <ChevronRight size={14} />
+              </Link>
+            ) : (
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                  opacity: 0.38,
+                  cursor: 'not-allowed',
+                  pointerEvents: 'none',
+                }}
+              >
+                <span>Next</span>
+                <ChevronRight size={14} />
+              </button>
+            )}
+          </div>
+        </nav>
+
+        {/* ── Article Content ─────────────────────────────────────────────────── */}
+        <article
+          className="site-container"
+          style={{ maxWidth: '860px', margin: '0 auto', paddingTop: '2rem', paddingBottom: '5rem' }}
+        >
           {/* JSON-LD Article Structured Data */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
             suppressHydrationWarning
           />
-
-          {/* Sticky Header Nav: Breadcrumbs + Prev/Next Article Controls */}
-          <nav
-            aria-label="Article navigation and breadcrumbs"
-            style={{
-              position: 'sticky',
-              top: '4.75rem',
-              zIndex: 30,
-              backdropFilter: 'blur(14px)',
-              WebkitBackdropFilter: 'blur(14px)',
-              backgroundColor: 'rgba(var(--bg-primary-rgb, 10, 10, 10), 0.82)',
-              border: '1px solid var(--border-subtle)',
-              borderRadius: 'var(--radius-lg, 12px)',
-              padding: '0.65rem 1rem',
-              marginBottom: '2rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '1rem',
-              boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.15)',
-            }}
-          >
-            {/* Left: Breadcrumbs */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontSize: '0.85rem', minWidth: 0 }}>
-              <Link
-                to="/blog"
-                className="btn btn-secondary btn-sm"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.35rem',
-                  padding: '0.35rem 0.65rem',
-                  fontSize: '0.8rem',
-                }}
-              >
-                <ArrowLeft size={13} />
-                <span>All Articles</span>
-              </Link>
-              <span style={{ color: 'var(--text-muted)' }}>/</span>
-              <span
-                className="text-emerald"
-                style={{
-                  fontWeight: 500,
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                }}
-              >
-                {post.category}
-              </span>
-            </div>
-
-            {/* Right: Adjacent Posts Navigation (Prev / Next Buttons) */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
-              {adjacentPosts.prev ? (
-                <Link
-                  to={`/blog/${adjacentPosts.prev.slug}`}
-                  className="btn btn-secondary btn-sm"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.3rem',
-                    padding: '0.35rem 0.65rem',
-                    fontSize: '0.8rem',
-                  }}
-                  title={`Previous: ${adjacentPosts.prev.title}`}
-                >
-                  <ChevronLeft size={14} />
-                  <span>Prev</span>
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  disabled
-                  className="btn btn-secondary btn-sm"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.3rem',
-                    padding: '0.35rem 0.65rem',
-                    fontSize: '0.8rem',
-                    opacity: 0.4,
-                    cursor: 'not-allowed',
-                  }}
-                >
-                  <ChevronLeft size={14} />
-                  <span>Prev</span>
-                </button>
-              )}
-
-              {adjacentPosts.next ? (
-                <Link
-                  to={`/blog/${adjacentPosts.next.slug}`}
-                  className="btn btn-secondary btn-sm"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.3rem',
-                    padding: '0.35rem 0.65rem',
-                    fontSize: '0.8rem',
-                  }}
-                  title={`Next: ${adjacentPosts.next.title}`}
-                >
-                  <span>Next</span>
-                  <ChevronRight size={14} />
-                </Link>
-              ) : (
-                <button
-                  type="button"
-                  disabled
-                  className="btn btn-secondary btn-sm"
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.3rem',
-                    padding: '0.35rem 0.65rem',
-                    fontSize: '0.8rem',
-                    opacity: 0.4,
-                    cursor: 'not-allowed',
-                  }}
-                >
-                  <span>Next</span>
-                  <ChevronRight size={14} />
-                </button>
-              )}
-            </div>
-          </nav>
 
           {/* Article Header */}
           <header style={{ marginBottom: '2.5rem' }}>
@@ -305,7 +320,7 @@ export default function BlogPostDetail() {
                 />
                 <div>
                   <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>{siteConfig.name}</div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Senior Shopify & Full-Stack Engineer</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Senior Shopify &amp; Full-Stack Engineer</div>
                 </div>
               </div>
 
@@ -356,7 +371,7 @@ export default function BlogPostDetail() {
                   <span className="tag-badge" style={{ fontSize: '0.72rem' }}>Top Rated</span>
                 </div>
                 <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', margin: '0 0 1rem 0', lineHeight: 1.6 }}>
-                  Senior Full-Stack Engineer & Official Shopify App Store developer. Founder of Stockly and Kilo (kilo.nazmulcodes.org), specializing in high-performance Shopify apps, client-side media compression, and sub-second web performance.
+                  Senior Full-Stack Engineer &amp; Official Shopify App Store developer. Founder of Stockly and Kilo (kilo.nazmulcodes.org), specializing in high-performance Shopify apps, client-side media compression, and sub-second web performance.
                 </p>
                 <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                   <Link to="/about" className="btn btn-secondary btn-sm">
@@ -391,7 +406,7 @@ export default function BlogPostDetail() {
                     <h4 style={{ fontSize: '1.05rem', fontWeight: 700, margin: '0.4rem 0', color: 'var(--text-primary)', lineHeight: 1.4 }}>
                       {rel.title}
                     </h4>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineClamp: 2, WebkitLineClamp: 2, overflow: 'hidden', display: '-webkit-box', WebkitBoxOrient: 'vertical' }}>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', WebkitLineClamp: 2, overflow: 'hidden', display: '-webkit-box', WebkitBoxOrient: 'vertical' }}>
                       {rel.excerpt}
                     </p>
                     <div style={{ marginTop: 'auto', paddingTop: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-muted)' }}>

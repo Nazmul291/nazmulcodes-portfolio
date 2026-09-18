@@ -78,7 +78,9 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-width: 100%;
-  overflow-x: hidden;
+  /* overflow-x: clip prevents horizontal scroll WITHOUT creating a new scroll
+     container — unlike overflow-x: hidden which breaks position: sticky */
+  overflow-x: clip;
 }
 
 body {
@@ -88,7 +90,8 @@ body {
   background-image: var(--gradient-ambient);
   background-attachment: fixed;
   color: var(--text-primary);
-  overflow-x: hidden;
+  /* overflow-x: clip — safe alternative to hidden; does not trap sticky children */
+  overflow-x: clip;
   line-height: 1.6;
 }
 

@@ -1,5 +1,5 @@
-import React, { useState, useCallback } from 'react';
-import { Form, useNavigation } from '@remix-run/react';
+import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react';
+import { Form, useNavigation, Link } from '@remix-run/react';
 import {
   Plus,
   ChevronUp,
@@ -11,17 +11,21 @@ import {
   AlertCircle,
   Image,
   List,
+  ArrowLeft,
   Save,
-  Send,
+  Eye,
 } from 'lucide-react';
 import type { ContentBlock, DbBlogPost } from '~/types/blog';
 
 /**
- * Visual block builder form for creating and editing blog posts.
+ * Visual block-builder form for creating and editing blog posts.
  *
- * Manages block state client-side via React useState and serializes
- * the blocks array to a hidden JSON field on form submission.
+ * Manages block state client-side via React useState, serializes the blocks
+ * array to a hidden JSON field on submission, and exposes a sticky action bar
+ * with reactive dirty-state tracking and "Save Now" / "Preview Now" CTAs.
  */
+
+// ─── Constants ────────────────────────────────────────────────────────────────
 
 const CATEGORIES = [
   'Shopify & E-Commerce',
@@ -37,10 +41,30 @@ const CODE_LANGUAGES = [
   'bash', 'sql', 'graphql', 'python', 'yaml', 'markdown',
 ];
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 interface BlogEditorProps {
+  /** Existing post when editing; undefined when creating a new post. */
   post?: DbBlogPost;
+  /** Server-side validation errors from the Remix action. */
   errors?: Record<string, string>;
 }
+
+/** Stable snapshot of all form values used for dirty-state comparison. */
+interface FormSnapshot {
+  title: string;
+  slug: string;
+  excerpt: string;
+  category: string;
+  tags: string;
+  coverImage: string;
+  readTime: string;
+  isPublished: boolean;
+  /** JSON-serialised content blocks for deep equality. */
+  blocksJson: string;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function slugify(text: string): string {
   return text
@@ -50,26 +74,101 @@ function slugify(text: string): string {
     .slice(0, 100);
 }
 
+function buildSnapshot(
+  values: Omit<FormSnapshot, 'blocksJson'> & { blocks: ContentBlock[] }
+): FormSnapshot {
+  return {
+    title: values.title,
+    slug: values.slug,
+    excerpt: values.excerpt,
+    category: values.category,
+    tags: values.tags,
+    coverImage: values.coverImage,
+    readTime: values.readTime,
+    isPublished: values.isPublished,
+    blocksJson: JSON.stringify(values.blocks),
+  };
+}
+
+function snapshotsEqual(a: FormSnapshot, b: FormSnapshot): boolean {
+  return (
+    a.title === b.title &&
+    a.slug === b.slug &&
+    a.excerpt === b.excerpt &&
+    a.category === b.category &&
+    a.tags === b.tags &&
+    a.coverImage === b.coverImage &&
+    a.readTime === b.readTime &&
+    a.isPublished === b.isPublished &&
+    a.blocksJson === b.blocksJson
+  );
+}
+
+// ─── Component ────────────────────────────────────────────────────────────────
+
 export function BlogEditor({ post, errors }: BlogEditorProps) {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === 'submitting';
 
-  // Metadata state
-  const [title, setTitle] = useState(post?.title || '');
-  const [slug, setSlug] = useState(post?.slug || '');
+  // ── Metadata state ────────────────────────────────────────────────────────
+  const [title, setTitle] = useState(post?.title ?? '');
+  const [slug, setSlug] = useState(post?.slug ?? '');
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(!!post);
-  const [excerpt, setExcerpt] = useState(post?.excerpt || '');
-  const [category, setCategory] = useState(post?.category || CATEGORIES[0]);
-  const [tags, setTags] = useState(post?.tags.join(', ') || '');
-  const [coverImage, setCoverImage] = useState(post?.coverImage || '');
-  const [readTime, setReadTime] = useState(post?.readTime || '5 min read');
-  const [isPublished, setIsPublished] = useState(post?.isPublished || false);
+  const [excerpt, setExcerpt] = useState(post?.excerpt ?? '');
+  const [category, setCategory] = useState(post?.category ?? CATEGORIES[0]);
+  const [tags, setTags] = useState(post?.tags.join(', ') ?? '');
+  const [coverImage, setCoverImage] = useState(post?.coverImage ?? '');
+  const [readTime, setReadTime] = useState(post?.readTime ?? '5 min read');
+  const [isPublished, setIsPublished] = useState(post?.isPublished ?? false);
 
-  // Block state
-  const [blocks, setBlocks] = useState<ContentBlock[]>(post?.contentBlocks || []);
+  // ── Block state ───────────────────────────────────────────────────────────
+  const [blocks, setBlocks] = useState<ContentBlock[]>(post?.contentBlocks ?? []);
   const [showAddMenu, setShowAddMenu] = useState(false);
 
-  // Auto-generate slug from title
+  // ── Dirty-state tracking ─────────────────────────────────────────────────
+  /**
+   * The initial snapshot is computed once from the post prop and stored in a
+   * ref so it stays stable across renders without triggering effects.
+   */
+  const initialSnapshot = useRef<FormSnapshot>(
+    buildSnapshot({
+      title: post?.title ?? '',
+      slug: post?.slug ?? '',
+      excerpt: post?.excerpt ?? '',
+      category: post?.category ?? CATEGORIES[0],
+      tags: post?.tags.join(', ') ?? '',
+      coverImage: post?.coverImage ?? '',
+      readTime: post?.readTime ?? '5 min read',
+      isPublished: post?.isPublished ?? false,
+      blocks: post?.contentBlocks ?? [],
+    })
+  );
+
+  /** Live snapshot recomputed on every render — cheap string comparisons. */
+  const currentSnapshot = useMemo<FormSnapshot>(
+    () => buildSnapshot({ title, slug, excerpt, category, tags, coverImage, readTime, isPublished, blocks }),
+    [title, slug, excerpt, category, tags, coverImage, readTime, isPublished, blocks]
+  );
+
+  const isDirty = !snapshotsEqual(initialSnapshot.current, currentSnapshot);
+
+  /**
+   * After a successful save the Remix action redirects (edit) or stays (new).
+   * Track the submitting → idle transition to reset the dirty baseline so the
+   * Save button becomes disabled again after a round-trip that doesn't redirect.
+   */
+  const wasSubmitting = useRef(false);
+  useEffect(() => {
+    if (isSubmitting) {
+      wasSubmitting.current = true;
+    } else if (wasSubmitting.current) {
+      wasSubmitting.current = false;
+      // Reset the baseline to whatever state the server just accepted.
+      initialSnapshot.current = currentSnapshot;
+    }
+  }, [isSubmitting, currentSnapshot]);
+
+  // ── Auto-generate slug from title ─────────────────────────────────────────
   const handleTitleChange = (value: string) => {
     setTitle(value);
     if (!slugManuallyEdited) {
@@ -77,7 +176,7 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
     }
   };
 
-  // Block manipulation
+  // ── Block manipulation ────────────────────────────────────────────────────
   const addBlock = useCallback((type: ContentBlock['type']) => {
     let newBlock: ContentBlock;
     switch (type) {
@@ -116,14 +215,30 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
 
   const moveBlock = useCallback((index: number, direction: -1 | 1) => {
     setBlocks((prev) => {
-      const newBlocks = [...prev];
-      const targetIndex = index + direction;
-      if (targetIndex < 0 || targetIndex >= newBlocks.length) return prev;
-      [newBlocks[index], newBlocks[targetIndex]] = [newBlocks[targetIndex], newBlocks[index]];
-      return newBlocks;
+      const next = [...prev];
+      const target = index + direction;
+      if (target < 0 || target >= next.length) return prev;
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
     });
   }, []);
 
+  // ── Preview handler ───────────────────────────────────────────────────────
+  const handlePreview = () => {
+    if (post?.slug && typeof window !== 'undefined') {
+      window.open(`/blog/${post.slug}`, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // ── Derived values ────────────────────────────────────────────────────────
+  const canPreview = Boolean(post?.slug);
+  const previewTitle = !canPreview
+    ? 'Save the post first to enable preview'
+    : isDirty
+    ? 'You have unsaved changes — save first to preview the latest version'
+    : `Open /blog/${post!.slug} in a new tab`;
+
+  // ─── Render ────────────────────────────────────────────────────────────────
   return (
     <Form method="post">
       {/* Hidden JSON fields */}
@@ -131,7 +246,146 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
       <input type="hidden" name="tags" value={tags} />
       <input type="hidden" name="isPublished" value={isPublished ? '1' : '0'} />
 
-      {/* ─── Metadata Section ──────────────────────────────────────── */}
+      {/* ─── Sticky Action Bar ──────────────────────────────────────────────
+          • position: sticky; top: var(--admin-topbar-h, 65px)
+            snaps flush below the admin topbar (z-index: 100) with no overlap.
+          • z-index: 40 — below topbar (100) but above all editor content.
+          • margin bleed (-2rem left/right/-2rem top) escapes .admin-content
+            padding so the bar spans the full viewport width visually.
+          • backdrop-filter frosted glass — theme-adaptive via CSS variables.
+      ─────────────────────────────────────────────────────────────────────── */}
+      <div className="editor-action-bar" role="toolbar" aria-label="Article editor actions">
+
+        {/* LEFT: Back nav · Status badge · Unsaved-changes label */}
+        <div className="editor-action-bar-left">
+          <Link
+            to="/admin/blogs"
+            className="admin-block-action-btn"
+            title="Back to all posts"
+            style={{
+              width: 'auto',
+              padding: '0.3rem 0.65rem',
+              gap: '0.35rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              fontSize: '0.82rem',
+              textDecoration: 'none',
+            }}
+          >
+            <ArrowLeft size={14} />
+            <span style={{ whiteSpace: 'nowrap' }}>Back to Posts</span>
+          </Link>
+
+          {/* Real-time publish status — updates immediately when toggle is flipped */}
+          <span
+            className={`admin-badge ${isPublished ? 'admin-badge-published' : 'admin-badge-draft'}`}
+            title={isPublished ? 'Publicly visible' : 'Draft — not visible to the public'}
+          >
+            <span
+              style={{
+                display: 'inline-block',
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: isPublished ? 'var(--accent-emerald)' : 'var(--accent-amber)',
+                flexShrink: 0,
+              }}
+            />
+            {isPublished ? 'Published' : 'Draft'}
+          </span>
+
+          {/* Inline "Unsaved changes" label — only shows when form is dirty */}
+          {isDirty && !isSubmitting && (
+            <span
+              aria-live="polite"
+              style={{
+                fontSize: '0.75rem',
+                color: 'var(--accent-amber)',
+                fontWeight: 500,
+                whiteSpace: 'nowrap',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.3rem',
+              }}
+            >
+              <span
+                style={{
+                  width: '5px',
+                  height: '5px',
+                  borderRadius: '50%',
+                  background: 'currentColor',
+                  flexShrink: 0,
+                }}
+              />
+              Unsaved changes
+            </span>
+          )}
+        </div>
+
+        {/* RIGHT: Preview Now · Save Now */}
+        <div className="editor-action-bar-right">
+
+          {/* Preview Now — disabled for brand-new posts without a persisted slug */}
+          <button
+            type="button"
+            onClick={handlePreview}
+            disabled={!canPreview}
+            aria-disabled={!canPreview}
+            title={previewTitle}
+            className="btn btn-secondary btn-sm"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              opacity: canPreview ? 1 : 0.38,
+              cursor: canPreview ? 'pointer' : 'not-allowed',
+              pointerEvents: canPreview ? 'auto' : 'none',
+              position: 'relative',
+            }}
+          >
+            <Eye size={14} />
+            <span>Preview</span>
+            {/* Amber pulse dot: warns that the preview shows stale (pre-save) content */}
+            {canPreview && isDirty && (
+              <span className="editor-preview-warning-dot" aria-hidden="true" />
+            )}
+          </button>
+
+          {/* Save Now — disabled when clean, active when dirty, spinner while submitting */}
+          <button
+            type="submit"
+            disabled={!isDirty || isSubmitting}
+            aria-disabled={!isDirty || isSubmitting}
+            className="btn btn-primary btn-sm"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.4rem',
+              opacity: (!isDirty && !isSubmitting) ? 0.42 : 1,
+              cursor: (!isDirty && !isSubmitting) ? 'not-allowed' : 'pointer',
+              pointerEvents: (!isDirty && !isSubmitting) ? 'none' : 'auto',
+              minWidth: '108px',
+              justifyContent: 'center',
+              transition: 'opacity 150ms ease',
+            }}
+          >
+            {isSubmitting ? (
+              <>
+                <span className="editor-save-spinner" aria-hidden="true" />
+                <span>Saving…</span>
+              </>
+            ) : (
+              <>
+                <Save size={14} />
+                <span>Save Now</span>
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+      {/* ─── End Sticky Action Bar ─────────────────────────────────────────── */}
+
+      {/* ─── Metadata Section ────────────────────────────────────────────── */}
       <div
         style={{
           background: 'var(--bg-secondary)',
@@ -258,7 +512,9 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
               Publish Immediately
             </div>
             <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>
-              {isPublished ? 'This article will be visible on the public blog.' : 'Saved as draft — not visible to the public.'}
+              {isPublished
+                ? 'This article will be visible on the public blog.'
+                : 'Saved as draft — not visible to the public.'}
             </div>
           </div>
           <label className="admin-toggle">
@@ -272,7 +528,7 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
         </div>
       </div>
 
-      {/* ─── Block Builder Section ──────────────────────────────────── */}
+      {/* ─── Block Builder Section ────────────────────────────────────────── */}
       <div
         style={{
           background: 'var(--bg-secondary)',
@@ -538,38 +794,10 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
         </div>
       </div>
 
-      {/* ─── Submit Bar ────────────────────────────────────────────── */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          gap: '0.75rem',
-          paddingTop: '1rem',
-          borderTop: '1px solid var(--border-subtle)',
-        }}
-      >
-        <button
-          type="submit"
-          className="btn btn-primary"
-          disabled={isSubmitting}
-          style={{ padding: '0.7rem 1.5rem', fontSize: '0.95rem' }}
-        >
-          {isSubmitting ? (
-            <span>Saving...</span>
-          ) : isPublished ? (
-            <>
-              <Send size={16} />
-              <span>{post ? 'Update & Publish' : 'Publish Article'}</span>
-            </>
-          ) : (
-            <>
-              <Save size={16} />
-              <span>{post ? 'Update Draft' : 'Save as Draft'}</span>
-            </>
-          )}
-        </button>
-      </div>
+      {/* ─── Footer hint ─────────────────────────────────────────────────── */}
+      <p style={{ textAlign: 'center', fontSize: '0.8rem', color: 'var(--text-muted)', paddingBottom: '1.5rem' }}>
+        Use the <strong>Save Now</strong> button in the sticky bar above to persist your changes.
+      </p>
     </Form>
   );
 }
