@@ -44,6 +44,43 @@ export async function getPublishedPosts(): Promise<DbBlogPostListItem[]> {
   });
 }
 
+/** Minimal shape returned by getPublishedPostsForSitemap(). */
+export interface SitemapPost {
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+
+/**
+ * Ultra-lightweight query for the XML sitemap.
+ *
+ * Selects ONLY slug + date fields — no title, excerpt, tags, content blocks.
+ * Cached in Redis with a 1-hour TTL (shorter than the 24 h blog-listing TTL)
+ * so freshly published articles appear in the sitemap quickly.
+ * Falls back to Postgres transparently on Redis errors.
+ */
+export async function getPublishedPostsForSitemap(): Promise<SitemapPost[]> {
+  const ONE_HOUR = 3600;
+  return cachedDbQuery('posts:published:sitemap', ONE_HOUR, async () => {
+    const posts = await prisma.blogPost.findMany({
+      where: { isPublished: true },
+      select: {
+        slug: true,
+        updatedAt: true,
+        createdAt: true,
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return posts.map((p) => ({
+      slug: p.slug,
+      updatedAt: p.updatedAt.toISOString(),
+      createdAt: p.createdAt.toISOString(),
+    }));
+  });
+}
+
+
 /**
  * Get a single published post by slug (includes full content blocks).
  * Cached in Redis for 1 hour.
