@@ -23,6 +23,7 @@ export const AdSlot: React.FC<AdSlotProps> = ({
       typeof window !== 'undefined' &&
       (window.location.hostname === 'nazmulcodes.org' ||
         window.location.hostname === 'www.nazmulcodes.org');
+    
     setIsProduction(isProd);
 
     if (isProd) {
@@ -37,40 +38,32 @@ export const AdSlot: React.FC<AdSlotProps> = ({
     }
   }, []);
 
+  // ডেভেলপমেন্ট এনভায়রনমেন্টে পুরোপুরি হাইড থাকবে (অথবা এম্পটি ডিভ রিটার্ন করবে)
+  if (!isProduction) {
+    return <div className="ad-slot-dev-placeholder" style={{ display: 'none' }} aria-hidden="true" />;
+  }
+
   return (
     <aside
       className={`ad-slot-container ${className}`}
-      style={{ minHeight: '120px', width: '100%', ...style }}
+      style={{
+        width: '100%',
+        margin: '1.5rem 0',
+        overflow: 'hidden',
+        ...style,
+      }}
       aria-label="Advertisement"
       suppressHydrationWarning
     >
-      <span className="ad-slot-label">Advertisement</span>
-      {isProduction ? (
-        <ins
-          className="adsbygoogle"
-          style={{ display: 'block', width: '100%', textAlign: 'center' }}
-          data-ad-client="ca-pub-3337739847756959"
-          {...(isNumericSlot ? { 'data-ad-slot': slotId } : {})}
-          data-ad-format={format}
-          data-full-width-responsive={responsive ? 'true' : 'false'}
-          suppressHydrationWarning
-        />
-      ) : (
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1.25rem',
-            fontSize: '0.82rem',
-            color: 'var(--text-muted)',
-            fontStyle: 'italic',
-          }}
-          suppressHydrationWarning
-        >
-          Google AdSense Placement Area (Active on production domain)
-        </div>
-      )}
+      <ins
+        className="adsbygoogle"
+        style={{ display: 'block', width: '100%', textAlign: 'center' }}
+        data-ad-client="ca-pub-3337739847756959"
+        {...(isNumericSlot ? { 'data-ad-slot': slotId } : {})}
+        data-ad-format={format}
+        data-full-width-responsive={responsive ? 'true' : 'false'}
+        suppressHydrationWarning
+      />
     </aside>
   );
 };
