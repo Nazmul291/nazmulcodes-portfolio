@@ -72,7 +72,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { property: 'og:title', content: `${post.title} | NazmulCodes` },
     { property: 'og:description', content: post.excerpt },
     { property: 'og:type', content: 'article' },
-    { property: 'og:url', canonicalUrl },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: canonicalUrl,
+    },
     { property: 'article:published_time', content: post.createdAt },
     { property: 'article:section', content: post.category },
     { property: 'article:tag', content: post.tags.join(',') },
