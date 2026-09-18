@@ -1,13 +1,27 @@
 import React, { useState, useMemo } from 'react';
 import type { MetaFunction } from '@remix-run/node';
-import { Link, useOutletContext } from '@remix-run/react';
+import { json } from '@remix-run/node';
+import { Link, useOutletContext, useLoaderData } from '@remix-run/react';
 import { BookOpen, Search, Clock, Calendar, ArrowRight, Sparkles, Filter, Code, Award } from 'lucide-react';
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
 import { AdSlot } from '~/components/AdSlot';
-import { blogPosts, blogCategories } from '~/data/blogPosts';
-import { BlogCategory } from '~/types/blog';
+import { getPublishedPosts } from '~/models/blog.server';
 import { siteConfig } from '~/data/siteConfig';
+
+const BLOG_CATEGORIES = [
+  'Shopify & E-Commerce',
+  'Performance & Web Vitals',
+  'React & Frontend',
+  'Full-Stack & APIs',
+  'Freelancing & Career',
+  'Founder Journey',
+];
+
+export const loader = async () => {
+  const posts = await getPublishedPosts();
+  return json({ posts });
+};
 
 export const meta: MetaFunction = () => {
   return [
@@ -31,16 +45,17 @@ export const meta: MetaFunction = () => {
 };
 
 export default function BlogIndex() {
+  const { posts } = useLoaderData<typeof loader>();
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const myStoryPost = useMemo(() => {
-    return blogPosts.find((p) => p.slug === 'my-story-from-zero-to-shopify-app-founder');
-  }, []);
+    return posts.find((p) => p.slug === 'my-story-from-zero-to-shopify-app-founder');
+  }, [posts]);
 
   const filteredPosts = useMemo(() => {
-    return blogPosts.filter((post) => {
+    return posts.filter((post) => {
       const matchesCategory = selectedCategory === 'all' || post.category === selectedCategory;
       const matchesSearch =
         searchQuery.trim() === '' ||
@@ -49,7 +64,7 @@ export default function BlogIndex() {
         post.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()));
       return matchesCategory && matchesSearch;
     });
-  }, [searchQuery, selectedCategory]);
+  }, [posts, searchQuery, selectedCategory]);
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
@@ -88,7 +103,7 @@ export default function BlogIndex() {
                   <Sparkles size={12} />
                   Featured Founder Story
                 </span>
-                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>12 min read</span>
+                <span style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{myStoryPost.readTime}</span>
               </div>
 
               <h2 style={{ fontSize: 'clamp(1.35rem, 3vw, 1.85rem)', fontWeight: 800, marginBottom: '0.85rem' }}>
@@ -170,17 +185,18 @@ export default function BlogIndex() {
                 onClick={() => setSelectedCategory('all')}
                 className={`category-tab-pill ${selectedCategory === 'all' ? 'active' : ''}`}
               >
-                All Articles ({blogPosts.length})
+                All Articles ({posts.length})
               </button>
-              {blogCategories.map((cat) => {
-                const count = blogPosts.filter((p) => p.category === cat.name).length;
+              {BLOG_CATEGORIES.map((cat) => {
+                const count = posts.filter((p) => p.category === cat).length;
+                if (count === 0) return null;
                 return (
                   <button
-                    key={cat.name}
-                    onClick={() => setSelectedCategory(cat.name)}
-                    className={`category-tab-pill ${selectedCategory === cat.name ? 'active' : ''}`}
+                    key={cat}
+                    onClick={() => setSelectedCategory(cat)}
+                    className={`category-tab-pill ${selectedCategory === cat ? 'active' : ''}`}
                   >
-                    {cat.name} ({count})
+                    {cat} ({count})
                   </button>
                 );
               })}
@@ -247,7 +263,7 @@ export default function BlogIndex() {
                   <div className="blog-card-footer">
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                       <Calendar size={13} />
-                      {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                      {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                     <span style={{ color: 'var(--accent-emerald)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
                       Read Guide <ArrowRight size={14} />
