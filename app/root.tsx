@@ -4,6 +4,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
 } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
@@ -291,28 +292,38 @@ export const links: LinksFunction = () => [
   },
 ];
 
+
+function NavigationLoadingOverlay() {
+  return (
+    <div style={{
+      position: "fixed",
+      top: 0, left: 0, right: 0, bottom: 0,
+      backgroundColor: "rgba(17, 16, 16, 0.75)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      zIndex: 9999,
+    }}>
+      <div style={{ textAlign: "center" }}>
+        <div style={{
+          width: "36px",
+          height: "36px",
+          border: "3px solid #e4e5e7",
+          borderTopColor: "#008060",
+          borderRadius: "50%",
+          animation: "nav-spin 0.8s linear infinite",
+        }} />
+        <div style={{ marginTop: "10px", fontSize: "13px", color: "#6d7175" }}>Loading…</div>
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  // useEffect(() => {
-  //   // Restore saved theme preference
-  //   const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
-  //   setTheme(savedTheme);
-  //   document.documentElement.setAttribute("data-theme", savedTheme);
-
-  //   // Inject Google AdSense only after client hydration completes
-  //   // to prevent third-party scripts from injecting iframes or attributes into the DOM prematurely
-  //   const scriptId = "google-adsense-script";
-  //   if (!document.getElementById(scriptId)) {
-  //     const script = document.createElement("script");
-  //     script.id = scriptId;
-  //     script.async = true;
-  //     script.crossOrigin = "anonymous";
-  //     script.src =
-  //       "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
-  //     document.head.appendChild(script);
-  //   }
-  // }, []);
+  const navigation = useNavigation();
+  const isNavigating = navigation.state === "loading";
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
@@ -340,6 +351,7 @@ export default function App() {
         />
       </head>
       <body>
+        {isNavigating && <NavigationLoadingOverlay />}
         <Outlet context={{ theme, toggleTheme }} />
         <ScrollRestoration />
         <Scripts />
