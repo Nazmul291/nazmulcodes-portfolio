@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from '@remix-run/node';
 import { Outlet, Link, useLocation } from '@remix-run/react';
-import { LayoutDashboard, FileText, LogOut, Home } from 'lucide-react';
+import { LayoutDashboard, FileText, CornerDownRight, LogOut, Home } from 'lucide-react';
 import { requireAdmin, destroyAdminSession } from '~/session.server';
 
 import '~/styles/admin.css';
@@ -57,6 +57,13 @@ export default function AdminLayout() {
           >
             <FileText size={16} />
             <span>Blog Posts</span>
+          </Link>
+          <Link
+            to="/admin/redirects"
+            className={`admin-nav-link ${isActive('/admin/redirects') ? 'active' : ''}`}
+          >
+            <CornerDownRight size={16} />
+            <span>Redirects (301)</span>
           </Link>
           <Link
             to="/"
