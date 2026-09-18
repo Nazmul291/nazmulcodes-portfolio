@@ -2,17 +2,27 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useActionData, useLoaderData } from '@remix-run/react';
 import { BlogEditor } from '~/components/BlogEditor';
-import { getPostById, updatePost, isSlugTaken } from '~/models/blog.server';
+import {
+  getPostById,
+  updatePost,
+  isSlugTaken,
+  getAdjacentAdminPosts,
+} from '~/models/blog.server';
 import type { ContentBlock } from '~/types/blog';
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   const { id } = params;
   if (!id) throw new Response('Post ID required', { status: 400 });
 
-  const post = await getPostById(id);
+  // Run both queries in parallel — adjacent posts query is cheap (2 indexed lookups).
+  const [post, adjacentPosts] = await Promise.all([
+    getPostById(id),
+    getAdjacentAdminPosts(id),
+  ]);
+
   if (!post) throw new Response('Post not found', { status: 404 });
 
-  return json({ post });
+  return json({ post, adjacentPosts });
 };
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
@@ -77,8 +87,14 @@ export const action = async ({ request, params }: ActionFunctionArgs) => {
 };
 
 export default function AdminBlogsEdit() {
-  const { post } = useLoaderData<typeof loader>();
+  const { post, adjacentPosts } = useLoaderData<typeof loader>();
   const actionData = useActionData<{ errors?: Record<string, string> }>();
 
-  return <BlogEditor post={post} errors={actionData?.errors} />;
+  return (
+    <BlogEditor
+      post={post}
+      errors={actionData?.errors}
+      adjacentPosts={adjacentPosts}
+    />
+  );
 }
