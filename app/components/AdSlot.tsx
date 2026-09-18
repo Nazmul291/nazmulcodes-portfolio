@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 interface AdSlotProps {
   slotId?: string;
@@ -16,31 +16,49 @@ export const AdSlot: React.FC<AdSlotProps> = ({
   style,
 }) => {
   const [isProduction, setIsProduction] = useState(false);
+  const insRef = useRef<HTMLModElement | null>(null);
+  const isPushedRef = useRef(false);
   const isNumericSlot = slotId && /^\d+$/.test(slotId);
 
+  // ১. ডোমেন ভেরিফিকেশন
   useEffect(() => {
     const isProd =
       typeof window !== 'undefined' &&
       (window.location.hostname === 'nazmulcodes.org' ||
         window.location.hostname === 'www.nazmulcodes.org');
-    
-    setIsProduction(isProd);
 
-    if (isProd) {
-      try {
-        const adsbygoogle = (window as unknown as { adsbygoogle?: unknown[] }).adsbygoogle;
-        if (adsbygoogle) {
-          adsbygoogle.push({});
-        }
-      } catch {
-        // Ignore push errors
-      }
-    }
+    setIsProduction(isProd);
   }, []);
 
-  // ডেভেলপমেন্ট এনভায়রনমেন্টে পুরোপুরি হাইড থাকবে (অথবা এম্পটি ডিভ রিটার্ন করবে)
+  // ২. শুধুমাত্র <ins> ট্যাগ DOM-এ মাউন্ট হওয়ার পর push({}) কল
+  useEffect(() => {
+    if (!isProduction || isPushedRef.current) return;
+
+    // DOM পেইন্ট শেষ হওয়া পর্যন্ত একটি মাইক্রোটাস্ক অপেক্ষা
+    const timeoutId = setTimeout(() => {
+      try {
+        const adsbygoogle = (window as unknown as { adsbygoogle?: unknown[] }).adsbygoogle;
+        
+        // নিশ্চিত হওয়া হচ্ছে যে insRef ব্রাউজারে বর্তমান এবং আগে প্রসেস হয়নি
+        if (
+          adsbygoogle &&
+          insRef.current &&
+          !insRef.current.getAttribute('data-adsbygoogle-status')
+        ) {
+          adsbygoogle.push({});
+          isPushedRef.current = true;
+        }
+      } catch {
+        // Safe ignore
+      }
+    }, 50);
+
+    return () => clearTimeout(timeoutId);
+  }, [isProduction]);
+
+  // প্রোডাকশন না হলে DOM খালি থাকবে
   if (!isProduction) {
-    return <div className="ad-slot-dev-placeholder" style={{ display: 'none' }} aria-hidden="true" />;
+    return null;
   }
 
   return (
@@ -56,6 +74,7 @@ export const AdSlot: React.FC<AdSlotProps> = ({
       suppressHydrationWarning
     >
       <ins
+        ref={insRef}
         className="adsbygoogle"
         style={{ display: 'block', width: '100%', textAlign: 'center' }}
         data-ad-client="ca-pub-3337739847756959"
