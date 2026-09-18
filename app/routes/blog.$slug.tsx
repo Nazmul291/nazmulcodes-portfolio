@@ -11,6 +11,8 @@ import {
   BookOpen,
   ArrowRight,
   Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
@@ -33,14 +35,12 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
   const post = await getPublishedPostBySlug(slug);
   if (!post) {
-    // Check if an SEO 301/302 redirect rule exists for this deleted or renamed slug
     const redirectRule = await findRedirect(slug);
     if (redirectRule) {
       throw redirect(redirectRule.targetUrl, {
         status: redirectRule.statusCode || 301,
       });
     }
-
     throw new Response('Article not found', { status: 404 });
   }
 
@@ -123,24 +123,139 @@ export default function BlogPostDetail() {
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar theme={theme} toggleTheme={toggleTheme} />
 
-      <main style={{ flex: 1, paddingTop: '6rem', paddingBottom: '5rem' }}>
+      <main style={{ flex: 1, paddingTop: '5.5rem', paddingBottom: '5rem' }}>
         <article className="site-container" style={{ maxWidth: '860px', margin: '0 auto' }}>
-          {/* JSON-LD Article Structured Data for SEO / Crawler */}
+          {/* JSON-LD Article Structured Data */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
             suppressHydrationWarning
           />
 
-          {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumbs" style={{ marginBottom: '2rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-              <Link to="/blog" className="btn btn-secondary btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                <ArrowLeft size={14} />
+          {/* Sticky Header Nav: Breadcrumbs + Prev/Next Article Controls */}
+          <nav
+            aria-label="Article navigation and breadcrumbs"
+            style={{
+              position: 'sticky',
+              top: '4.75rem',
+              zIndex: 30,
+              backdropFilter: 'blur(14px)',
+              WebkitBackdropFilter: 'blur(14px)',
+              backgroundColor: 'rgba(var(--bg-primary-rgb, 10, 10, 10), 0.82)',
+              border: '1px solid var(--border-subtle)',
+              borderRadius: 'var(--radius-lg, 12px)',
+              padding: '0.65rem 1rem',
+              marginBottom: '2rem',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '1rem',
+              boxShadow: '0 4px 20px -2px rgba(0, 0, 0, 0.15)',
+            }}
+          >
+            {/* Left: Breadcrumbs */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontSize: '0.85rem', minWidth: 0 }}>
+              <Link
+                to="/blog"
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                }}
+              >
+                <ArrowLeft size={13} />
                 <span>All Articles</span>
               </Link>
-              <span>/</span>
-              <span className="text-emerald" style={{ fontWeight: 500 }}>{post.category}</span>
+              <span style={{ color: 'var(--text-muted)' }}>/</span>
+              <span
+                className="text-emerald"
+                style={{
+                  fontWeight: 500,
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {post.category}
+              </span>
+            </div>
+
+            {/* Right: Adjacent Posts Navigation (Prev / Next Buttons) */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+              {adjacentPosts.prev ? (
+                <Link
+                  to={`/blog/${adjacentPosts.prev.slug}`}
+                  className="btn btn-secondary btn-sm"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.3rem',
+                    padding: '0.35rem 0.65rem',
+                    fontSize: '0.8rem',
+                  }}
+                  title={`Previous: ${adjacentPosts.prev.title}`}
+                >
+                  <ChevronLeft size={14} />
+                  <span>Prev</span>
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="btn btn-secondary btn-sm"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.3rem',
+                    padding: '0.35rem 0.65rem',
+                    fontSize: '0.8rem',
+                    opacity: 0.4,
+                    cursor: 'not-allowed',
+                  }}
+                >
+                  <ChevronLeft size={14} />
+                  <span>Prev</span>
+                </button>
+              )}
+
+              {adjacentPosts.next ? (
+                <Link
+                  to={`/blog/${adjacentPosts.next.slug}`}
+                  className="btn btn-secondary btn-sm"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.3rem',
+                    padding: '0.35rem 0.65rem',
+                    fontSize: '0.8rem',
+                  }}
+                  title={`Next: ${adjacentPosts.next.title}`}
+                >
+                  <span>Next</span>
+                  <ChevronRight size={14} />
+                </Link>
+              ) : (
+                <button
+                  type="button"
+                  disabled
+                  className="btn btn-secondary btn-sm"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.3rem',
+                    padding: '0.35rem 0.65rem',
+                    fontSize: '0.8rem',
+                    opacity: 0.4,
+                    cursor: 'not-allowed',
+                  }}
+                >
+                  <span>Next</span>
+                  <ChevronRight size={14} />
+                </button>
+              )}
             </div>
           </nav>
 
@@ -261,100 +376,6 @@ export default function BlogPostDetail() {
               </div>
             </div>
           </div>
-
-          {/* Previous / Next Article Navigation */}
-          {(adjacentPosts.prev || adjacentPosts.next) && (
-            <nav
-              aria-label="Previous and next articles"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: adjacentPosts.prev && adjacentPosts.next ? '1fr 1fr' : '1fr',
-                gap: '1rem',
-                marginTop: '2.5rem',
-                marginBottom: '3rem',
-              }}
-            >
-              {adjacentPosts.prev && (
-                <Link
-                  to={`/blog/${adjacentPosts.prev.slug}`}
-                  className="glass-card"
-                  style={{
-                    padding: '1.25rem 1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem',
-                    textDecoration: 'none',
-                    border: '1px solid var(--border-subtle)',
-                    borderRadius: 'var(--radius-lg)',
-                    transition: 'border-color 0.2s ease, transform 0.2s ease',
-                  }}
-                >
-                  <ArrowLeft size={20} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
-                  <div style={{ minWidth: 0 }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.3rem', display: 'block' }}>
-                      Previous Article
-                    </span>
-                    <span
-                      style={{
-                        fontSize: '0.95rem',
-                        fontWeight: 600,
-                        color: 'var(--text-primary)',
-                        lineHeight: 1.4,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {adjacentPosts.prev.title}
-                    </span>
-                  </div>
-                </Link>
-              )}
-
-              {adjacentPosts.next && (
-                <Link
-                  to={`/blog/${adjacentPosts.next.slug}`}
-                  className="glass-card"
-                  style={{
-                    padding: '1.25rem 1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem',
-                    textDecoration: 'none',
-                    border: '1px solid var(--border-subtle)',
-                    borderRadius: 'var(--radius-lg)',
-                    transition: 'border-color 0.2s ease, transform 0.2s ease',
-                    textAlign: 'right',
-                    justifyContent: 'flex-end',
-                    gridColumn: !adjacentPosts.prev ? '1 / -1' : undefined,
-                    marginLeft: !adjacentPosts.prev ? 'auto' : undefined,
-                  }}
-                >
-                  <div style={{ minWidth: 0 }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.3rem', display: 'block' }}>
-                      Next Article
-                    </span>
-                    <span
-                      style={{
-                        fontSize: '0.95rem',
-                        fontWeight: 600,
-                        color: 'var(--text-primary)',
-                        lineHeight: 1.4,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {adjacentPosts.next.title}
-                    </span>
-                  </div>
-                  <ArrowRight size={20} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
-                </Link>
-              )}
-            </nav>
-          )}
 
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
