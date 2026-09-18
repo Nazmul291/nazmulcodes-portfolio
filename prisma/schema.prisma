@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BlogPost {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  excerpt       String
+  coverImage    String?  @map("cover_image")
+  category      String
+  tags          String[]
+  readTime      String   @default("5 min read") @map("read_time")
+  isPublished   Boolean  @default(false) @map("is_published")
+  contentBlocks Json     @default("[]") @map("content_blocks")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@index([slug])
+  @@index([isPublished])
+  @@index([createdAt])
+  @@map("blog_posts")
+}
+
+model IpRateLimit {
+  ip           String    @id
+  attempts     Int       @default(0)
+  blockedUntil DateTime? @map("blocked_until")
+
+  @@map("ip_rate_limits")
+}

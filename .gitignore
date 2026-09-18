@@ -10,4 +10,8 @@ yarn-debug.log*
 yarn-error.log*
 .react-router/
 .vercel/
-
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm

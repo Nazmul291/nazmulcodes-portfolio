@@ -6,20 +6,21 @@ import {
   ArrowLeft,
   Calendar,
   Clock,
-  CheckCircle2,
   Share2,
-  Copy,
   Check,
   BookOpen,
   ArrowRight,
-  ExternalLink,
   Sparkles,
-  Lightbulb,
 } from 'lucide-react';
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
 import { AdSlot } from '~/components/AdSlot';
-import { getBlogPostBySlug, getRelatedBlogPosts } from '~/data/blogPosts';
+import { BlockRenderer } from '~/components/BlockRenderer';
+import {
+  getPublishedPostBySlug,
+  getAdjacentPublishedPosts,
+  getRelatedPublishedPosts,
+} from '~/models/blog.server';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
 
@@ -29,14 +30,15 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     throw new Response('Article not found', { status: 404 });
   }
 
-  const post = getBlogPostBySlug(slug);
+  const post = await getPublishedPostBySlug(slug);
   if (!post) {
     throw new Response('Article not found', { status: 404 });
   }
 
-  const relatedPosts = getRelatedBlogPosts(slug, post.category, 3);
+  const relatedPosts = await getRelatedPublishedPosts(slug, post.category, 3);
+  const adjacentPosts = await getAdjacentPublishedPosts(slug);
 
-  return json({ post, relatedPosts });
+  return json({ post, relatedPosts, adjacentPosts });
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -49,36 +51,28 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
   const { post } = data;
   const canonicalUrl = `https://nazmulcodes.org/blog/${post.slug}`;
-
-  const keywords = Array.from(
-    new Set([
-      ...(post.primaryKeyword ? [post.primaryKeyword] : []),
-      ...(post.secondaryKeywords || []),
-      ...post.tags,
-    ])
-  ).join(', ');
+  const keywords = Array.from(new Set(post.tags)).join(', ');
 
   return [
     { charSet: 'utf-8' },
     { title: `${post.title} | NazmulCodes` },
     { name: 'description', content: post.excerpt },
     { name: 'keywords', content: keywords },
-    { name: 'author', content: post.author.name },
+    { name: 'author', content: siteConfig.name },
     { name: 'robots', content: 'index, follow' },
     { property: 'og:title', content: `${post.title} | NazmulCodes` },
     { property: 'og:description', content: post.excerpt },
     { property: 'og:type', content: 'article' },
     { property: 'og:url', canonicalUrl },
-    { property: 'article:published_time', content: post.publishedAt },
+    { property: 'article:published_time', content: post.createdAt },
     { property: 'article:section', content: post.category },
     { property: 'article:tag', content: post.tags.join(',') },
   ];
 };
 
 export default function BlogPostDetail() {
-  const { post, relatedPosts } = useLoaderData<typeof loader>();
+  const { post, relatedPosts, adjacentPosts } = useLoaderData<typeof loader>();
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
-  const [copiedCodeIndex, setCopiedCodeIndex] = useState<number | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
 
   const schemaData = {
@@ -86,43 +80,22 @@ export default function BlogPostDetail() {
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt,
-    datePublished: post.publishedAt,
+    datePublished: post.createdAt,
+    dateModified: post.updatedAt,
     author: {
       '@type': 'Person',
-      name: post.author.name,
-      url: 'https://nazmulcodes.org',
+      name: siteConfig.name,
+      url: siteConfig.siteUrl,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'NazmulCodes',
-      url: 'https://nazmulcodes.org',
+      name: siteConfig.brandName,
+      url: siteConfig.siteUrl,
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': `https://nazmulcodes.org/blog/${post.slug}`,
     },
-  };
-
-  const faqSchemaData =
-    post.faqs && post.faqs.length > 0
-      ? {
-          '@context': 'https://schema.org',
-          '@type': 'FAQPage',
-          mainEntity: post.faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer,
-            },
-          })),
-        }
-      : null;
-
-  const handleCopyCode = (code: string, index: number) => {
-    navigator.clipboard.writeText(code);
-    setCopiedCodeIndex(index);
-    setTimeout(() => setCopiedCodeIndex(null), 2000);
   };
 
   const handleCopyShareLink = () => {
@@ -139,21 +112,12 @@ export default function BlogPostDetail() {
 
       <main style={{ flex: 1, paddingTop: '6rem', paddingBottom: '5rem' }}>
         <article className="site-container" style={{ maxWidth: '860px', margin: '0 auto' }}>
-          {/* JSON-LD Article Structured Data */}
+          {/* JSON-LD Article Structured Data for SEO / Crawler */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
             suppressHydrationWarning
           />
-
-          {/* JSON-LD FAQ Structured Data (Rich Snippets) */}
-          {faqSchemaData && (
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
-              suppressHydrationWarning
-            />
-          )}
 
           {/* Breadcrumbs */}
           <nav aria-label="Breadcrumbs" style={{ marginBottom: '2rem' }}>
@@ -177,7 +141,7 @@ export default function BlogPostDetail() {
               </span>
               <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                 <Calendar size={13} />
-                {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
               </span>
             </div>
 
@@ -205,15 +169,15 @@ export default function BlogPostDetail() {
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
                 <img
-                  src={post.author.avatarUrl}
-                  alt={post.author.name}
+                  src={siteConfig.avatarUrl}
+                  alt={siteConfig.name}
                   width={44}
                   height={44}
                   style={{ borderRadius: '50%', border: '2px solid var(--accent-emerald)' }}
                 />
                 <div>
-                  <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>{post.author.name}</div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>{post.author.role}</div>
+                  <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>{siteConfig.name}</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Senior Shopify & Full-Stack Engineer</div>
                 </div>
               </div>
 
@@ -229,159 +193,11 @@ export default function BlogPostDetail() {
             </div>
           </header>
 
-          {/* Key Learning Takeaways Box */}
-          {post.learningOutcomes && post.learningOutcomes.length > 0 && (
-            <div className="learning-box">
-              <div className="learning-box-title">
-                <CheckCircle2 size={18} />
-                <span>What You Will Learn in This Guide</span>
-              </div>
-              <ul style={{ margin: 0, paddingLeft: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                {post.learningOutcomes.map((outcome, idx) => (
-                  <li key={idx} style={{ color: 'var(--text-secondary)', fontSize: '0.98rem', lineHeight: 1.5 }}>
-                    {outcome}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-
           {/* Top In-Article AdSense Slot */}
           <AdSlot />
 
-          {/* Article Body */}
-          <div className="article-prose">
-            {/* Introduction */}
-            {post.introduction.split('\n\n').map((para, pIdx) => (
-              <p key={pIdx} style={{ fontSize: '1.12rem', color: 'var(--text-primary)', fontWeight: 400, lineHeight: 1.85, marginBottom: '1.5rem' }}>
-                {para}
-              </p>
-            ))}
-
-            {/* Sections */}
-            {post.sections.map((section, idx) => (
-              <section key={idx} style={{ marginBottom: '2.75rem' }}>
-                <h2>{section.heading}</h2>
-
-                {section.content.split('\n\n').map((block, bIdx) => {
-                  const trimmed = block.trim();
-                  if (trimmed.startsWith('### ')) {
-                    return (
-                      <h3 key={bIdx} style={{ fontSize: '1.3rem', fontWeight: 600, color: 'var(--text-primary)', margin: '1.75rem 0 0.75rem 0' }}>
-                        {trimmed.replace(/^###\s+/, '')}
-                      </h3>
-                    );
-                  }
-                  if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
-                    const items = trimmed.split('\n').filter(Boolean);
-                    return (
-                      <ul key={bIdx} style={{ paddingLeft: '1.25rem', marginBottom: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                        {items.map((item, iIdx) => (
-                          <li key={iIdx} style={{ color: 'var(--text-secondary)', lineHeight: 1.7 }}>
-                            {item.replace(/^[-*]\s+/, '')}
-                          </li>
-                        ))}
-                      </ul>
-                    );
-                  }
-                  return (
-                    <p key={bIdx} style={{ marginBottom: '1.4rem', lineHeight: 1.8 }}>
-                      {trimmed}
-                    </p>
-                  );
-                })}
-
-                {/* Optional Code Snippet */}
-                {section.codeSnippet && (
-                  <div className="code-container" style={{ margin: '1.75rem 0' }}>
-                    <div className="code-header">
-                      <span>{section.codeSnippet.filename || `${section.codeSnippet.language.toUpperCase()} SNIPPET`}</span>
-                      <button
-                        onClick={() => handleCopyCode(section.codeSnippet!.code, idx)}
-                        style={{
-                          background: 'none',
-                          border: 'none',
-                          color: 'var(--text-muted)',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.35rem',
-                          fontSize: '0.78rem',
-                        }}
-                      >
-                        {copiedCodeIndex === idx ? (
-                          <>
-                            <Check size={13} className="text-emerald" />
-                            <span className="text-emerald">Copied!</span>
-                          </>
-                        ) : (
-                          <>
-                            <Copy size={13} />
-                            <span>Copy Code</span>
-                          </>
-                        )}
-                      </button>
-                    </div>
-                    <pre className="code-content">
-                      <code>{section.codeSnippet.code}</code>
-                    </pre>
-                    {section.codeSnippet.explanation && (
-                      <div style={{ padding: '0.75rem 1rem', background: 'rgba(255, 255, 255, 0.02)', fontSize: '0.85rem', color: 'var(--text-muted)', borderTop: '1px solid var(--border-subtle)' }}>
-                        <strong>Explanation:</strong> {section.codeSnippet.explanation}
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Optional Pro Tip */}
-                {section.tip && (
-                  <div className="pro-tip-box" style={{ margin: '1.5rem 0' }}>
-                    <Lightbulb size={20} style={{ color: 'var(--accent-cyan)', flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <strong style={{ color: 'var(--text-primary)' }}>Pro Tip:</strong> {section.tip}
-                    </div>
-                  </div>
-                )}
-              </section>
-            ))}
-
-            {/* Conclusion */}
-            <section style={{ marginTop: '3rem', marginBottom: '2.5rem' }}>
-              <h2>Summary & Key Conclusion</h2>
-              {post.conclusion.split('\n\n').map((cPara, cIdx) => (
-                <p key={cIdx} style={{ marginBottom: '1.35rem', lineHeight: 1.8 }}>
-                  {cPara}
-                </p>
-              ))}
-            </section>
-
-            {/* FAQs Section */}
-            {post.faqs && post.faqs.length > 0 && (
-              <section style={{ marginTop: '3.5rem', marginBottom: '3rem' }}>
-                <h2>Frequently Asked Questions</h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', marginTop: '1.5rem' }}>
-                  {post.faqs.map((faq, fIdx) => (
-                    <div
-                      key={fIdx}
-                      className="glass-card"
-                      style={{
-                        padding: '1.5rem',
-                        borderRadius: 'var(--radius-lg)',
-                        border: '1px solid var(--border-subtle)',
-                      }}
-                    >
-                      <h3 style={{ fontSize: '1.15rem', fontWeight: 600, color: 'var(--text-primary)', marginTop: 0, marginBottom: '0.6rem' }}>
-                        {faq.question}
-                      </h3>
-                      <p style={{ margin: 0, color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '0.98rem' }}>
-                        {faq.answer}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-          </div>
+          {/* Article Body - Rendered via BlockRenderer */}
+          <BlockRenderer blocks={post.contentBlocks} />
 
           {/* Bottom In-Article AdSense Slot */}
           <AdSlot />
@@ -432,6 +248,100 @@ export default function BlogPostDetail() {
               </div>
             </div>
           </div>
+
+          {/* Previous / Next Article Navigation */}
+          {(adjacentPosts.prev || adjacentPosts.next) && (
+            <nav
+              aria-label="Previous and next articles"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: adjacentPosts.prev && adjacentPosts.next ? '1fr 1fr' : '1fr',
+                gap: '1rem',
+                marginTop: '2.5rem',
+                marginBottom: '3rem',
+              }}
+            >
+              {adjacentPosts.prev && (
+                <Link
+                  to={`/blog/${adjacentPosts.prev.slug}`}
+                  className="glass-card"
+                  style={{
+                    padding: '1.25rem 1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    textDecoration: 'none',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--radius-lg)',
+                    transition: 'border-color 0.2s ease, transform 0.2s ease',
+                  }}
+                >
+                  <ArrowLeft size={20} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
+                  <div style={{ minWidth: 0 }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.3rem', display: 'block' }}>
+                      Previous Article
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.95rem',
+                        fontWeight: 600,
+                        color: 'var(--text-primary)',
+                        lineHeight: 1.4,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {adjacentPosts.prev.title}
+                    </span>
+                  </div>
+                </Link>
+              )}
+
+              {adjacentPosts.next && (
+                <Link
+                  to={`/blog/${adjacentPosts.next.slug}`}
+                  className="glass-card"
+                  style={{
+                    padding: '1.25rem 1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    textDecoration: 'none',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--radius-lg)',
+                    transition: 'border-color 0.2s ease, transform 0.2s ease',
+                    textAlign: 'right',
+                    justifyContent: 'flex-end',
+                    gridColumn: !adjacentPosts.prev ? '1 / -1' : undefined,
+                    marginLeft: !adjacentPosts.prev ? 'auto' : undefined,
+                  }}
+                >
+                  <div style={{ minWidth: 0 }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.3rem', display: 'block' }}>
+                      Next Article
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.95rem',
+                        fontWeight: 600,
+                        color: 'var(--text-primary)',
+                        lineHeight: 1.4,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {adjacentPosts.next.title}
+                    </span>
+                  </div>
+                  <ArrowRight size={20} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
+                </Link>
+              )}
+            </nav>
+          )}
 
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
