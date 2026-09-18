@@ -997,3 +997,12 @@ export function getRelatedBlogPosts(currentSlug: string, category: BlogCategory,
 export function getFeaturedBlogPosts(): BlogPost[] {
   return blogPosts.filter((post) => post.featured);
 }
+
+export function getAdjacentBlogPosts(currentSlug: string): { prev: BlogPost | null; next: BlogPost | null } {
+  const index = blogPosts.findIndex((post) => post.slug === currentSlug);
+  if (index === -1) return { prev: null, next: null };
+  return {
+    prev: index > 0 ? blogPosts[index - 1] : null,
+    next: index < blogPosts.length - 1 ? blogPosts[index + 1] : null,
+  };
+}

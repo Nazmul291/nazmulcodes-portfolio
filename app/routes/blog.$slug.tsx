@@ -19,7 +19,7 @@ import {
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
 import { AdSlot } from '~/components/AdSlot';
-import { getBlogPostBySlug, getRelatedBlogPosts } from '~/data/blogPosts';
+import { getBlogPostBySlug, getRelatedBlogPosts, getAdjacentBlogPosts } from '~/data/blogPosts';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
 
@@ -35,8 +35,9 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   }
 
   const relatedPosts = getRelatedBlogPosts(slug, post.category, 3);
+  const adjacentPosts = getAdjacentBlogPosts(slug);
 
-  return json({ post, relatedPosts });
+  return json({ post, relatedPosts, adjacentPosts });
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -76,7 +77,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 };
 
 export default function BlogPostDetail() {
-  const { post, relatedPosts } = useLoaderData<typeof loader>();
+  const { post, relatedPosts, adjacentPosts } = useLoaderData<typeof loader>();
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
   const [copiedCodeIndex, setCopiedCodeIndex] = useState<number | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
@@ -432,6 +433,100 @@ export default function BlogPostDetail() {
               </div>
             </div>
           </div>
+
+          {/* Previous / Next Article Navigation */}
+          {(adjacentPosts.prev || adjacentPosts.next) && (
+            <nav
+              aria-label="Previous and next articles"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: adjacentPosts.prev && adjacentPosts.next ? '1fr 1fr' : '1fr',
+                gap: '1rem',
+                marginTop: '2.5rem',
+                marginBottom: '3rem',
+              }}
+            >
+              {adjacentPosts.prev && (
+                <Link
+                  to={`/blog/${adjacentPosts.prev.slug}`}
+                  className="glass-card"
+                  style={{
+                    padding: '1.25rem 1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    textDecoration: 'none',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--radius-lg)',
+                    transition: 'border-color 0.2s ease, transform 0.2s ease',
+                  }}
+                >
+                  <ArrowLeft size={20} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
+                  <div style={{ minWidth: 0 }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.3rem', display: 'block' }}>
+                      Previous Article
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.95rem',
+                        fontWeight: 600,
+                        color: 'var(--text-primary)',
+                        lineHeight: 1.4,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {adjacentPosts.prev.title}
+                    </span>
+                  </div>
+                </Link>
+              )}
+
+              {adjacentPosts.next && (
+                <Link
+                  to={`/blog/${adjacentPosts.next.slug}`}
+                  className="glass-card"
+                  style={{
+                    padding: '1.25rem 1.5rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    textDecoration: 'none',
+                    border: '1px solid var(--border-subtle)',
+                    borderRadius: 'var(--radius-lg)',
+                    transition: 'border-color 0.2s ease, transform 0.2s ease',
+                    textAlign: 'right',
+                    justifyContent: 'flex-end',
+                    gridColumn: !adjacentPosts.prev ? '1 / -1' : undefined,
+                    marginLeft: !adjacentPosts.prev ? 'auto' : undefined,
+                  }}
+                >
+                  <div style={{ minWidth: 0 }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.3rem', display: 'block' }}>
+                      Next Article
+                    </span>
+                    <span
+                      style={{
+                        fontSize: '0.95rem',
+                        fontWeight: 600,
+                        color: 'var(--text-primary)',
+                        lineHeight: 1.4,
+                        display: '-webkit-box',
+                        WebkitLineClamp: 2,
+                        WebkitBoxOrient: 'vertical',
+                        overflow: 'hidden',
+                      }}
+                    >
+                      {adjacentPosts.next.title}
+                    </span>
+                  </div>
+                  <ArrowRight size={20} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
+                </Link>
+              )}
+            </nav>
+          )}
 
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
