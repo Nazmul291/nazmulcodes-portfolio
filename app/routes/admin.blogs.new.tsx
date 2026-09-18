@@ -1,8 +1,6 @@
 import type { ActionFunctionArgs } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { useActionData } from '@remix-run/react';
-import { ArrowLeft } from 'lucide-react';
-import { Link } from '@remix-run/react';
 import { BlogEditor } from '~/components/BlogEditor';
 import { createPost, isSlugTaken } from '~/models/blog.server';
 import type { ContentBlock } from '~/types/blog';
@@ -63,18 +61,8 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 export default function AdminBlogsNew() {
   const actionData = useActionData<{ errors?: Record<string, string> }>();
 
-  return (
-    <div>
-      <div className="admin-page-header">
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <Link to="/admin/blogs" className="admin-block-action-btn" title="Back to list">
-            <ArrowLeft size={18} />
-          </Link>
-          <h1 className="admin-page-title">Create New Article</h1>
-        </div>
-      </div>
-
-      <BlogEditor errors={actionData?.errors} />
-    </div>
-  );
+  // No `post` prop → BlogEditor renders in "new post" mode:
+  //   • Preview button disabled (no slug yet)
+  //   • Save button enabled immediately on first keystroke
+  return <BlogEditor errors={actionData?.errors} />;
 }

@@ -435,4 +435,80 @@
   .admin-block-card {
     padding: 1rem;
   }
+
+  .editor-action-bar {
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    padding: 0.6rem 1rem;
+  }
+
+  .editor-action-bar-right {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+}
+
+/* ─── Editor Sticky Action Bar ──────────────────────────────────────────── */
+
+/*
+  Sticks directly below the admin topbar (z-index: 100).
+  The topbar is ~65px tall on desktop (1rem padding top+bottom + content).
+  We use a CSS variable with a safe fallback so SSR and client are identical.
+*/
+.editor-action-bar {
+  position: sticky;
+  top: var(--admin-topbar-h, 65px);
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 1.5rem;
+  margin: -2rem -2rem 2rem -2rem; /* bleed out of .admin-content padding */
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  background: var(--bg-glass);
+  border-bottom: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 24px -6px rgba(0, 0, 0, 0.22);
+  will-change: transform;
+}
+
+.editor-action-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.editor-action-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+/* Unsaved-changes warning dot on Preview button */
+.editor-preview-warning-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-amber);
+  flex-shrink: 0;
+  animation: pulseComposited 2s ease-in-out infinite;
+}
+
+/* Inline spinner for Save button */
+@keyframes editor-spin {
+  to { transform: rotate(360deg); }
+}
+
+.editor-save-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: editor-spin 0.65s linear infinite;
+  flex-shrink: 0;
 }

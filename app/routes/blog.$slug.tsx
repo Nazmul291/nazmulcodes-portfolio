@@ -11,6 +11,8 @@ import {
   BookOpen,
   ArrowRight,
   Sparkles,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
@@ -33,14 +35,12 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
   const post = await getPublishedPostBySlug(slug);
   if (!post) {
-    // Check if an SEO 301/302 redirect rule exists for this deleted or renamed slug
     const redirectRule = await findRedirect(slug);
     if (redirectRule) {
       throw redirect(redirectRule.targetUrl, {
         status: redirectRule.statusCode || 301,
       });
     }
-
     throw new Response('Article not found', { status: 404 });
   }
 
@@ -121,28 +121,158 @@ export default function BlogPostDetail() {
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      {/* Global Navbar — sticky top: 0, z-index: 50 (see .navbar in components.css) */}
       <Navbar theme={theme} toggleTheme={toggleTheme} />
 
-      <main style={{ flex: 1, paddingTop: '6rem', paddingBottom: '5rem' }}>
-        <article className="site-container" style={{ maxWidth: '860px', margin: '0 auto' }}>
-          {/* JSON-LD Article Structured Data for SEO / Crawler */}
+      <main style={{ flex: 1 }}>
+        {/* ── Sticky Sub-Navigation Bar (Breadcrumb + Prev / Next) ────────────────
+            Placed directly inside <main> so it spans the full page width and
+            sticks correctly.
+            top: 4rem   = navbar height on mobile  (64px)
+            top: 4.5rem = navbar height on tablet+ (72px)  via CSS media query
+            z-index: 40 = below Navbar (50) but above all article content          */}
+        <nav
+          aria-label="Article navigation and breadcrumbs"
+          style={{
+            position: 'sticky',
+            top: '4rem', /* 64px — mobile navbar height */
+            zIndex: 40,
+            backdropFilter: 'blur(20px) saturate(160%)',
+            WebkitBackdropFilter: 'blur(20px) saturate(160%)',
+            backgroundColor: theme === 'dark'
+              ? 'rgba(8, 12, 20, 0.85)'
+              : 'rgba(248, 250, 252, 0.88)',
+            borderBottom: '1px solid var(--border-subtle)',
+            padding: '0.6rem clamp(1rem, 3vw, 2.5rem)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem',
+            boxShadow: '0 4px 24px -6px rgba(0, 0, 0, 0.18)',
+          }}
+        >
+          {/* Left: Breadcrumbs */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontSize: '0.85rem', minWidth: 0 }}>
+            <Link
+              to="/blog"
+              className="btn btn-secondary btn-sm"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                padding: '0.35rem 0.65rem',
+                fontSize: '0.8rem',
+              }}
+            >
+              <ArrowLeft size={13} />
+              <span>All Articles</span>
+            </Link>
+            <span style={{ color: 'var(--text-muted)' }}>/</span>
+            <span
+              className="text-emerald"
+              style={{
+                fontWeight: 500,
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                maxWidth: 'clamp(80px, 20vw, 200px)',
+              }}
+            >
+              {post.category}
+            </span>
+          </div>
+
+          {/* Right: Adjacent Posts Navigation (Prev / Next Buttons) */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', flexShrink: 0 }}>
+            {adjacentPosts.prev ? (
+              <Link
+                to={`/blog/${adjacentPosts.prev.slug}`}
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                }}
+                title={`Previous: ${adjacentPosts.prev.title}`}
+              >
+                <ChevronLeft size={14} />
+                <span>Prev</span>
+              </Link>
+            ) : (
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                  opacity: 0.38,
+                  cursor: 'not-allowed',
+                  pointerEvents: 'none',
+                }}
+              >
+                <ChevronLeft size={14} />
+                <span>Prev</span>
+              </button>
+            )}
+
+            {adjacentPosts.next ? (
+              <Link
+                to={`/blog/${adjacentPosts.next.slug}`}
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                }}
+                title={`Next: ${adjacentPosts.next.title}`}
+              >
+                <span>Next</span>
+                <ChevronRight size={14} />
+              </Link>
+            ) : (
+              <button
+                type="button"
+                disabled
+                aria-disabled="true"
+                className="btn btn-secondary btn-sm"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.3rem',
+                  padding: '0.35rem 0.65rem',
+                  fontSize: '0.8rem',
+                  opacity: 0.38,
+                  cursor: 'not-allowed',
+                  pointerEvents: 'none',
+                }}
+              >
+                <span>Next</span>
+                <ChevronRight size={14} />
+              </button>
+            )}
+          </div>
+        </nav>
+
+        {/* ── Article Content ─────────────────────────────────────────────────── */}
+        <article
+          className="site-container"
+          style={{ maxWidth: '860px', margin: '0 auto', paddingTop: '2rem', paddingBottom: '5rem' }}
+        >
+          {/* JSON-LD Article Structured Data */}
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
             suppressHydrationWarning
           />
-
-          {/* Breadcrumbs */}
-          <nav aria-label="Breadcrumbs" style={{ marginBottom: '2rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', fontSize: '0.88rem', color: 'var(--text-muted)' }}>
-              <Link to="/blog" className="btn btn-secondary btn-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem' }}>
-                <ArrowLeft size={14} />
-                <span>All Articles</span>
-              </Link>
-              <span>/</span>
-              <span className="text-emerald" style={{ fontWeight: 500 }}>{post.category}</span>
-            </div>
-          </nav>
 
           {/* Article Header */}
           <header style={{ marginBottom: '2.5rem' }}>
@@ -190,7 +320,7 @@ export default function BlogPostDetail() {
                 />
                 <div>
                   <div style={{ fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-primary)' }}>{siteConfig.name}</div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Senior Shopify & Full-Stack Engineer</div>
+                  <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)' }}>Senior Shopify &amp; Full-Stack Engineer</div>
                 </div>
               </div>
 
@@ -241,7 +371,7 @@ export default function BlogPostDetail() {
                   <span className="tag-badge" style={{ fontSize: '0.72rem' }}>Top Rated</span>
                 </div>
                 <p style={{ fontSize: '0.92rem', color: 'var(--text-muted)', margin: '0 0 1rem 0', lineHeight: 1.6 }}>
-                  Senior Full-Stack Engineer & Official Shopify App Store developer. Founder of Stockly and Kilo (kilo.nazmulcodes.org), specializing in high-performance Shopify apps, client-side media compression, and sub-second web performance.
+                  Senior Full-Stack Engineer &amp; Official Shopify App Store developer. Founder of Stockly and Kilo (kilo.nazmulcodes.org), specializing in high-performance Shopify apps, client-side media compression, and sub-second web performance.
                 </p>
                 <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
                   <Link to="/about" className="btn btn-secondary btn-sm">
@@ -262,100 +392,6 @@ export default function BlogPostDetail() {
             </div>
           </div>
 
-          {/* Previous / Next Article Navigation */}
-          {(adjacentPosts.prev || adjacentPosts.next) && (
-            <nav
-              aria-label="Previous and next articles"
-              style={{
-                display: 'grid',
-                gridTemplateColumns: adjacentPosts.prev && adjacentPosts.next ? '1fr 1fr' : '1fr',
-                gap: '1rem',
-                marginTop: '2.5rem',
-                marginBottom: '3rem',
-              }}
-            >
-              {adjacentPosts.prev && (
-                <Link
-                  to={`/blog/${adjacentPosts.prev.slug}`}
-                  className="glass-card"
-                  style={{
-                    padding: '1.25rem 1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem',
-                    textDecoration: 'none',
-                    border: '1px solid var(--border-subtle)',
-                    borderRadius: 'var(--radius-lg)',
-                    transition: 'border-color 0.2s ease, transform 0.2s ease',
-                  }}
-                >
-                  <ArrowLeft size={20} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
-                  <div style={{ minWidth: 0 }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.3rem', display: 'block' }}>
-                      Previous Article
-                    </span>
-                    <span
-                      style={{
-                        fontSize: '0.95rem',
-                        fontWeight: 600,
-                        color: 'var(--text-primary)',
-                        lineHeight: 1.4,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {adjacentPosts.prev.title}
-                    </span>
-                  </div>
-                </Link>
-              )}
-
-              {adjacentPosts.next && (
-                <Link
-                  to={`/blog/${adjacentPosts.next.slug}`}
-                  className="glass-card"
-                  style={{
-                    padding: '1.25rem 1.5rem',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '1rem',
-                    textDecoration: 'none',
-                    border: '1px solid var(--border-subtle)',
-                    borderRadius: 'var(--radius-lg)',
-                    transition: 'border-color 0.2s ease, transform 0.2s ease',
-                    textAlign: 'right',
-                    justifyContent: 'flex-end',
-                    gridColumn: !adjacentPosts.prev ? '1 / -1' : undefined,
-                    marginLeft: !adjacentPosts.prev ? 'auto' : undefined,
-                  }}
-                >
-                  <div style={{ minWidth: 0 }}>
-                    <span style={{ fontSize: '0.75rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', color: 'var(--text-muted)', marginBottom: '0.3rem', display: 'block' }}>
-                      Next Article
-                    </span>
-                    <span
-                      style={{
-                        fontSize: '0.95rem',
-                        fontWeight: 600,
-                        color: 'var(--text-primary)',
-                        lineHeight: 1.4,
-                        display: '-webkit-box',
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
-                        overflow: 'hidden',
-                      }}
-                    >
-                      {adjacentPosts.next.title}
-                    </span>
-                  </div>
-                  <ArrowRight size={20} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
-                </Link>
-              )}
-            </nav>
-          )}
-
           {/* Related Posts */}
           {relatedPosts.length > 0 && (
             <div style={{ marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--border-subtle)' }}>
@@ -370,7 +406,7 @@ export default function BlogPostDetail() {
                     <h4 style={{ fontSize: '1.05rem', fontWeight: 700, margin: '0.4rem 0', color: 'var(--text-primary)', lineHeight: 1.4 }}>
                       {rel.title}
                     </h4>
-                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', lineClamp: 2, WebkitLineClamp: 2, overflow: 'hidden', display: '-webkit-box', WebkitBoxOrient: 'vertical' }}>
+                    <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', WebkitLineClamp: 2, overflow: 'hidden', display: '-webkit-box', WebkitBoxOrient: 'vertical' }}>
                       {rel.excerpt}
                     </p>
                     <div style={{ marginTop: 'auto', paddingTop: '0.75rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-muted)' }}>
