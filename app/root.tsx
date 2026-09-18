@@ -294,25 +294,25 @@ export const links: LinksFunction = () => [
 export default function App() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  useEffect(() => {
-    // Restore saved theme preference
-    const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
-    setTheme(savedTheme);
-    document.documentElement.setAttribute("data-theme", savedTheme);
+  // useEffect(() => {
+  //   // Restore saved theme preference
+  //   const savedTheme = (localStorage.getItem("theme") as "dark" | "light") || "dark";
+  //   setTheme(savedTheme);
+  //   document.documentElement.setAttribute("data-theme", savedTheme);
 
-    // Inject Google AdSense only after client hydration completes
-    // to prevent third-party scripts from injecting iframes or attributes into the DOM prematurely
-    const scriptId = "google-adsense-script";
-    if (!document.getElementById(scriptId)) {
-      const script = document.createElement("script");
-      script.id = scriptId;
-      script.async = true;
-      script.crossOrigin = "anonymous";
-      script.src =
-        "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
-      document.head.appendChild(script);
-    }
-  }, []);
+  //   // Inject Google AdSense only after client hydration completes
+  //   // to prevent third-party scripts from injecting iframes or attributes into the DOM prematurely
+  //   const scriptId = "google-adsense-script";
+  //   if (!document.getElementById(scriptId)) {
+  //     const script = document.createElement("script");
+  //     script.id = scriptId;
+  //     script.async = true;
+  //     script.crossOrigin = "anonymous";
+  //     script.src =
+  //       "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959";
+  //     document.head.appendChild(script);
+  //   }
+  // }, []);
 
   const toggleTheme = () => {
     const nextTheme = theme === "dark" ? "light" : "dark";
@@ -329,6 +329,13 @@ export default function App() {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaGraph) }}
+          suppressHydrationWarning
+        />
+        <script
+          type="text/javascript"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3337739847756959"
+          crossOrigin="anonymous"
+          async
           suppressHydrationWarning
         />
       </head>
