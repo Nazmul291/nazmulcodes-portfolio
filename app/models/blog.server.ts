@@ -1,5 +1,5 @@
 import { prisma } from '~/db.server';
-import { cachedDbQuery, invalidateCacheKeys } from '~/redis.server';
+import { cachedDbQuery, invalidateCacheKeys, invalidateAllBlogCache, DEFAULT_CACHE_TTL } from '~/redis.server';
 import type { ContentBlock, DbBlogPost, DbBlogPostListItem } from '~/types/blog';
 
 /**
@@ -14,10 +14,10 @@ import type { ContentBlock, DbBlogPost, DbBlogPostListItem } from '~/types/blog'
 
 /**
  * Get all published posts for the public blog index (omits heavy content blocks).
- * Cached in Redis for 1 hour.
+ * Cached in Redis for DEFAULT_CACHE_TTL (24 hours) with automatic DB fallback.
  */
 export async function getPublishedPosts(): Promise<DbBlogPostListItem[]> {
-  return cachedDbQuery('posts:published:list', 3600, async () => {
+  return cachedDbQuery('posts:published:list', DEFAULT_CACHE_TTL, async () => {
     const posts = await prisma.blogPost.findMany({
       where: { isPublished: true },
       select: {
@@ -49,7 +49,7 @@ export async function getPublishedPosts(): Promise<DbBlogPostListItem[]> {
  * Cached in Redis for 1 hour.
  */
 export async function getPublishedPostBySlug(slug: string): Promise<DbBlogPost | null> {
-  return cachedDbQuery(`post:slug:${slug}`, 3600, async () => {
+  return cachedDbQuery(`post:slug:${slug}`, DEFAULT_CACHE_TTL, async () => {
     const post = await prisma.blogPost.findFirst({
       where: { slug, isPublished: true },
     });
@@ -75,13 +75,13 @@ export async function getPublishedPostBySlug(slug: string): Promise<DbBlogPost |
 
 /**
  * Get adjacent published posts for previous / next article navigation.
- * Cached in Redis for 1 hour.
+ * Cached in Redis for DEFAULT_CACHE_TTL (24 hours).
  */
 export async function getAdjacentPublishedPosts(slug: string): Promise<{
   prev: DbBlogPostListItem | null;
   next: DbBlogPostListItem | null;
 }> {
-  return cachedDbQuery(`post:adjacent:${slug}`, 3600, async () => {
+  return cachedDbQuery(`post:adjacent:${slug}`, DEFAULT_CACHE_TTL, async () => {
     const current = await prisma.blogPost.findFirst({
       where: { slug, isPublished: true },
       select: { createdAt: true },
@@ -147,14 +147,14 @@ export async function getAdjacentPublishedPosts(slug: string): Promise<{
 
 /**
  * Get related published posts in the same category, falling back to latest posts.
- * Cached in Redis for 1 hour.
+ * Cached in Redis for DEFAULT_CACHE_TTL (24 hours).
  */
 export async function getRelatedPublishedPosts(
   slug: string,
   category: string,
   limit = 3
 ): Promise<DbBlogPostListItem[]> {
-  return cachedDbQuery(`post:related:${slug}`, 3600, async () => {
+  return cachedDbQuery(`post:related:${slug}`, DEFAULT_CACHE_TTL, async () => {
     const sameCategory = await prisma.blogPost.findMany({
       where: {
         isPublished: true,
@@ -331,12 +331,7 @@ export async function createPost(input: CreatePostInput): Promise<DbBlogPost> {
     },
   });
 
-  await invalidateCacheKeys(
-    'posts:published:list',
-    `post:slug:${post.slug}`,
-    `post:adjacent:${post.slug}`,
-    `post:related:${post.slug}`
-  );
+  await invalidateAllBlogCache();
 
   return {
     id: post.id,
@@ -358,11 +353,6 @@ export async function createPost(input: CreatePostInput): Promise<DbBlogPost> {
  * Update an existing blog post and invalidate Redis cache keys.
  */
 export async function updatePost(input: UpdatePostInput): Promise<DbBlogPost | null> {
-  const prev = await prisma.blogPost.findUnique({
-    where: { id: input.id },
-    select: { slug: true },
-  });
-
   const post = await prisma.blogPost.update({
     where: { id: input.id },
     data: {
@@ -378,22 +368,7 @@ export async function updatePost(input: UpdatePostInput): Promise<DbBlogPost | n
     },
   });
 
-  const keysToInvalidate = [
-    'posts:published:list',
-    `post:slug:${post.slug}`,
-    `post:adjacent:${post.slug}`,
-    `post:related:${post.slug}`,
-  ];
-
-  if (prev && prev.slug !== post.slug) {
-    keysToInvalidate.push(
-      `post:slug:${prev.slug}`,
-      `post:adjacent:${prev.slug}`,
-      `post:related:${prev.slug}`
-    );
-  }
-
-  await invalidateCacheKeys(...keysToInvalidate);
+  await invalidateAllBlogCache();
 
   return {
     id: post.id,
@@ -426,12 +401,7 @@ export async function deletePost(id: string): Promise<boolean> {
     where: { id },
   });
 
-  await invalidateCacheKeys(
-    'posts:published:list',
-    `post:slug:${post.slug}`,
-    `post:adjacent:${post.slug}`,
-    `post:related:${post.slug}`
-  );
+  await invalidateAllBlogCache();
 
   return true;
 }

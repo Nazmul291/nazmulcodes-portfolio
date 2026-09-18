@@ -85,6 +85,8 @@ export async function cachedDbQuery<T>(
   return freshData;
 }
 
+export const DEFAULT_CACHE_TTL = 86400; // 24 hours (1440 minutes)
+
 /**
  * Invalidates one or more Redis cache keys upon database mutation (create/update/delete).
  */
@@ -96,5 +98,23 @@ export async function invalidateCacheKeys(...keys: string[]): Promise<void> {
     await Promise.all(keys.map((k) => redis.del(k)));
   } catch (err) {
     console.warn('[Redis Invalidate Error] Failed to delete cache keys:', keys, err);
+  }
+}
+
+/**
+ * Purges all blog-related cache keys (posts list, post detail, adjacent, related)
+ * to ensure complete site-wide consistency whenever an article is created, updated, or deleted.
+ */
+export async function invalidateAllBlogCache(): Promise<void> {
+  const redis = getRedis();
+  if (!redis) return;
+
+  try {
+    const keys = await redis.keys('post*');
+    if (keys && keys.length > 0) {
+      await Promise.all(keys.map((k) => redis.del(k)));
+    }
+  } catch (err) {
+    console.warn('[Redis Invalidate All Error] Failed to purge blog cache keys:', err);
   }
 }
