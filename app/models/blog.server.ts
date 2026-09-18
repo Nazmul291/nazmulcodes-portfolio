@@ -286,6 +286,61 @@ export async function getAllPosts(): Promise<DbBlogPostListItem[]> {
   }));
 }
 
+/** Minimal shape for admin Prev / Next post navigation. */
+export interface AdjacentAdminPost {
+  id: string;
+  title: string;
+  isPublished: boolean;
+}
+
+/**
+ * Fetch the immediately older (prev) and immediately newer (next) post
+ * relative to `currentId`, sorted by `createdAt`.
+ *
+ * Admin-only — direct Postgres, no Redis cache — because drafts change
+ * frequently and stale adjacent pointers would be confusing in the editor.
+ * Selects only id + title + isPublished to keep the payload tiny.
+ */
+export async function getAdjacentAdminPosts(currentId: string): Promise<{
+  prev: AdjacentAdminPost | null;
+  next: AdjacentAdminPost | null;
+}> {
+  // Resolve current post's createdAt so we can find neighbours.
+  const current = await prisma.blogPost.findUnique({
+    where: { id: currentId },
+    select: { createdAt: true },
+  });
+
+  if (!current) return { prev: null, next: null };
+
+  const selectFields = {
+    id: true,
+    title: true,
+    isPublished: true,
+  } as const;
+
+  const [prevPost, nextPost] = await Promise.all([
+    // Prev = older post (createdAt < current, descending → first result is the closest)
+    prisma.blogPost.findFirst({
+      where: { createdAt: { lt: current.createdAt } },
+      orderBy: { createdAt: 'desc' },
+      select: selectFields,
+    }),
+    // Next = newer post (createdAt > current, ascending → first result is the closest)
+    prisma.blogPost.findFirst({
+      where: { createdAt: { gt: current.createdAt } },
+      orderBy: { createdAt: 'asc' },
+      select: selectFields,
+    }),
+  ]);
+
+  return {
+    prev: prevPost ?? null,
+    next: nextPost ?? null,
+  };
+}
+
+
 /**
  * Get a single post by ID for admin editing.
  */

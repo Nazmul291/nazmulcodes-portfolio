@@ -1,9 +1,11 @@
 import React, { useState, useCallback, useRef, useEffect, useMemo } from 'react';
-import { Form, useNavigation, Link } from '@remix-run/react';
+import { Form, useNavigation, Link, useNavigate } from '@remix-run/react';
 import {
   Plus,
   ChevronUp,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Trash2,
   Type,
   AlignLeft,
@@ -16,6 +18,7 @@ import {
   Eye,
 } from 'lucide-react';
 import type { ContentBlock, DbBlogPost } from '~/types/blog';
+import type { AdjacentAdminPost } from '~/models/blog.server';
 
 /**
  * Visual block-builder form for creating and editing blog posts.
@@ -48,6 +51,14 @@ interface BlogEditorProps {
   post?: DbBlogPost;
   /** Server-side validation errors from the Remix action. */
   errors?: Record<string, string>;
+  /**
+   * Previous and next posts for in-editor navigation.
+   * Only present when editing an existing post (not on the "new" route).
+   */
+  adjacentPosts?: {
+    prev: AdjacentAdminPost | null;
+    next: AdjacentAdminPost | null;
+  };
 }
 
 /** Stable snapshot of all form values used for dirty-state comparison. */
@@ -106,8 +117,9 @@ function snapshotsEqual(a: FormSnapshot, b: FormSnapshot): boolean {
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export function BlogEditor({ post, errors }: BlogEditorProps) {
+export function BlogEditor({ post, errors, adjacentPosts }: BlogEditorProps) {
   const navigation = useNavigation();
+  const navigate = useNavigate();
   const isSubmitting = navigation.state === 'submitting';
 
   // ── Metadata state ────────────────────────────────────────────────────────
@@ -230,6 +242,28 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
     }
   };
 
+  // ── Adjacent-post navigation (dirty-guarded) ──────────────────────────────
+  /**
+   * Navigate to a Prev/Next post, but first confirm if the form is dirty.
+   * Using window.confirm keeps the implementation zero-dependency and avoids
+   * the need for a custom modal component.
+   */
+  const handleAdjacentNav = useCallback(
+    (targetId: string) => {
+      if (
+        isDirty &&
+        typeof window !== 'undefined' &&
+        !window.confirm(
+          'You have unsaved changes.\nAre you sure you want to navigate away? Your changes will be lost.'
+        )
+      ) {
+        return; // User cancelled — stay on the current page.
+      }
+      navigate(`/admin/blogs/${targetId}/edit`);
+    },
+    [isDirty, navigate]
+  );
+
   // ── Derived values ────────────────────────────────────────────────────────
   const canPreview = Boolean(post?.slug);
   const previewTitle = !canPreview
@@ -237,6 +271,18 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
     : isDirty
     ? 'You have unsaved changes — save first to preview the latest version'
     : `Open /blog/${post!.slug} in a new tab`;
+
+  const prevPost = adjacentPosts?.prev ?? null;
+  const nextPost = adjacentPosts?.next ?? null;
+  const hasPrev = Boolean(prevPost);
+  const hasNext = Boolean(nextPost);
+
+  /** Human-readable tooltip for a Prev/Next button. */
+  const adjButtonTitle = (adj: AdjacentAdminPost | null, dir: 'Previous' | 'Next'): string => {
+    if (!adj) return `No ${dir.toLowerCase()} post`;
+    const status = adj.isPublished ? 'Published' : 'Draft';
+    return `${dir}: ${adj.title} (${status})${isDirty ? ' — save changes first' : ''}`;
+  };
 
   // ─── Render ────────────────────────────────────────────────────────────────
   return (
@@ -256,7 +302,7 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
       ─────────────────────────────────────────────────────────────────────── */}
       <div className="editor-action-bar" role="toolbar" aria-label="Article editor actions">
 
-        {/* LEFT: Back nav · Status badge · Unsaved-changes label */}
+        {/* LEFT: Back nav · Prev/Next · Status badge · Unsaved-changes label */}
         <div className="editor-action-bar-left">
           <Link
             to="/admin/blogs"
@@ -275,6 +321,81 @@ export function BlogEditor({ post, errors }: BlogEditorProps) {
             <ArrowLeft size={14} />
             <span style={{ whiteSpace: 'nowrap' }}>Back to Posts</span>
           </Link>
+
+          {/* Prev / Next post navigation — only shown when editing an existing post */}
+          {adjacentPosts !== undefined && (
+            <>
+              {/* Divider */}
+              <span
+                aria-hidden="true"
+                style={{
+                  width: '1px',
+                  height: '20px',
+                  background: 'var(--border-medium)',
+                  flexShrink: 0,
+                }}
+              />
+
+              {/* ← Prev */}
+              <button
+                type="button"
+                onClick={() => prevPost && handleAdjacentNav(prevPost.id)}
+                disabled={!hasPrev}
+                aria-disabled={!hasPrev}
+                title={adjButtonTitle(prevPost, 'Previous')}
+                className="admin-block-action-btn"
+                style={{
+                  width: 'auto',
+                  padding: '0.3rem 0.6rem',
+                  gap: '0.25rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  fontSize: '0.8rem',
+                  opacity: hasPrev ? 1 : 0.35,
+                  cursor: hasPrev ? 'pointer' : 'not-allowed',
+                  pointerEvents: hasPrev ? 'auto' : 'none',
+                }}
+              >
+                <ChevronLeft size={13} />
+                <span style={{ whiteSpace: 'nowrap' }}>Prev</span>
+              </button>
+
+              {/* Next → */}
+              <button
+                type="button"
+                onClick={() => nextPost && handleAdjacentNav(nextPost.id)}
+                disabled={!hasNext}
+                aria-disabled={!hasNext}
+                title={adjButtonTitle(nextPost, 'Next')}
+                className="admin-block-action-btn"
+                style={{
+                  width: 'auto',
+                  padding: '0.3rem 0.6rem',
+                  gap: '0.25rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  fontSize: '0.8rem',
+                  opacity: hasNext ? 1 : 0.35,
+                  cursor: hasNext ? 'pointer' : 'not-allowed',
+                  pointerEvents: hasNext ? 'auto' : 'none',
+                }}
+              >
+                <span style={{ whiteSpace: 'nowrap' }}>Next</span>
+                <ChevronRight size={13} />
+              </button>
+
+              {/* Divider */}
+              <span
+                aria-hidden="true"
+                style={{
+                  width: '1px',
+                  height: '20px',
+                  background: 'var(--border-medium)',
+                  flexShrink: 0,
+                }}
+              />
+            </>
+          )}
 
           {/* Real-time publish status — updates immediately when toggle is flipped */}
           <span
