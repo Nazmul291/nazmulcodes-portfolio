@@ -92,9 +92,11 @@ export default function AdminBlogsEdit() {
 
   return (
     <BlogEditor
+      key={post.id}
       post={post}
       errors={actionData?.errors}
       adjacentPosts={adjacentPosts}
     />
   );
 }
+
