@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
+import { json, redirect } from '@remix-run/node';
 import { useLoaderData, Link, useOutletContext } from '@remix-run/react';
 import {
   ArrowLeft,
@@ -21,6 +21,7 @@ import {
   getAdjacentPublishedPosts,
   getRelatedPublishedPosts,
 } from '~/models/blog.server';
+import { findRedirect } from '~/models/redirect.server';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
 
@@ -32,6 +33,14 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
   const post = await getPublishedPostBySlug(slug);
   if (!post) {
+    // Check if an SEO 301/302 redirect rule exists for this deleted or renamed slug
+    const redirectRule = await findRedirect(slug);
+    if (redirectRule) {
+      throw redirect(redirectRule.targetUrl, {
+        status: redirectRule.statusCode || 301,
+      });
+    }
+
     throw new Response('Article not found', { status: 404 });
   }
 
@@ -63,7 +72,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { property: 'og:title', content: `${post.title} | NazmulCodes` },
     { property: 'og:description', content: post.excerpt },
     { property: 'og:type', content: 'article' },
-    { property: 'og:url', canonicalUrl },
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: canonicalUrl,
+    },
     { property: 'article:published_time', content: post.createdAt },
     { property: 'article:section', content: post.category },
     { property: 'article:tag', content: post.tags.join(',') },

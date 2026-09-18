@@ -34,3 +34,15 @@ model IpRateLimit {
 
   @@map("ip_rate_limits")
 }
+
+model Redirect {
+  id          String   @id @default(cuid())
+  sourceSlug  String   @unique @map("source_slug")
+  targetUrl   String   @map("target_url")
+  statusCode  Int      @default(301) @map("status_code")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@index([sourceSlug])
+  @@map("redirects")
+}
