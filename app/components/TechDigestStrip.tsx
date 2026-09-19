@@ -1,16 +1,28 @@
-import React, { useState } from 'react';
-import { Mail, CheckCircle2, ShieldCheck, ArrowRight, Rss } from 'lucide-react';
+import React, { useEffect, useRef } from 'react';
+import { useFetcher } from '@remix-run/react';
+import { Mail, CheckCircle2, ShieldCheck, ArrowRight, Rss, Loader2, AlertCircle } from 'lucide-react';
+
+interface ActionData {
+  success?: boolean;
+  message?: string;
+  error?: string;
+}
 
 export const TechDigestStrip: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
+  const fetcher = useFetcher<ActionData>();
+  const formRef = useRef<HTMLFormElement>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email.trim()) {
-      setSubmitted(true);
+  const isSubmitting = fetcher.state === 'submitting';
+  const isSuccess = fetcher.data?.success;
+  const errorMessage = fetcher.data?.error;
+  const successMessage = fetcher.data?.message;
+
+  // সফল সাবমিটের পর ইনপুট ক্লিয়ার করা
+  useEffect(() => {
+    if (isSuccess) {
+      formRef.current?.reset();
     }
-  };
+  }, [isSuccess]);
 
   return (
     <section className="section-padding" style={{ position: 'relative', background: 'var(--bg-secondary)' }}>
@@ -27,20 +39,6 @@ export const TechDigestStrip: React.FC = () => {
             overflow: 'hidden',
           }}
         >
-          {/* Subtle Ambient Glow inside Card */}
-          <div
-            style={{
-              position: 'absolute',
-              top: '-40%',
-              right: '-20%',
-              width: '350px',
-              height: '350px',
-              borderRadius: '50%',
-              background: 'radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%)',
-              pointerEvents: 'none',
-            }}
-          />
-
           <div style={{ maxWidth: '640px', margin: '0 auto', textAlign: 'center' }}>
             {/* Header Badge */}
             <div
@@ -67,8 +65,8 @@ export const TechDigestStrip: React.FC = () => {
               Subscribe to get monthly, zero-fluff breakdowns on Shopify platform API shifts, Liquid micro-optimizations, and real-world app infrastructure.
             </p>
 
-            {/* Input or Success State */}
-            {submitted ? (
+            {/* Success Notification */}
+            {isSuccess ? (
               <div
                 style={{
                   display: 'inline-flex',
@@ -80,14 +78,18 @@ export const TechDigestStrip: React.FC = () => {
                   border: '1px solid var(--accent-emerald)',
                   color: 'var(--accent-emerald)',
                   fontWeight: 600,
+                  fontSize: '0.95rem',
                 }}
               >
                 <CheckCircle2 size={18} />
-                <span>You're subscribed to the engineering dispatch. Welcome aboard!</span>
+                <span>{successMessage}</span>
               </div>
             ) : (
-              <form
-                onSubmit={handleSubmit}
+              /* Remix Fetcher Form */
+              <fetcher.Form
+                ref={formRef}
+                method="post"
+                action="/?index" // হোমপেজের অ্যাকশনে হিট করার জন্য
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
@@ -111,15 +113,15 @@ export const TechDigestStrip: React.FC = () => {
                   />
                   <input
                     type="email"
+                    name="email"
                     required
                     placeholder="engineer@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={isSubmitting}
                     style={{
                       width: '100%',
                       padding: '0.85rem 1rem 0.85rem 2.65rem',
                       background: 'var(--bg-surface)',
-                      border: '1px solid var(--border-subtle)',
+                      border: errorMessage ? '1px solid #ef4444' : '1px solid var(--border-subtle)',
                       borderRadius: 'var(--radius-md)',
                       color: 'var(--text-primary)',
                       fontSize: '0.95rem',
@@ -130,16 +132,43 @@ export const TechDigestStrip: React.FC = () => {
 
                 <button
                   type="submit"
+                  disabled={isSubmitting}
                   className="btn btn-primary"
                   style={{ whiteSpace: 'nowrap', gap: '0.5rem', flex: '0 0 auto' }}
                 >
-                  <span>Subscribe</span>
-                  <ArrowRight size={15} />
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={15} className="animate-spin" />
+                      <span>Subscribing...</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Subscribe</span>
+                      <ArrowRight size={15} />
+                    </>
+                  )}
                 </button>
-              </form>
+              </fetcher.Form>
             )}
 
-            {/* Trust Signal Footer */}
+            {/* Error Message */}
+            {errorMessage && (
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  color: '#ef4444',
+                  fontSize: '0.85rem',
+                  marginBottom: '1rem',
+                }}
+              >
+                <AlertCircle size={14} />
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
+            {/* Trust Signal */}
             <div
               style={{
                 display: 'flex',

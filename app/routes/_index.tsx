@@ -9,10 +9,39 @@ import { FeaturedBlogs } from '~/components/FeaturedBlogs';
 import { getPublishedPosts } from '~/models/blog.server';
 import { BlogCategoryDirectory } from '~/components/BlogCategoryDirectory';
 import { TechDigestStrip } from '~/components/TechDigestStrip';
+import type { ActionFunctionArgs } from '@remix-run/node';
+import { createSubscriber } from '~/models/subscriber.server';
 
 export const loader = async () => {
   const posts = await getPublishedPosts();
   return { posts };
+};
+
+export const action = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const email = formData.get('email');
+
+  if (typeof email !== 'string' || !email.includes('@') || !email.includes('.')) {
+    return Response.json(
+      { error: 'Please enter a valid email address.' },
+      { status: 400 }
+    );
+  }
+
+  try {
+    const result = await createSubscriber(email);
+    return {
+      success: true,
+      message: result.created
+        ? "Welcome aboard! You're subscribed to the dispatch."
+        : "You're already on the subscriber list!",
+    };
+  } catch (error) {
+    return Response.json(
+      { error: 'Unable to subscribe right now. Please try again.' },
+      { status: 500 }
+    );
+  }
 };
 
 

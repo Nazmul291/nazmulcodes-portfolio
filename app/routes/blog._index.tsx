@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import type { MetaFunction } from '@remix-run/node';
-import { json } from '@remix-run/node';
-import { Link, useOutletContext, useLoaderData } from '@remix-run/react';
-import { BookOpen, Search, Clock, Calendar, ArrowRight, Sparkles, Filter, Code, Award } from 'lucide-react';
+import { Link, useOutletContext, useLoaderData, useSearchParams } from '@remix-run/react';
+import { BookOpen, Search, Clock, Calendar, ArrowRight, Sparkles } from 'lucide-react';
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
 import { AdSlot } from '~/components/AdSlot';
@@ -20,7 +19,7 @@ const BLOG_CATEGORIES = [
 
 export const loader = async () => {
   const posts = await getPublishedPosts();
-  return json({ posts });
+  return { posts };
 };
 
 export const meta: MetaFunction = () => {
@@ -47,8 +46,34 @@ export const meta: MetaFunction = () => {
 export default function BlogIndex() {
   const { posts } = useLoaderData<typeof loader>();
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
+  
+  // ১. ইউআরএল প্যারামিটার হ্যান্ডলিং
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryParam = searchParams.get('category') || 'all';
+
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam);
+
+  // ইউআরএল পরিবর্তন হলে (যেমন হোমপেজের লিঙ্ক থেকে এলে) স্টেট সিঙ্ক করা
+  useEffect(() => {
+    setSelectedCategory(categoryParam);
+  }, [categoryParam]);
+
+  // ক্যাটাগরি ফিল্টার হ্যান্ডলার (URL প্যারামিটার আপডেট করবে)
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setSearchParams(
+      (prev) => {
+        if (category === 'all') {
+          prev.delete('category');
+        } else {
+          prev.set('category', category);
+        }
+        return prev;
+      },
+      { preventScrollReset: true } // পেজের স্ক্রল অবস্থান ধরে রাখবে
+    );
+  };
 
   const myStoryPost = useMemo(() => {
     return posts.find((p) => p.slug === 'my-story-from-zero-to-shopify-app-founder');
@@ -182,7 +207,7 @@ export default function BlogIndex() {
             {/* Category Pills */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.6rem', alignItems: 'center' }}>
               <button
-                onClick={() => setSelectedCategory('all')}
+                onClick={() => handleCategoryChange('all')}
                 className={`category-tab-pill ${selectedCategory === 'all' ? 'active' : ''}`}
               >
                 All Articles ({posts.length})
@@ -193,7 +218,7 @@ export default function BlogIndex() {
                 return (
                   <button
                     key={cat}
-                    onClick={() => setSelectedCategory(cat)}
+                    onClick={() => handleCategoryChange(cat)}
                     className={`category-tab-pill ${selectedCategory === cat ? 'active' : ''}`}
                   >
                     {cat} ({count})
@@ -203,7 +228,7 @@ export default function BlogIndex() {
             </div>
           </div>
 
-          {/* Top AdSense Container (Zero CLS Guarantee) */}
+          {/* Top AdSense Container */}
           <AdSlot />
 
           {/* Blog Posts Grid */}
@@ -218,9 +243,15 @@ export default function BlogIndex() {
               }}
             >
               <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', marginBottom: '1rem' }}>
-                No articles found matching &quot;{searchQuery}&quot;.
+                No articles found matching {selectedCategory !== 'all' ? `category "${selectedCategory}"` : ''} &quot;{searchQuery}&quot;.
               </p>
-              <button onClick={() => { setSearchQuery(''); setSelectedCategory('all'); }} className="btn btn-secondary btn-sm">
+              <button
+                onClick={() => {
+                  setSearchQuery('');
+                  handleCategoryChange('all');
+                }}
+                className="btn btn-secondary btn-sm"
+              >
                 Reset Filters
               </button>
             </div>
