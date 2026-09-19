@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     <nav className="navbar">
       <div className="site-container navbar-inner">
         {/* Brand Logo */}
-        <a href="/#hero" className="brand-logo">
+        <a href="/" className="brand-logo">
           <div className="brand-icon">
             <Code size={20} />
           </div>
@@ -40,10 +40,10 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         {/* Desktop Navigation Links */}
         <ul className="nav-links">
           <li>
-            <a href="/#showcase" className="nav-link">Projects</a>
+            <a href="/projects" className="nav-link">Projects</a>
           </li>
           <li>
-            <a href="/#services" className="nav-link">Services</a>
+            <a href="/services" className="nav-link">Services</a>
           </li>
           <li>
             <Link to="/blog" className="nav-link">Blogs</Link>

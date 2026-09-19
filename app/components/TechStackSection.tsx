@@ -1,45 +1,48 @@
 import React from 'react';
-import { Code, Database, Cpu, Globe2, ShieldCheck, Sparkles } from 'lucide-react';
+import { Code, Cpu, Globe2, ArrowRight } from 'lucide-react';
 
 export const TechStackSection: React.FC = () => {
   const stackCategories = [
     {
       category: 'Shopify Core Ecosystem',
       icon: <Globe2 size={20} className="text-emerald" />,
+      accentColor: 'var(--accent-emerald)',
       skills: [
-        { name: 'Shopify Liquid', level: 'Expert / Theme Architect' },
-        { name: 'Shopify App Bridge v3', level: 'Production Apps' },
-        { name: 'Shopify Polaris UI', level: 'Admin Design System' },
-        { name: 'Admin & Storefront GraphQL API', level: 'High-Volume Queries' },
-        { name: 'Theme App Extensions & App Blocks', level: 'Isolated Theme Embeds' },
-        { name: 'Shopify Recurring Billing API', level: 'Subscription SaaS' },
-        { name: 'Shopify Markets & Multi-Currency', level: 'Internationalization' },
-        { name: 'Shopify Metafields & Metaobjects', level: 'Custom Data Modeling' }
+        { name: 'Shopify Liquid & OS 2.0', level: 'Deep Schemas & Zero Bloat' },
+        { name: 'Shopify App Bridge v3', level: 'Embedded Admin Apps' },
+        { name: 'Shopify Polaris UI', level: 'Design System & Patterns' },
+        { name: 'GraphQL Admin & Storefront API', level: 'High-Volume Query Architecture' },
+        { name: 'Theme App Extensions', level: 'Isolated App Blocks' },
+        { name: 'Recurring Billing API', level: 'Subscription SaaS Modeling' },
+        { name: 'Markets & Multi-Currency', level: 'Global Localization' },
+        { name: 'Metafields & Metaobjects', level: 'Custom Data Architecture' }
       ]
     },
     {
       category: 'Front-End & Modern Web',
       icon: <Code size={20} className="text-cyan" />,
+      accentColor: 'var(--accent-cyan)',
       skills: [
-        { name: 'React 18 / 19', level: 'Advanced SPA & Embeds' },
-        { name: 'Remix / Next.js', level: 'Full-Stack SSR' },
+        { name: 'React 18 / 19', level: 'Modern State & Client Embeds' },
+        { name: 'Remix & Modern SSR', level: 'Headless Architecture' },
         { name: 'TypeScript', level: 'Strict Type-Safe Systems' },
-        { name: 'Vanilla Modern JavaScript (ES6+)', level: 'Zero jQuery Bloat' },
-        { name: 'Modern CSS & BEM Architecture', level: 'Zero Layout Shifts' },
-        { name: 'Tailwind CSS / CSS Modules', level: 'Rapid Styling' },
-        { name: 'WCAG AA Accessibility', level: 'Screen Reader & Contrast' }
+        { name: 'Modern Vanilla JS (ES6+)', level: 'Zero jQuery Overhead' },
+        { name: 'Modern CSS & BEM', level: 'Sub-second LCP & 0 CLS' },
+        { name: 'Tailwind CSS', level: 'Scalable Utility Styling' },
+        { name: 'WCAG AA Accessibility', level: 'Keyboard & Screen Reader First' }
       ]
     },
     {
       category: 'Backend, AI & Cloud Infrastructure',
       icon: <Cpu size={20} className="text-indigo" />,
+      accentColor: '#818cf8',
       skills: [
-        { name: 'Python (FastAPI / Flask)', level: 'High-Throughput APIs' },
+        { name: 'Python (FastAPI / Flask)', level: 'Demand Forecasting & APIs' },
         { name: 'Node.js (Express / Fastify)', level: 'Event-Driven Webhooks' },
-        { name: 'Machine Learning (Prophet / Scikit)', level: 'Sales Forecasting' },
+        { name: 'Machine Learning (Prophet)', level: 'Sales Velocity Models' },
         { name: 'PostgreSQL & Supabase', level: 'Relational Schemas' },
-        { name: 'Redis Queue & Caching', level: 'Idempotent Sync' },
-        { name: 'Fly.io & Docker Containers', level: 'Cloud Deployment' }
+        { name: 'Redis Queue & Caching', level: 'Idempotent Sync Pipelines' },
+        { name: 'Fly.io & Docker Containers', level: 'Automated Deployments' }
       ]
     }
   ];
@@ -53,10 +56,10 @@ export const TechStackSection: React.FC = () => {
             <span>Technical Mastery</span>
           </div>
           <h2 className="section-title">
-            Skills & <span className="text-gradient">Technology Stack</span>
+            Core Engineering &amp; <span className="text-gradient">Topics We Cover</span>
           </h2>
           <p className="section-subtitle">
-            A battle-tested technology toolkit designed for high-conversion storefronts, compliant Shopify apps, and robust server architectures.
+            In-depth architecture breakdowns, performance case studies, and engineering solutions across the modern Shopify and web stack.
           </p>
         </div>
 
@@ -97,12 +100,25 @@ export const TechStackSection: React.FC = () => {
                     }}
                   >
                     <span style={{ fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)' }}>{skill.name}</span>
-                    <span style={{ fontSize: '0.75rem', color: 'var(--accent-emerald)', fontWeight: 500 }}>{skill.level}</span>
+                    <span style={{ fontSize: '0.75rem', color: group.accentColor, fontWeight: 500 }}>{skill.level}</span>
                   </div>
                 ))}
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Action Link to Articles */}
+        <div style={{ textAlign: 'center', marginTop: '2.5rem' }}>
+          <a
+            href="/blog/engineering-shopify-plus-b2b-wholesale-storefronts"
+            target="_blank"
+            className="btn btn-secondary btn-sm"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}
+          >
+            <span>Explore Engineering Case Studies &amp; Articles</span>
+            <ArrowRight size={15} />
+          </a>
         </div>
       </div>
     </section>
