@@ -33,14 +33,12 @@ export default function Index() {
 
       {/* Main Content Sections */}
       <main style={{ flex: 1 }}>
-        <Hero />
-        {/* Flagship SaaS: Founder Spotlight */}
+        <ProjectShowcase projects={projectsData} onSelectProject={setSelectedProject} />
         <StocklySpotlight project={stocklyProject} onSelectProject={setSelectedProject} />
-        <FeaturedApps projects={projectsData} onSelectProject={setSelectedProject} />
-        <ServicesSection />
-        <TechStackSection />
-        <TestimonialsSection />
-        <HireSection />
+        <React.Suspense fallback={<div style={{ minHeight: '400px' }} />}>
+          <ProjectEstimator />
+        </React.Suspense>
+        {/* <HireSection /> */}
       </main>
 
       {/* Footer */}

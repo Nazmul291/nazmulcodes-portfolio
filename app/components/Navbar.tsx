@@ -40,10 +40,10 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
         {/* Desktop Navigation Links */}
         <ul className="nav-links">
           <li>
-            <a href="/#showcase" className="nav-link">Projects</a>
+            <a href="/projects" className="nav-link">Projects</a>
           </li>
           <li>
-            <a href="/#services" className="nav-link">Services</a>
+            <a href="/services" className="nav-link">Services</a>
           </li>
           <li>
             <Link to="/blog" className="nav-link">Blogs</Link>

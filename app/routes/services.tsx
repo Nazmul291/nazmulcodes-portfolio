@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import { useOutletContext } from '@remix-run/react';
 import { Navbar } from '~/components/Navbar';
 import { Hero } from '~/components/Hero';
-import { StocklySpotlight } from '~/components/StocklySpotlight';
-import { FeaturedApps } from '~/components/FeaturedApps';
-import { ProjectShowcase } from '~/components/ProjectShowcase';
 import { ServicesSection } from '~/components/ServicesSection';
 import { TechStackSection } from '~/components/TechStackSection';
 import { TestimonialsSection } from '~/components/TestimonialsSection';
@@ -13,9 +10,6 @@ import { Footer } from '~/components/Footer';
 import { projectsData } from '~/data/projects';
 import { ProjectItem } from '~/types/project';
 
-const ProjectEstimator = React.lazy(() =>
-  import('~/components/ProjectEstimator').then((m) => ({ default: m.ProjectEstimator }))
-);
 
 const ProjectModal = React.lazy(() =>
   import('~/components/ProjectModal').then((m) => ({ default: m.ProjectModal }))
@@ -33,10 +27,7 @@ export default function Index() {
 
       {/* Main Content Sections */}
       <main style={{ flex: 1 }}>
-        <Hero />
         {/* Flagship SaaS: Founder Spotlight */}
-        <StocklySpotlight project={stocklyProject} onSelectProject={setSelectedProject} />
-        <FeaturedApps projects={projectsData} onSelectProject={setSelectedProject} />
         <ServicesSection />
         <TechStackSection />
         <TestimonialsSection />

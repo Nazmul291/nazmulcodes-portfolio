@@ -27,6 +27,8 @@ import { AdSlot } from '~/components/AdSlot';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
 import { GithubIcon } from '~/components/BrandIcons';
+import { HireSection } from '~/components/HireSection';
+import { Hero } from '~/components/Hero';
 
 export const meta: MetaFunction = () => {
   return [
@@ -56,9 +58,10 @@ export default function AboutPage() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar theme={theme} toggleTheme={toggleTheme} />
+      <Hero />
 
       <main style={{ flex: 1, paddingTop: '6.5rem', paddingBottom: '5rem' }}>
-        <div className="site-container" style={{ maxWidth: '900px', margin: '0 auto' }}>
+        <div className="site-container" style={{ maxWidth: '1080px', margin: '0 auto' }}>
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <div
@@ -84,105 +87,20 @@ export default function AboutPage() {
           </div>
 
           {/* Profile Card & Key Statistics */}
-          <div
-            className="glass-card"
-            style={{
-              padding: 'clamp(1.75rem, 4vw, 2.75rem)',
-              marginBottom: '3rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '2rem',
-              flexWrap: 'wrap',
-              border: '1px solid var(--border-medium)',
-              borderRadius: 'var(--radius-2xl)',
-            }}
-          >
-            <div style={{ position: 'relative', flexShrink: 0 }}>
-              <img
-                src="/assets/images/profile/nazmul-lg.webp"
-                alt="Nazmul Hawlader — Senior Shopify Engineer"
-                width={150}
-                height={150}
-                loading="eager"
+          <img
+                src="/assets/about/beggining-of-my-carier-kilo.webp"
+                alt="Nazmul Hawlader working at the engineering workstation"
+                width={800}
+                height={800}
+                loading="lazy"
                 decoding="async"
                 style={{
-                  width: 'clamp(110px, 16vw, 150px)',
-                  height: 'clamp(110px, 16vw, 150px)',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: '3px solid var(--accent-emerald)',
-                  boxShadow: '0 0 35px rgba(16, 185, 129, 0.35)',
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  objectFit: 'contain',
                 }}
               />
-            </div>
-
-            <div style={{ flex: 1, minWidth: '280px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '0.4rem' }}>
-                <h2 style={{ fontSize: '1.75rem', fontWeight: 800, margin: 0, color: 'var(--text-primary)' }}>
-                  {siteConfig.name}
-                </h2>
-                <span className="tag-badge" style={{ fontSize: '0.75rem', background: 'rgba(16, 185, 129, 0.12)', color: 'var(--accent-emerald)', borderColor: 'rgba(16, 185, 129, 0.3)' }}>
-                  Top-Rated Upwork Consultant
-                </span>
-              </div>
-
-              <div style={{ fontSize: '0.98rem', color: 'var(--accent-emerald)', fontWeight: 600, marginBottom: '0.85rem' }}>
-                Senior Full-Stack Engineer • Shopify App & Custom Theme Architect
-              </div>
-
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 1.25rem 0' }}>
-                Creator of <strong>Stockly: Inventory & Reorder</strong> (Shopify App Store) and <strong>Kilo</strong> (<a href="https://kilo.nazmulcodes.org/" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-cyan)', textDecoration: 'underline' }}>kilo.nazmulcodes.org</a>). Trusted partner to 33+ international brands across North America, the UK, Europe, and Australia.
-              </p>
-
-              {/* Stats Highlights */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0.75rem', marginBottom: '1.5rem' }}>
-                <div style={{ background: 'var(--bg-tertiary)', padding: '0.6rem 0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--accent-emerald)' }}>6+ Years</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Professional Dev</div>
-                </div>
-                <div style={{ background: 'var(--bg-tertiary)', padding: '0.6rem 0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--accent-cyan)' }}>33+</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Completed Projects</div>
-                </div>
-                <div style={{ background: 'var(--bg-tertiary)', padding: '0.6rem 0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--accent-amber)' }}>100%</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Upwork Job Success</div>
-                </div>
-                <div style={{ background: 'var(--bg-tertiary)', padding: '0.6rem 0.85rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)' }}>
-                  <div style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)' }}>2 SaaS</div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Published Products</div>
-                </div>
-              </div>
-
-              {/* Social and Profile Buttons */}
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-                <a
-                  href={siteConfig.upworkUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary btn-sm"
-                  style={{ gap: '0.45rem' }}
-                >
-                  <UpworkIcon size={15} />
-                  <span>Hire on Upwork</span>
-                </a>
-                <a
-                  href={siteConfig.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-secondary btn-sm"
-                  style={{ gap: '0.45rem' }}
-                >
-                  <GithubIcon size={15} />
-                  <span>GitHub (@Nazmul291)</span>
-                </a>
-                <Link to="/blog" className="btn btn-secondary btn-sm" style={{ gap: '0.45rem' }}>
-                  <BookOpen size={14} className="text-emerald" />
-                  <span>Explore 41 Guides</span>
-                </Link>
-              </div>
-            </div>
-          </div>
 
           {/* AdSense Placement (AdSense Compliant) */}
           <AdSlot />
@@ -234,6 +152,22 @@ export default function AboutPage() {
             </div>
 
             <h2>Chapter 3: The E-Commerce Awakening &amp; The Shopify Frontier</h2>
+            <img
+                src="/assets/about/e-commerce-awakening-the-shopify-frontier.webp"
+                alt="Nazmul Hawlader working at the engineering workstation"
+                width={800}
+                height={800}
+                loading="lazy"
+                decoding="async"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  objectFit: 'contain',
+                }}
+              />
+
+            
             <p>
               When I entered the freelance arena, I made a crucial observation that changed the trajectory of my professional life. Most freelance marketplaces were flooded with generalist web developers competing in a desperate race to the bottom, offering $50 cookie-cutter websites built on bloated visual builders.
             </p>
@@ -247,46 +181,6 @@ export default function AboutPage() {
               I saw an undeniable opportunity to provide massive, tangible business value: <strong>I would specialize deeply and uncompromisingly in high-performance Shopify engineering.</strong> I rejected visual page builders entirely and mastered native Shopify Liquid, the Online Store 2.0 component architecture, and headless integrations. I learned how to build bespoke, modular storefronts that gave merchants 100% visual customizability inside the native Shopify Theme Editor while delivering sub-second page loads and 95+ mobile Google Lighthouse scores.
             </p>
 
-            {/* Full Uncropped Photo & Caption (Half Text Width) */}
-            <div
-              style={{
-                margin: '2.5rem auto',
-                maxWidth: '420px',
-                borderRadius: 'var(--radius-xl)',
-                overflow: 'hidden',
-                border: '1px solid var(--border-medium)',
-                background: 'var(--bg-surface)',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
-              }}
-            >
-              <img
-                src="/assets/images/lifestyle/lifestyle-1.webp"
-                alt="Nazmul Hawlader working at the engineering workstation"
-                width={800}
-                height={800}
-                loading="lazy"
-                decoding="async"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  display: 'block',
-                  objectFit: 'contain',
-                }}
-              />
-              <div
-                style={{
-                  padding: '0.85rem 1rem',
-                  fontSize: '0.82rem',
-                  color: 'var(--text-muted)',
-                  fontStyle: 'italic',
-                  borderTop: '1px solid var(--border-subtle)',
-                  background: 'var(--bg-card)',
-                  textAlign: 'center',
-                }}
-              >
-                Deep in development: Architecting high-concurrency event pipelines and sub-second Liquid storefronts at my workstation in Bangladesh.
-              </div>
-            </div>
 
             <h2>Chapter 4: The Obsession with Sub-Second Speed &amp; Core Web Vitals</h2>
             <p>
@@ -333,6 +227,20 @@ export default function AboutPage() {
             </p>
 
             <h2>Chapter 5: Transitioning to SaaS — The Genesis of Stockly &amp; Kilo</h2>
+            <img
+                src="/assets/about/dashboard_interface_2K_-kilo 1-kilo.webp"
+                alt="Nazmul Hawlader working at the engineering workstation"
+                width={800}
+                height={800}
+                loading="lazy"
+                decoding="async"
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  display: 'block',
+                  objectFit: 'contain',
+                }}
+              />
             <p>
               While freelancing gave me intimate insight into client pain points, I knew that true technical mastery required building, launching, and maintaining my own commercial software products. In 2024, I set out to architect my first official SaaS product for the Shopify App Store.
             </p>
@@ -499,42 +407,6 @@ export default function AboutPage() {
           <AdSlot style={{ marginTop: '3.5rem' }} />
 
           {/* Bottom Call to Action */}
-          <div
-            className="glass-card"
-            style={{
-              padding: 'clamp(2rem, 5vw, 3rem)',
-              marginTop: '3.5rem',
-              textAlign: 'center',
-              border: '1px solid var(--accent-emerald)',
-              borderRadius: 'var(--radius-2xl)',
-              background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(10, 16, 30, 0.95) 100%)',
-            }}
-          >
-            <h3 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--text-primary)' }}>
-              Let&apos;s Build Something Extraordinary Together
-            </h3>
-            <p style={{ color: 'var(--text-secondary)', maxWidth: '650px', margin: '0 auto 1.75rem auto', fontSize: '1.02rem', lineHeight: 1.65 }}>
-              Whether you need a custom Shopify App, a sub-second bespoke theme built without visual page builders, or emergency speed and checkout troubleshooting, I am ready to partner with you.
-            </p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-              <a
-                href={siteConfig.upworkUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-lg"
-                style={{ gap: '0.65rem' }}
-              >
-                <UpworkIcon size={18} />
-                <span>Hire Nazmul on Upwork</span>
-                <ExternalLink size={16} />
-              </a>
-              <Link to="/blog" className="btn btn-secondary btn-lg" style={{ gap: '0.65rem' }}>
-                <BookOpen size={18} />
-                <span>Explore Technical Guides</span>
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          </div>
         </div>
       </main>
 
