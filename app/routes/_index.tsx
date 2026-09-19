@@ -2,17 +2,13 @@ import React, { useState } from 'react';
 import { useOutletContext, useLoaderData } from '@remix-run/react';
 import { Navbar } from '~/components/Navbar';
 import { BlogHero } from '~/components/Hero';
-import { StocklySpotlight } from '~/components/StocklySpotlight';
-import { FeaturedApps } from '~/components/FeaturedApps';
-import { ServicesSection } from '~/components/ServicesSection';
-import { TechStackSection } from '~/components/TechStackSection';
-import { TestimonialsSection } from '~/components/TestimonialsSection';
-import { HireSection } from '~/components/HireSection';
 import { Footer } from '~/components/Footer';
 import { projectsData } from '~/data/projects';
 import { ProjectItem } from '~/types/project';
 import { FeaturedBlogs } from '~/components/FeaturedBlogs';
 import { getPublishedPosts } from '~/models/blog.server';
+import { BlogCategoryDirectory } from '~/components/BlogCategoryDirectory';
+import { TechDigestStrip } from '~/components/TechDigestStrip';
 
 export const loader = async () => {
   const posts = await getPublishedPosts();
@@ -39,6 +35,8 @@ export default function Index() {
       <main style={{ flex: 1 }}>
         {/* Flagship SaaS: Founder Spotlight */}
         <FeaturedBlogs posts={posts} />
+        <BlogCategoryDirectory />
+        <TechDigestStrip />
 
       </main>
 
