@@ -115,14 +115,14 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
       {mobileMenuOpen && (
         <div className="mobile-menu-open">
           <a
-            href="/#showcase"
+            href="/projects"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Projects
           </a>
           <a
-            href="/#services"
+            href="/services"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
@@ -143,27 +143,27 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           >
             About Me
           </Link>
-          <a
-            href="/#apps"
+          <Link
+            to="/apps"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Shopify App Store Apps
-          </a>
-          <a
-            href="/#estimator"
+          </Link>
+          <Link
+            to="/estimator"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Project Cost Estimator
-          </a>
-          <a
-            href="/#reviews"
+          </Link>
+          <Link
+            to="/reviews"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Client Reviews
-          </a>
+          </Link>
           <Link
             to="/privacy"
             className="nav-link"
