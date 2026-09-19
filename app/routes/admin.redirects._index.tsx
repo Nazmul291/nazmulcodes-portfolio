@@ -2,12 +2,12 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import { json, redirect } from '@remix-run/node';
 import { Link, useLoaderData, useActionData, useNavigation, Form } from '@remix-run/react';
 import { useState } from 'react';
-import { ArrowRight, CornerDownRight, Plus, Trash2, ExternalLink, ShieldCheck, HelpCircle } from 'lucide-react';
+import { ArrowRight, CornerDownRight, Plus, Trash2, ExternalLink, ShieldCheck } from 'lucide-react';
 import { getAllRedirects, createRedirect, deleteRedirect } from '~/models/redirect.server';
 
 export const loader = async () => {
   const redirects = await getAllRedirects();
-  return json({ redirects });
+  return { redirects };
 };
 
 interface ActionData {
@@ -20,19 +20,25 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const intent = formData.get('intent');
 
   if (intent === 'create') {
-    const sourceSlug = (formData.get('sourceSlug') as string || '').trim();
+    const rawSource = (formData.get('sourceSlug') as string || '').trim();
     const targetUrl = (formData.get('targetUrl') as string || '').trim();
     const statusCode = parseInt(formData.get('statusCode') as string || '301', 10);
 
-    if (!sourceSlug) {
-      return json<ActionData>({ error: 'Source slug or path is required.' }, { status: 400 });
+    if (!rawSource) {
+      return Response.json({ error: 'Source slug is required.' }, { status: 400 });
     }
     if (!targetUrl) {
-      return json<ActionData>({ error: 'Destination URL is required.' }, { status: 400 });
+      return Response.json({ error: 'Destination URL is required.' }, { status: 400 });
     }
 
+    // 💡 সমাধান ১: /blog/ বা শুরুর কোনো স্ল্যাশ থাকলে তা কেটে শুধু ক্লিন স্লাগ রাখা
+    const sourceSlug = rawSource
+      .replace(/^\/?blog\//, '') // removes "/blog/" or "blog/" from start
+      .replace(/^\/+/, '')       // removes leading slashes
+      .replace(/\/+$/, '');      // removes trailing slashes
+
     await createRedirect({ sourceSlug, targetUrl, statusCode });
-    return json<ActionData>({ success: true });
+    return { success: true };
   }
 
   if (intent === 'delete') {
@@ -40,7 +46,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     if (id) {
       await deleteRedirect(id);
     }
-    return json<ActionData>({ success: true });
+    return { success: true };
   }
 
   return redirect('/admin/redirects');
@@ -119,18 +125,18 @@ export default function AdminRedirectsList() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginBottom: '1rem' }}>
               <div className="admin-field" style={{ margin: 0 }}>
                 <label className="admin-label" htmlFor="sourceSlug">
-                  Old / Deleted Slug or Path <span style={{ color: 'var(--accent-amber)' }}>*</span>
+                  Old / Deleted Slug <span style={{ color: 'var(--accent-amber)' }}>*</span>
                 </label>
                 <input
                   id="sourceSlug"
                   name="sourceSlug"
                   type="text"
-                  placeholder="e.g. old-guide-slug or /blog/old-slug"
+                  placeholder="e.g. old-guide-slug"
                   className="admin-input"
                   required
                 />
                 <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.25rem', display: 'block' }}>
-                  The slug that is returning 404 or indexed by Google.
+                  The pure slug without prefix (e.g. old-post-name).
                 </span>
               </div>
 
@@ -221,7 +227,7 @@ export default function AdminRedirectsList() {
           <table className="admin-posts-table">
             <thead>
               <tr>
-                <th>Source URL (From)</th>
+                <th>Source Slug (From)</th>
                 <th>Destination (To)</th>
                 <th>Status</th>
                 <th>Created</th>
@@ -231,8 +237,9 @@ export default function AdminRedirectsList() {
             <tbody>
               {redirects.map((r) => (
                 <tr key={r.id}>
+                  {/* 💡 সমাধান ২: /blog/ সরিয়ে সরাসরি r.sourceSlug দেখানো হচ্ছে */}
                   <td style={{ fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'var(--font-mono)', fontSize: '0.85rem' }}>
-                    /blog/{r.sourceSlug}
+                    {r.sourceSlug}
                   </td>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--accent-emerald)' }}>
@@ -261,8 +268,9 @@ export default function AdminRedirectsList() {
                   </td>
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '0.35rem' }}>
+                      {/* টেস্ট করার জন্য সরাসরি স্লাগে যাবে */}
                       <Link
-                        to={`/blog/${r.sourceSlug}`}
+                        to={`/${r.sourceSlug}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="admin-block-action-btn"
@@ -278,7 +286,7 @@ export default function AdminRedirectsList() {
                           className="admin-block-action-btn danger"
                           title="Delete redirect"
                           onClick={(e) => {
-                            if (!confirm(`Delete redirect for "/blog/${r.sourceSlug}"?`)) {
+                            if (!confirm(`Delete redirect for "${r.sourceSlug}"?`)) {
                               e.preventDefault();
                             }
                           }}
