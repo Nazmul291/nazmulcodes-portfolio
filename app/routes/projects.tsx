@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import { useOutletContext } from '@remix-run/react';
 import { Navbar } from '~/components/Navbar';
-import { Hero } from '~/components/Hero';
 import { StocklySpotlight } from '~/components/StocklySpotlight';
-import { FeaturedApps } from '~/components/FeaturedApps';
 import { ProjectShowcase } from '~/components/ProjectShowcase';
-import { ServicesSection } from '~/components/ServicesSection';
-import { TechStackSection } from '~/components/TechStackSection';
-import { TestimonialsSection } from '~/components/TestimonialsSection';
-import { HireSection } from '~/components/HireSection';
 import { Footer } from '~/components/Footer';
 import { projectsData } from '~/data/projects';
 import { ProjectItem } from '~/types/project';
