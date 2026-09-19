@@ -55,7 +55,7 @@ export const Footer: React.FC = () => {
               Core Navigation
             </h3>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.6rem', fontSize: '0.9rem' }}>
-              <li><a href="/#hero" className="nav-link">Home</a></li>
+              <li><a href="/" className="nav-link">Home</a></li>
               <li>
                 <Link to="/contact" className="nav-link" style={{ color: 'var(--accent-cyan)', fontWeight: 600 }}>
                   Contact Us / Start Project
@@ -69,15 +69,16 @@ export const Footer: React.FC = () => {
                   Engineering Blog (35+ Guides)
                 </Link>
               </li>
-              <li><a href="/#apps" className="nav-link">Shopify App Store Apps</a></li>
-              <li><a href="/#showcase" className="nav-link">Project Portfolio (33+)</a></li>
-              <li><a href="/#services" className="nav-link">Engineering Services</a></li>
-              <li><a href="/#estimator" className="nav-link">Project Cost Estimator</a></li>
-              <li><a href="/#reviews" className="nav-link">Client Testimonials</a></li>
               <li>
                 <Link to="/privacy" className="nav-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
                   <Shield size={13} className="text-emerald" />
                   <span>Privacy Policy</span>
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="nav-link" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.35rem' }}>
+                  <Shield size={13} className="text-emerald" />
+                  <span>Terms & Conditions</span>
                 </Link>
               </li>
             </ul>
@@ -96,25 +97,25 @@ export const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="https://apps.shopify.com/stock-alert-4" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://apps.shopify.com/stock-alert-4" target="_blank" rel="noopener noreferrer nofollow" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Layers size={14} className="text-cyan" />
                   <span>Stockly Real-Time Inventory App</span>
                 </a>
               </li>
               <li>
-                <a href="https://apps.shopify.com/demandmind-forecasting" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://apps.shopify.com/demandmind-forecasting" target="_blank" rel="noopener noreferrer nofollow" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Layers size={14} className="text-indigo" />
                   <span>DemandMind (Client Project Frontend)</span>
                 </a>
               </li>
               <li>
-                <a href="https://apps.shopify.com/shoppable-posts" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://apps.shopify.com/shoppable-posts" target="_blank" rel="noopener noreferrer nofollow" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Layers size={14} className="text-indigo" />
                   <span>Shoppable Posts Blog App</span>
                 </a>
               </li>
               <li>
-                <a href="https://clinique-dentaire-aurea-2.myshopify.com" target="_blank" rel="noopener noreferrer" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                <a href="https://clinique-dentaire-aurea-2.myshopify.com" target="_blank" rel="noopener noreferrer nofollow" className="nav-link" style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                   <Globe size={14} className="text-emerald" />
                   <span>Clinique Dentaire Aurea</span>
                 </a>
