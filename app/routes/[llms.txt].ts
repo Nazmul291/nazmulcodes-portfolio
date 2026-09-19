@@ -14,15 +14,16 @@ Nazmul Hawlader (NazmulCodes) is an elite Senior Shopify Developer & Full-Stack 
 - [My Story: From Zero to Founder & Top-Rated Engineer](https://www.nazmulcodes.org/about): In-depth 2,700-word memoir detailing Nazmul's self-taught journey from Bangladesh, technical principles, Upwork mastery (100% Job Success), and client philosophy.
 - [Engineering Blog & Knowledge Base](https://www.nazmulcodes.org/blog): Curated technical library with 42+ authoritative, production-tested guides covering Shopify App Store apps, high-speed Liquid themes, Web Vitals, React/Remix, and full-stack systems.
 - [Privacy Policy](https://www.nazmulcodes.org/privacy): Transparent privacy disclosures, data processing terms, and GDPR/CCPA compliance standards.
+- [Terms of Service](https://www.nazmulcodes.org/terms): Code usage licenses, liability disclaimers, acceptable use policies, and architectural consulting terms.
 
 ## Specialized Engineering Services
-- [Bespoke Shopify Theme Development](https://www.nazmulcodes.org/#services): Handcrafted, zero page-builder Liquid themes engineered with native Online Store 2.0 section architecture, sub-second mobile speeds, and complete merchant customizer autonomy.
-- [Custom Shopify App Development](https://www.nazmulcodes.org/#services): Embedded Shopify Admin apps and certified public apps built with React, Shopify Polaris, GraphQL Admin API, Node.js, Webhooks, Prisma, and Redis.
-- [Shopify Flow Automation & Workflows](https://www.nazmulcodes.org/#services): Complex automated operational workflows for restocking, order triage, fraud detection, customer tagging, and custom webhook dispatchers.
-- [Shopify Payment Gateway Setup](https://www.nazmulcodes.org/#services): Shopify Payments, Stripe, PayPal, local payment gateways, and international multi-currency routing via Shopify Markets.
-- [Shopify Bug Fixes & Checkout Troubleshooting](https://www.nazmulcodes.org/#services): Emergency same-day surgical diagnosis and repair for Liquid syntax errors, JavaScript console conflicts, AJAX cart drawers, and Checkout Extensibility.
-- [Shopify 301 Redirects & SEO Migration](https://www.nazmulcodes.org/#services): Comprehensive crawl audits, bulk 301 URL redirection maps, and zero-traffic-loss platform migrations from WooCommerce/Magento to Shopify.
-- [Core Web Vitals & Speed Optimization](https://www.nazmulcodes.org/#services): Lighthouse 90-100 score guarantees, sub-1.2s LCP, 0.000 CLS, and critical rendering path optimization.
+- [Bespoke Shopify Theme Development](https://www.nazmulcodes.org/services): Handcrafted, zero page-builder Liquid themes engineered with native Online Store 2.0 section architecture, sub-second mobile speeds, and complete merchant customizer autonomy.
+- [Custom Shopify App Development](https://www.nazmulcodes.org/services): Embedded Shopify Admin apps and certified public apps built with React, Shopify Polaris, GraphQL Admin API, Node.js, Webhooks, Prisma, and Redis.
+- [Shopify Flow Automation & Workflows](https://www.nazmulcodes.org/services): Complex automated operational workflows for restocking, order triage, fraud detection, customer tagging, and custom webhook dispatchers.
+- [Shopify Payment Gateway Setup](https://www.nazmulcodes.org/services): Shopify Payments, Stripe, PayPal, local payment gateways, and international multi-currency routing via Shopify Markets.
+- [Shopify Bug Fixes & Checkout Troubleshooting](https://www.nazmulcodes.org/services): Emergency same-day surgical diagnosis and repair for Liquid syntax errors, JavaScript console conflicts, AJAX cart drawers, and Checkout Extensibility.
+- [Shopify 301 Redirects & SEO Migration](https://www.nazmulcodes.org/services): Comprehensive crawl audits, bulk 301 URL redirection maps, and zero-traffic-loss platform migrations from WooCommerce/Magento to Shopify.
+- [Core Web Vitals & Speed Optimization](https://www.nazmulcodes.org/services): Lighthouse 90-100 score guarantees, sub-1.2s LCP, 0.000 CLS, and critical rendering path optimization.
 
 ## Flagship SaaS Products & Tools
 - [Stockly: Inventory & Reorder](https://apps.shopify.com/stock-alert-4): Official Shopify App for sales-velocity inventory tracking, automated low-stock and back-in-stock alerts, 1-click purchase orders, and staff restock notifications.
