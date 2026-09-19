@@ -51,7 +51,7 @@ export const StocklySpotlight: React.FC<StocklySpotlightProps> = ({ project, onS
             <a
               href="https://apps.shopify.com/stock-alert-4"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
               className="tag-badge"
               style={{
                 textDecoration: 'none',
@@ -99,6 +99,13 @@ export const StocklySpotlight: React.FC<StocklySpotlightProps> = ({ project, onS
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.96rem', lineHeight: 1.6, maxWidth: '750px' }}>
                 Conceived, architected, and bootstrapped by Nazmul Hawlader. Stockly empowers modern Shopify merchants with sales-velocity demand forecasting, automated supplier purchase orders, and real-time multi-channel staff notifications.
               </p>
+              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.85rem' }}>
+                <span className="tech-tag">React / Shopify Polaris</span>
+                <span className="tech-tag">Remix / Node.js</span>
+                <span className="tech-tag">GraphQL Admin API</span>
+                <span className="tech-tag">Webhooks Engine</span>
+                <span className="tech-tag">Redis Queue</span>
+              </div>
             </div>
           </div>
 
@@ -201,21 +208,21 @@ export const StocklySpotlight: React.FC<StocklySpotlightProps> = ({ project, onS
 
             <div className="spotlight-actions-buttons">
               {project && (
-                <button
-                  type="button"
-                  onClick={() => onSelectProject(project)}
+                <a
+                  target="_blank"
+                  href="/blog/case-study-building-stockly-inventory-alert-saas"
                   className="btn btn-secondary btn-sm"
                   style={{ gap: '0.5rem' }}
                 >
                   <Layers size={15} />
                   <span>Technical Case Study</span>
-                </button>
+                </a>
               )}
 
               <a
                 href="https://apps.shopify.com/stock-alert-4"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 className="btn btn-primary btn-sm"
                 style={{ gap: '0.5rem' }}
               >

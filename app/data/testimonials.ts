@@ -9,7 +9,9 @@ export const testimonialsData: TestimonialItem[] = [
     projectRef: 'Clinique Dentaire Aurea Storefront',
     rating: 5,
     projectTypeTag: 'Bespoke Liquid Theme',
-    highlight: 'Lighthouse 93 & 369 Settings'
+    highlight: 'Lighthouse 93 & 369 Settings',
+    metric: 'Lighthouse 93 Score • 369 Settings',
+    caseStudyUrl: '#case-studies'
   },
   {
     id: 't-2',
@@ -19,7 +21,8 @@ export const testimonialsData: TestimonialItem[] = [
     projectRef: 'DemandMind Shopify Frontend Engineering',
     rating: 5,
     projectTypeTag: 'Shopify Embedded App Frontend',
-    highlight: 'Embedded Polaris & GraphQL'
+    highlight: 'Embedded Polaris & GraphQL',
+    metric: 'React Polaris & High-Volume GraphQL'
   },
   {
     id: 't-3',
@@ -29,7 +32,8 @@ export const testimonialsData: TestimonialItem[] = [
     projectRef: 'Myant Health Wearables Storefront',
     rating: 5,
     projectTypeTag: 'Custom Architecture & B2B',
-    highlight: 'Enterprise Shopify Engine'
+    highlight: 'Enterprise Shopify Engine',
+    metric: 'Enterprise Compliance & Zero-Delay Delivery'
   },
   {
     id: 't-4',
@@ -39,7 +43,8 @@ export const testimonialsData: TestimonialItem[] = [
     projectRef: 'Klense.nl Postcode Diagnostic Funnel',
     rating: 5,
     projectTypeTag: 'Funnel & Landing Page',
-    highlight: '18.4% Conversion Rate'
+    highlight: '18.4% Conversion Rate',
+    metric: '18.4% Lead Capture Rate'
   },
   {
     id: 't-5',
@@ -49,7 +54,8 @@ export const testimonialsData: TestimonialItem[] = [
     projectRef: 'Gus* Modern Furniture Storefront',
     rating: 5,
     projectTypeTag: 'Figma to Code',
-    highlight: 'Pixel-Perfect Custom PDP'
+    highlight: 'Pixel-Perfect Custom PDP',
+    metric: 'Zero Bloat • Custom PDP Matrix'
   },
   {
     id: 't-6',
@@ -59,7 +65,8 @@ export const testimonialsData: TestimonialItem[] = [
     projectRef: 'Shoppable Posts Shopify App',
     rating: 5,
     projectTypeTag: 'Shopify App Store Launch',
-    highlight: 'Shopify App Store Approval'
+    highlight: 'Shopify App Store Approval',
+    metric: 'Shopify App Store Approval & Shadow-DOM'
   }
 ];
 
@@ -67,12 +74,12 @@ export const statsData = [
   {
     id: 'projects',
     value: '33+',
-    label: 'Stores & Apps Shipped',
+    label: 'Case Studies & Apps Shipped',
     subtext: 'Across US, EU, UK & Canada'
   },
   {
     id: 'apps',
-    value: '3+',
+    value: '4+',
     label: 'Published Shopify Apps',
     subtext: 'Live on official Shopify App Store'
   },
@@ -84,7 +91,7 @@ export const statsData = [
   },
   {
     id: 'experience',
-    value: '5+ Yrs',
+    value: '6+ Yrs',
     label: 'Shopify & Full-Stack Expertise',
     subtext: 'Liquid, React, Node, Python'
   }

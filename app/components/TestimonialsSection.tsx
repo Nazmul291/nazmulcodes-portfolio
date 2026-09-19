@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, MessageSquareQuote, ShieldCheck, CheckCircle2 } from 'lucide-react';
+import { Star, MessageSquareQuote, ShieldCheck, CheckCircle2, ArrowUpRight } from 'lucide-react';
 import { testimonialsData } from '~/data/testimonials';
 
 export const TestimonialsSection: React.FC = () => {
@@ -9,13 +9,13 @@ export const TestimonialsSection: React.FC = () => {
         <div className="section-header">
           <div className="section-badge">
             <MessageSquareQuote size={14} />
-            <span>Client Endorsements</span>
+            <span>Production Impact & Feedback</span>
           </div>
           <h2 className="section-title">
             Trusted by <span className="text-gradient">Founders & Engineering Leaders</span>
           </h2>
           <p className="section-subtitle">
-            What clients, product managers, and Shopify store owners say about working with Nazmul.
+            Feedback from founders, e-commerce managers, and store owners on theme speed, custom apps, and technical execution.
           </p>
         </div>
 
@@ -41,39 +41,89 @@ export const TestimonialsSection: React.FC = () => {
               </div>
 
               {/* Quote Content */}
-              <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)', lineHeight: 1.65, fontStyle: 'italic', marginBottom: '1.5rem', flex: 1 }}>
+              <p style={{ fontSize: '0.94rem', color: 'var(--text-secondary)', lineHeight: 1.65, fontStyle: 'italic', marginBottom: '1.25rem', flex: 1 }}>
                 "{t.content}"
               </p>
+
+              {/* Verified Metric Badge */}
+              {(t.metric || t.outcome) && (
+                <div style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  padding: '0.3rem 0.65rem',
+                  background: 'rgba(16, 185, 129, 0.08)',
+                  border: '1px solid rgba(16, 185, 129, 0.25)',
+                  borderRadius: 'var(--radius-sm)',
+                  fontSize: '0.76rem',
+                  color: 'var(--accent-emerald)',
+                  fontWeight: 600,
+                  marginBottom: '1rem',
+                  width: 'fit-content'
+                }}>
+                  <CheckCircle2 size={13} style={{ flexShrink: 0 }} />
+                  <span>{t.metric || t.outcome}</span>
+                </div>
+              )}
 
               {/* Project & Role Info */}
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'space-between',
                 gap: '0.85rem',
                 paddingTop: '1rem',
                 borderTop: '1px solid var(--border-subtle)',
                 marginTop: 'auto'
               }}>
-                <div style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: 'var(--radius-md)',
-                  background: 'var(--bg-tertiary)',
-                  border: '1px solid var(--border-medium)',
-                  color: 'var(--accent-emerald)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  flexShrink: 0
-                }}>
-                  <ShieldCheck size={20} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
+                  <div style={{
+                    width: '42px',
+                    height: '42px',
+                    borderRadius: '50%',
+                    background: 'var(--bg-tertiary)',
+                    border: '1px solid var(--border-medium)',
+                    color: 'var(--accent-emerald)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                    overflow: 'hidden'
+                  }}>
+                    {t.avatarUrl ? (
+                      <img src={t.avatarUrl} alt={t.role} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    ) : (
+                      <ShieldCheck size={20} />
+                    )}
+                  </div>
+
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: '0.92rem', color: 'var(--text-primary)' }}>{t.role}</div>
+                    <div style={{ fontSize: '0.8rem', color: 'var(--accent-emerald)', fontWeight: 600 }}>{t.company}</div>
+                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)' }}>Project: {t.projectRef}</div>
+                  </div>
                 </div>
 
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>{t.role}</div>
-                  <div style={{ fontSize: '0.82rem', color: 'var(--accent-emerald)', fontWeight: 600 }}>{t.company}</div>
-                  <div style={{ fontSize: '0.74rem', color: 'var(--text-muted)' }}>Project: {t.projectRef}</div>
-                </div>
+                {t.caseStudyUrl && (
+                  <a
+                    href={t.caseStudyUrl}
+                    title="Read Technical Breakdown"
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: 'var(--radius-sm)',
+                      background: 'rgba(255, 255, 255, 0.04)',
+                      border: '1px solid var(--border-subtle)',
+                      color: 'var(--text-secondary)',
+                      textDecoration: 'none'
+                    }}
+                  >
+                    <ArrowUpRight size={16} />
+                  </a>
+                )}
               </div>
             </div>
           ))}

@@ -1,10 +1,47 @@
 import React from 'react';
-import { ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Zap, ExternalLink, Star, Award, Code2 } from 'lucide-react';
+import { ArrowRight, BookOpen, Sparkles, CheckCircle2, ShieldCheck, Zap, ExternalLink, Star, Award, Code2 } from 'lucide-react';
 import { statsData } from '~/data/testimonials';
 import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
 
-export const Hero: React.FC = () => {
+export const AboutHero: React.FC = () => {
+  return (
+    <section id="hero" style={{ paddingBottom: '5rem', }}>
+      {/* Ambient background glows */}
+
+      <div>
+        <div style={{
+          position: 'relative',
+          width: '100%',
+          aspectRatio: '16 / 9',
+          borderRadius: 'var(--radius-lg, 12px)',
+          overflow: 'hidden',
+          background: 'var(--bg-tertiary, #0d121f)',
+          boxShadow: '0 20px 40px -15px rgba(0, 0, 0, 0.5)',
+          border: '1px solid var(--border-subtle, rgba(255, 255, 255, 0.1))'
+        }}>
+          <iframe
+            src="https://player.vimeo.com/video/1228313966?h=7d8ef713bb"
+            title="Shopify & Full-Stack Developer | Custom Apps, High-Converting Stores & Scalable Architecture"
+            style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              border: 0
+            }}
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export const BlogHero: React.FC = () => {
   return (
     <section id="hero" className="hero-wrapper">
       {/* Ambient background glows */}
@@ -45,51 +82,45 @@ export const Hero: React.FC = () => {
                 }} />
               </div>
               <div className="section-badge" style={{ marginBottom: 0 }}>
-                <Sparkles size={14} />
-                <span>Senior Full-Stack Shopify & E-Commerce Engineer</span>
+                <span>Shopify Architecture, Technical Guides & E-Commerce Engineering</span>
               </div>
             </div>
 
             <h1 className="hero-title">
-              Engineering <span className="text-gradient">High-Performance</span> Shopify Apps & Custom Storefronts.
+              Deep Dives into <span className="text-gradient">Shopify Architecture</span>, Modern Web Dev & Performance.
             </h1>
 
             <p className="hero-subtitle">
-              Hi, I’m <strong>Nazmul Hawlader</strong> (NazmulCodes). I build published Shopify App Store applications (React/Polaris/GraphQL/Python) and hand-crafted Online Store 2.0 themes with <strong>zero page builder bloat</strong>, sub-second load speeds, and deep merchant customizability.
+              Welcome to <strong>NazmulCodes</strong> by <strong>Nazmul Hawlader</strong>. A publication dedicated to actionable engineering guides, Online Store 2.0 theme architecture, Shopify app workflows, and sub-second Core Web Vitals optimization.
             </p>
 
             {/* Quick Proof Bullets */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem', marginBottom: '2rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.95rem' }}>
                 <CheckCircle2 size={18} className="text-emerald" style={{ flexShrink: 0 }} />
-                <span><strong>Official Shopify App & Tool Creator</strong> — Stockly & Kilo (kilo.nazmulcodes.org)</span>
+                <span><strong>Production-Tested Insights</strong> — Real-world architecture breakdowns from published apps & stores</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.95rem' }}>
                 <CheckCircle2 size={18} className="text-emerald" style={{ flexShrink: 0 }} />
-                <span><strong>Zero Page Builder Lag</strong> — 100% Native Liquid sections with deep schema settings</span>
+                <span><strong>Modern Theme Engineering</strong> — In-depth Liquid schemas, headless patterns, and zero bloat</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', fontSize: '0.95rem' }}>
                 <CheckCircle2 size={18} className="text-emerald" style={{ flexShrink: 0 }} />
-                <span><strong>Core Web Vitals Perfection</strong> — 90–100 Lighthouse scores, 0 CLS, &lt;1.1s LCP</span>
+                <span><strong>Performance Optimization</strong> — Actionable case studies on achieving &lt;1.1s LCP & 100 Lighthouse scores</span>
               </div>
             </div>
 
             {/* Call to Actions */}
             <div className="hero-ctas">
-              <a
-                href={siteConfig.upworkUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-lg"
-              >
-                <UpworkIcon size={20} />
-                <span>Hire on Upwork</span>
-                <ExternalLink size={18} />
+              <a href="#articles" className="btn btn-primary btn-lg">
+                <BookOpen size={20} />
+                <span>Explore Technical Guides</span>
+                <ArrowRight size={18} />
               </a>
 
-              <a href="#showcase" className="btn btn-secondary btn-lg">
-                <span>Explore 33+ Client Projects</span>
-                <ArrowRight size={18} />
+              <a href="/projects" className="btn btn-secondary btn-lg">
+                <span>View Client Work & Apps</span>
+                <ExternalLink size={18} />
               </a>
             </div>
           </div>
@@ -171,7 +202,7 @@ export const Hero: React.FC = () => {
                       Shopify Partner Verified
                     </div>
                     <div style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>
-                      33+ Stores & Apps Shipped
+                      33+ Case Studies & Apps Shipped
                     </div>
                   </div>
                 </div>

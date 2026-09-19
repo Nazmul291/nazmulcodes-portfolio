@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useOutletContext } from '@remix-run/react';
+import { useOutletContext, useLoaderData } from '@remix-run/react';
 import { Navbar } from '~/components/Navbar';
-import { Hero } from '~/components/Hero';
+import { BlogHero } from '~/components/Hero';
 import { StocklySpotlight } from '~/components/StocklySpotlight';
 import { FeaturedApps } from '~/components/FeaturedApps';
-import { ProjectShowcase } from '~/components/ProjectShowcase';
 import { ServicesSection } from '~/components/ServicesSection';
 import { TechStackSection } from '~/components/TechStackSection';
 import { TestimonialsSection } from '~/components/TestimonialsSection';
@@ -12,49 +11,39 @@ import { HireSection } from '~/components/HireSection';
 import { Footer } from '~/components/Footer';
 import { projectsData } from '~/data/projects';
 import { ProjectItem } from '~/types/project';
+import { FeaturedBlogs } from '~/components/FeaturedBlogs';
+import { getPublishedPosts } from '~/models/blog.server';
 
-const ProjectEstimator = React.lazy(() =>
-  import('~/components/ProjectEstimator').then((m) => ({ default: m.ProjectEstimator }))
-);
+export const loader = async () => {
+  const posts = await getPublishedPosts();
+  return { posts };
+};
 
-const ProjectModal = React.lazy(() =>
-  import('~/components/ProjectModal').then((m) => ({ default: m.ProjectModal }))
-);
+
 
 export default function Index() {
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const stocklyProject = projectsData.find(p => p.id === 'stock-alert');
+  const { posts } = useLoaderData<typeof loader>();
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Top Navbar */}
       <Navbar theme={theme} toggleTheme={toggleTheme} />
 
+      {/* Hero Section */}
+      <BlogHero />
+
       {/* Main Content Sections */}
       <main style={{ flex: 1 }}>
-        <Hero />
         {/* Flagship SaaS: Founder Spotlight */}
-        <StocklySpotlight project={stocklyProject} onSelectProject={setSelectedProject} />
-        <FeaturedApps projects={projectsData} onSelectProject={setSelectedProject} />
-        <ServicesSection />
-        <TechStackSection />
-        <TestimonialsSection />
-        <HireSection />
+        <FeaturedBlogs posts={posts} />
+
       </main>
 
       {/* Footer */}
       <Footer />
-
-      {/* Deep Dive Project Case Study Modal (Deferred until project selected) */}
-      {selectedProject && (
-        <React.Suspense fallback={null}>
-          <ProjectModal
-            project={selectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
-        </React.Suspense>
-      )}
     </div>
   );
 }

@@ -69,6 +69,10 @@ export interface TestimonialItem {
   rating: number;
   projectTypeTag: string;
   highlight?: string;
+  metric?: string;
+  outcome?: string;
+  avatarUrl?: string;
+  caseStudyUrl?: string;
 }
 
 export interface EstimatorOption {

@@ -28,7 +28,7 @@ import { siteConfig } from '~/data/siteConfig';
 import { UpworkIcon } from '~/components/UpworkIcon';
 import { GithubIcon } from '~/components/BrandIcons';
 import { HireSection } from '~/components/HireSection';
-import { Hero } from '~/components/Hero';
+import { AboutHero } from '~/components/Hero';
 
 export const meta: MetaFunction = () => {
   return [
@@ -58,10 +58,10 @@ export default function AboutPage() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Navbar theme={theme} toggleTheme={toggleTheme} />
-      <Hero />
 
       <main style={{ flex: 1, paddingTop: '6.5rem', paddingBottom: '5rem' }}>
         <div className="site-container" style={{ maxWidth: '1080px', margin: '0 auto' }}>
+          <AboutHero />
           {/* Header */}
           <div style={{ textAlign: 'center', marginBottom: '3.5rem' }}>
             <div

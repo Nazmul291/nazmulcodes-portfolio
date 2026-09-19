@@ -28,7 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
     <nav className="navbar">
       <div className="site-container navbar-inner">
         {/* Brand Logo */}
-        <a href="/#hero" className="brand-logo">
+        <a href="/" className="brand-logo">
           <div className="brand-icon">
             <Code size={20} />
           </div>
