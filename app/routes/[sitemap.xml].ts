@@ -24,6 +24,7 @@ const CORE_ROUTES: CoreRoute[] = [
   { path: '/about',         priority: '0.9',  changefreq: 'weekly'  },
   { path: '/contact',       priority: '0.85', changefreq: 'weekly'  },
   { path: '/privacy',       priority: '0.7',  changefreq: 'monthly' },
+  { path: '/terms',         priority: '0.7',  changefreq: 'monthly' },
   { path: '/projects',       priority: '0.7',  changefreq: 'monthly' },
   { path: '/services',       priority: '0.7',  changefreq: 'monthly' },
   { path: '/privacy-policy', priority: '0.5', changefreq: 'monthly' },
