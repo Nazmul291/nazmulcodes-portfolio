@@ -252,7 +252,6 @@ export const meta: MetaFunction = () => {
 };
 
 export const links: LinksFunction = () => [
-  { rel: "canonical", href: "https://www.nazmulcodes.org" },
   { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
   { rel: "alternate icon", href: "/favicon.ico" },
   {
