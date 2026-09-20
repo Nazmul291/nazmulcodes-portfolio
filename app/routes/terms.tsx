@@ -205,7 +205,7 @@ export default function TermsAndConditions() {
                     <a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer" className="platform-pill" style={{ fontSize: "0.78rem" }}>
                       <span>LinkedIn</span> <ExternalLink size={11} />
                     </a>
-                    <a href={siteConfig.upworkUrl} target="_blank" rel="noopener noreferrer" className="platform-pill" style={{ fontSize: "0.78rem" }}>
+                    <a href={siteConfig.upworkUrl} target="_blank" rel="noopener noreferrer nofollow" className="platform-pill" style={{ fontSize: "0.78rem" }}>
                       <span>Upwork</span> <ExternalLink size={11} />
                     </a>
                   </div>

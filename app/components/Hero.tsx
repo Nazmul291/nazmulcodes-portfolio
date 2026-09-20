@@ -34,6 +34,7 @@ export const AboutHero: React.FC = () => {
             allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
             referrerPolicy="strict-origin-when-cross-origin"
             allowFullScreen
+            rel="nofollow"
           />
         </div>
       </div>

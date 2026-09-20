@@ -92,7 +92,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           <a
             href={siteConfig.upworkUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             className="btn btn-primary btn-sm desktop-only"
           >
             <UpworkIcon size={15} />
@@ -205,7 +205,7 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
             <a
               href={siteConfig.upworkUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
               className="btn btn-primary"
               style={{ width: '100%', justifyContent: 'center' }}
               onClick={() => setMobileMenuOpen(false)}

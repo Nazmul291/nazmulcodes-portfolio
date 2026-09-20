@@ -552,7 +552,7 @@ export default function ContactPage() {
                     <a
                       href={channel.url}
                       target="_blank"
-                      rel="noopener noreferrer"
+                      rel="noopener noreferrer nofollow"
                       className="btn btn-secondary btn-sm"
                       style={{
                         width: '100%',

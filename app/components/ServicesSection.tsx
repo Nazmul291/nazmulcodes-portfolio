@@ -97,7 +97,7 @@ export const ServicesSection: React.FC = () => {
                 <a
                   href={siteConfig.upworkUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="btn btn-secondary btn-sm"
                   style={{ width: '100%', justifyContent: 'space-between', gap: '0.5rem' }}
                 >

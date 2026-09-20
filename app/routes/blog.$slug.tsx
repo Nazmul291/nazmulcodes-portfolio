@@ -381,7 +381,7 @@ export default function BlogPostDetail() {
                   <a
                     href={siteConfig.upworkUrl}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener noreferrer nofollow"
                     className="btn btn-primary btn-sm"
                   >
                     <UpworkIcon size={14} />
