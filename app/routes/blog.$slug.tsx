@@ -59,7 +59,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   }
 
   const { post } = data;
-  const canonicalUrl = `https://nazmulcodes.org/blog/${post.slug}`;
+  const canonicalUrl = `https://www.nazmulcodes.org/blog/${post.slug}`;
   const keywords = Array.from(new Set(post.tags)).join(', ');
 
   return [
@@ -107,7 +107,7 @@ export default function BlogPostDetail() {
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://nazmulcodes.org/blog/${post.slug}`,
+      '@id': `https://www.nazmulcodes.org/blog/${post.slug}`,
     },
   };
 
