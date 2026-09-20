@@ -593,7 +593,7 @@ export default function ContactPage() {
                     key={item.name}
                     href={item.url}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener noreferrer nofollow"
                     className="btn btn-secondary btn-sm"
                     style={{
                       display: 'inline-flex',

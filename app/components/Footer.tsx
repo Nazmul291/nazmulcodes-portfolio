@@ -193,7 +193,7 @@ export const Footer: React.FC = () => {
                 <a
                   href={siteConfig.stackoverflowUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="social-icon-btn"
                   title="Stack Overflow Profile"
                   aria-label="Stack Overflow Profile"
