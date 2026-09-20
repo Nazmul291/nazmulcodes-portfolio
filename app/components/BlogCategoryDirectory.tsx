@@ -132,6 +132,7 @@ export const BlogCategoryDirectory: React.FC = () => {
               <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1rem', marginTop: 'auto' }}>
                 <Link
                   to={`/blog?category=${encodeURIComponent(topic.filterParam)}`}
+                  rel="nofollow"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
