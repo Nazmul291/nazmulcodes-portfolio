@@ -17,7 +17,7 @@ const ProjectModal = React.lazy(() =>
 );
 
 export const meta: MetaFunction = () => [
-  { title: 'Projects & Case Studies | NazmulCodes' },
+  { title: 'Case Studies & Production Architecture | NazmulCodes' },
   { name: 'description', content: 'Explore custom Shopify applications, high-performance themes, and developer tools built by Nazmul Hawlader.' },
   { tagName: 'link', rel: 'canonical', href: 'https://www.nazmulcodes.org/projects' },
 ];

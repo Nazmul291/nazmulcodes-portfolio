@@ -45,7 +45,7 @@ export const meta: MetaFunction = ({ location }) => {
 
   return [
     { charSet: 'utf-8' },
-    { title: 'Engineering & Shopify Development Blog | NazmulCodes' },
+    { title: 'Technical Guides & Architecture Playbooks | NazmulCodes' },
     {
       name: 'description',
       content:

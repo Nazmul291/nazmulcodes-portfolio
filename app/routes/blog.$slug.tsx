@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import type { LoaderFunctionArgs, MetaFunction } from '@remix-run/node';
-import { json, redirect } from '@remix-run/node';
+import { redirect } from '@remix-run/node';
 import { useLoaderData, Link, useOutletContext } from '@remix-run/react';
 import {
   ArrowLeft,
@@ -47,7 +47,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const relatedPosts = await getRelatedPublishedPosts(slug, post.category, 3);
   const adjacentPosts = await getAdjacentPublishedPosts(slug);
 
-  return json({ post, relatedPosts, adjacentPosts });
+  return { post, relatedPosts, adjacentPosts };
 };
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
@@ -61,10 +61,11 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const { post } = data;
   const canonicalUrl = `https://www.nazmulcodes.org/blog/${post.slug}`;
   const keywords = Array.from(new Set(post.tags)).join(', ');
+  const fullTitle = post.title.length > 50 ? post.title : `${post.title} | NazmulCodes`;
 
   return [
     { charSet: 'utf-8' },
-    { title: `${post.title} | NazmulCodes` },
+    { title: fullTitle },
     { name: 'description', content: post.excerpt },
     { name: 'keywords', content: keywords },
     { name: 'author', content: siteConfig.name },

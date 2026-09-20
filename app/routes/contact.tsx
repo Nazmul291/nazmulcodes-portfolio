@@ -40,7 +40,7 @@ export const meta: MetaFunction = () => {
 
   return [
     { charSet: 'utf-8' },
-    { title: 'Contact & Connect with Nazmul Hawlader | Social Profiles, Phone & Office | NazmulCodes' },
+    { title: 'Editorial Inquiries & Tech Consulting | NazmulCodes' },
     {
       name: 'description',
       content:

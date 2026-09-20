@@ -46,7 +46,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 
 export const meta: MetaFunction = () => {
   return [
-    { title: 'NazmulCodes | Senior Shopify Expert & Full-Stack Engineer' },
+    { title: 'NazmulCodes | Engineering Guides & Shopify Insights' },
     { name: 'description', content: 'Bespoke Shopify Apps, Liquid Themes, and Performance Optimization.' },
     { tagName: 'link', rel: 'canonical', href: 'https://www.nazmulcodes.org/' },
   ];

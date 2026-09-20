@@ -16,7 +16,7 @@ const ProjectModal = React.lazy(() =>
 );
 
 export const meta: MetaFunction = () => [
-  { title: 'Shopify Development & Consulting Services | NazmulCodes' },
+  { title: 'Engineering Consulting & Technical Audits | NazmulCodes' },
   { name: 'description', content: 'End-to-end Shopify app development, theme speed optimization, GraphQL integrations, and custom migrations.' },
   { tagName: 'link', rel: 'canonical', href: 'https://www.nazmulcodes.org/services' },
 ];
