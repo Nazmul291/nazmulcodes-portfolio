@@ -40,6 +40,12 @@ export const meta: MetaFunction = () => {
         'The comprehensive memoir of Nazmul Hawlader: from a self-taught programmer in Bangladesh to Senior Full-Stack Shopify Engineer, official Shopify App founder (Stockly, Kilo), and Top-Rated Upwork consultant.',
     },
     { name: 'robots', content: 'index, follow' },
+    // ✅ এই ক্যানোনিকাল ট্যাগটি যুক্ত করুন
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: 'https://www.nazmulcodes.org/about',
+    },
     { property: 'og:title', content: 'About Nazmul Hawlader | My Story, Journey & Engineering Philosophy' },
     {
       property: 'og:description',

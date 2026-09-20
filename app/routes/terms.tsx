@@ -6,6 +6,8 @@ import { Footer } from "~/components/Footer";
 import { siteConfig } from "~/data/siteConfig";
 
 export const meta: MetaFunction = () => {
+  const canonicalUrl = 'https://www.nazmulcodes.org/terms';
+
   return [
     { charSet: "utf-8" },
     { title: "Terms and Conditions | NazmulCodes" },
@@ -15,6 +17,12 @@ export const meta: MetaFunction = () => {
         "Terms and conditions for accessing NazmulCodes (nazmulcodes.org), including software license disclosures, technical publication disclaimers, and architectural consulting terms.",
     },
     { name: "robots", content: "index, follow" },
+    // ✅ সেলফ-ক্যানোনিকাল ট্যাগ যুক্ত করা হলো
+    {
+      tagName: "link",
+      rel: "canonical",
+      href: canonicalUrl,
+    },
     { property: "og:title", content: "Terms and Conditions | NazmulCodes" },
     {
       property: "og:description",
@@ -22,7 +30,7 @@ export const meta: MetaFunction = () => {
         "Terms and conditions for accessing NazmulCodes (nazmulcodes.org), including software license disclosures, technical publication disclaimers, and architectural consulting terms.",
     },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://nazmulcodes.org/terms" },
+    { property: "og:url", content: canonicalUrl },
   ];
 };
 
