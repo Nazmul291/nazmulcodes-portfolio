@@ -27,7 +27,6 @@ const CORE_ROUTES: CoreRoute[] = [
   { path: '/terms',         priority: '0.7',  changefreq: 'monthly' },
   { path: '/projects',       priority: '0.7',  changefreq: 'monthly' },
   { path: '/services',       priority: '0.7',  changefreq: 'monthly' },
-  { path: '/privacy-policy', priority: '0.5', changefreq: 'monthly' },
 ];
 
 /** Escape any XML special characters in a URL just in case. */
