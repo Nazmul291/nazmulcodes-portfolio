@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useOutletContext } from '@remix-run/react';
 import { Navbar } from '~/components/Navbar';
+import type { MetaFunction } from '@remix-run/node';
 import { StocklySpotlight } from '~/components/StocklySpotlight';
 import { ProjectShowcase } from '~/components/ProjectShowcase';
 import { Footer } from '~/components/Footer';
@@ -15,6 +16,12 @@ const ProjectModal = React.lazy(() =>
   import('~/components/ProjectModal').then((m) => ({ default: m.ProjectModal }))
 );
 
+export const meta: MetaFunction = () => [
+  { title: 'Projects & Case Studies | NazmulCodes' },
+  { name: 'description', content: 'Explore custom Shopify applications, high-performance themes, and developer tools built by Nazmul Hawlader.' },
+  { tagName: 'link', rel: 'canonical', href: 'https://www.nazmulcodes.org/projects' },
+];
+
 export default function Index() {
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
@@ -24,6 +31,10 @@ export default function Index() {
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       {/* Top Navbar */}
       <Navbar theme={theme} toggleTheme={toggleTheme} />
+
+      <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 3.25rem)', fontWeight: 800, lineHeight: 1.2, marginBottom: '1rem' }}>
+        Shopify Apps, Tools & <span className="text-gradient">Client Projects</span>
+      </h1>
 
       {/* Main Content Sections */}
       <main style={{ flex: 1 }}>
