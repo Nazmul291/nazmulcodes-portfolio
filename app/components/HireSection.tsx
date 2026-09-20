@@ -53,7 +53,7 @@ export const HireSection: React.FC = () => {
                 <a
                   href={siteConfig.upworkUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="btn btn-primary"
                   style={{ gap: '0.65rem' }}
                 >
@@ -211,7 +211,7 @@ export const HireSection: React.FC = () => {
               <a
                 href={siteConfig.upworkUrl}
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 className="btn btn-secondary btn-sm"
                 style={{ width: '100%', justifyContent: 'center', marginTop: '0.25rem', gap: '0.5rem' }}
               >

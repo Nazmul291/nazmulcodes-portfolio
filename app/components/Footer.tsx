@@ -146,7 +146,7 @@ export const Footer: React.FC = () => {
             <a
               href={siteConfig.upworkUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
               className="btn btn-primary btn-sm"
               style={{ width: '100%', marginBottom: '1.25rem', gap: '0.5rem' }}
             >
@@ -193,7 +193,7 @@ export const Footer: React.FC = () => {
                 <a
                   href={siteConfig.stackoverflowUrl}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="social-icon-btn"
                   title="Stack Overflow Profile"
                   aria-label="Stack Overflow Profile"
@@ -248,7 +248,7 @@ export const Footer: React.FC = () => {
             <a
               href={siteConfig.upworkUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener noreferrer nofollow"
               className="platform-pill"
               title="Hire Nazmul on Upwork"
             >

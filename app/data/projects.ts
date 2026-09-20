@@ -387,7 +387,7 @@ export const projectsData: ProjectItem[] = [
     projectType: 'Shopify App Store Application',
     category: ['shopify-apps'],
     featured: false,
-    appStoreUrl: 'https://apps.shopify.com/eur-to-bgn',
+    appStoreUrl: 'https://apps.shopify.com/eur-to-bgn-converter-bg',
     role: 'Shopify App Developer',
     timeline: 'April 2026',
     summary: 'Shopify App providing seamless live currency conversion between Bulgarian Lev (BGN) and Euro (EUR) with dual-price display compliance.',
