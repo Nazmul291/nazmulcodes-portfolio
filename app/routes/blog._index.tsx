@@ -22,7 +22,30 @@ export const loader = async () => {
   return { posts };
 };
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ location }) => {
+  // ১. URL Search Params থেকে category ফিল্টার চেক করা
+  const searchParams = new URLSearchParams(location.search);
+  const category = searchParams.get('category');
+  const hasCategoryFilter = Boolean(category && category !== 'all');
+
+  // মূল ব্লগ পেজের ক্যানোনিকাল URL (সবসময় ক্লিন রুট থাকবে)
+  const canonicalUrl = 'https://nazmulcodes.org/blog';
+
+  // ২. যদি ফিল্টারিং পেজ হয় (যেমন ?category=Shopify & E-Commerce)
+  if (hasCategoryFilter) {
+    return [
+      { charSet: 'utf-8' },
+      { title: `${category} Articles | NazmulCodes Engineering Blog` },
+      // সার্চ ইঞ্জিনকে এই ফিল্টার পেজটি ইন্ডেক্স না করতে বলা (ডুপ্লিকেশন বন্ধ হবে)
+      { name: 'robots', content: 'noindex, follow' },
+      // সেলফ-ক্যানোনিকাল বন্ধ করে মূল /blog পেজে নির্দেশ করা
+      { tagName: 'link', rel: 'canonical', href: canonicalUrl },
+      { property: 'og:type', content: 'website' },
+      { property: 'og:url', content: canonicalUrl },
+    ];
+  }
+
+  // ৩. মূল /blog পেজের ডিফল্ট মেটা (যখন কোনো ফিল্টার নেই)
   return [
     { charSet: 'utf-8' },
     { title: 'Engineering & Shopify Development Blog | NazmulCodes' },
@@ -32,6 +55,7 @@ export const meta: MetaFunction = () => {
         'Technical tutorials, architecture deep-dives, Shopify App development guides, Core Web Vitals optimization, and founder stories by Senior Engineer Nazmul Hawlader.',
     },
     { name: 'robots', content: 'index, follow' },
+    { tagName: 'link', rel: 'canonical', href: canonicalUrl },
     { property: 'og:title', content: 'Engineering & Shopify Development Blog | NazmulCodes' },
     {
       property: 'og:description',
@@ -39,9 +63,30 @@ export const meta: MetaFunction = () => {
         '35+ in-depth guides on Shopify App Store apps, GraphQL APIs, high-performance Liquid themes, React/Remix architecture, and real-world freelance mastery.',
     },
     { property: 'og:type', content: 'website' },
-    { property: 'og:url', content: 'https://nazmulcodes.org/blog' },
+    { property: 'og:url', content: canonicalUrl },
   ];
 };
+
+// export const meta: MetaFunction = () => {
+//   return [
+//     { charSet: 'utf-8' },
+//     { title: 'Engineering & Shopify Development Blog | NazmulCodes' },
+//     {
+//       name: 'description',
+//       content:
+//         'Technical tutorials, architecture deep-dives, Shopify App development guides, Core Web Vitals optimization, and founder stories by Senior Engineer Nazmul Hawlader.',
+//     },
+//     { name: 'robots', content: 'index, follow' },
+//     { property: 'og:title', content: 'Engineering & Shopify Development Blog | NazmulCodes' },
+//     {
+//       property: 'og:description',
+//       content:
+//         '35+ in-depth guides on Shopify App Store apps, GraphQL APIs, high-performance Liquid themes, React/Remix architecture, and real-world freelance mastery.',
+//     },
+//     { property: 'og:type', content: 'website' },
+//     { property: 'og:url', content: 'https://nazmulcodes.org/blog' },
+//   ];
+// };
 
 export default function BlogIndex() {
   const { posts } = useLoaderData<typeof loader>();
