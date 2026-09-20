@@ -19,14 +19,14 @@ const schemaGraph = {
   "@graph": [
     {
       "@type": "Person",
-      "@id": "https://nazmulcodes.org/#person",
+      "@id": "https://www.nazmulcodes.org/#person",
       name: "Nazmul Hawlader",
       alternateName: ["NazmulCodes", "Nazmul"],
       jobTitle: "Senior Shopify Expert & Full-Stack App Developer",
       description:
         "Senior Shopify Engineer with 6+ years experience architecting custom Shopify Apps, bespoke Online Store 2.0 themes, Shopify Flow automations, payment gateway routing, emergency bug fixes, and technical SEO migrations.",
-      url: "https://nazmulcodes.org",
-      image: "https://nazmulcodes.org/favicon.svg",
+      url: "https://www.nazmulcodes.org",
+      image: "https://www.nazmulcodes.org/favicon.svg",
       sameAs: [
         "https://github.com/Nazmul291",
         "https://www.linkedin.com/in/nazmul-hawlader-a7bb14144/",
@@ -60,11 +60,11 @@ const schemaGraph = {
     },
     {
       "@type": "ProfessionalService",
-      "@id": "https://nazmulcodes.org/#service",
+      "@id": "https://www.nazmulcodes.org/#service",
       name: "NazmulCodes — Shopify Development & Consulting Services",
-      url: "https://nazmulcodes.org",
-      image: "https://nazmulcodes.org/favicon.svg",
-      founder: { "@id": "https://nazmulcodes.org/#person" },
+      url: "https://www.nazmulcodes.org",
+      image: "https://www.nazmulcodes.org/favicon.svg",
+      founder: { "@id": "https://www.nazmulcodes.org/#person" },
       priceRange: "$$$",
       currenciesAccepted: "USD, EUR, GBP, AUD, CAD",
       paymentAccepted: "Credit Card, Stripe, PayPal, Upwork Escrow, Wire Transfer",
@@ -141,7 +141,7 @@ const schemaGraph = {
       operatingSystem: "Shopify OS",
       applicationCategory: "BusinessApplication",
       url: "https://apps.shopify.com/stockly-inventory-reorder",
-      author: { "@id": "https://nazmulcodes.org/#person" },
+      author: { "@id": "https://www.nazmulcodes.org/#person" },
       description:
         "Official Shopify App for inventory reorder forecasting, automated low-stock and back-in-stock alerts, and multi-channel staff restock notifications.",
       offers: {
@@ -233,8 +233,8 @@ export const meta: MetaFunction = () => {
         "Specialized in bespoke Shopify Liquid themes, official Shopify App Store apps, Flow automations, payment gateway routing, emergency bug fixes, and SEO 301 redirects.",
     },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://nazmulcodes.org" },
-    { property: "og:image", content: "https://nazmulcodes.org/favicon.svg" },
+    { property: "og:url", content: "https://www.nazmulcodes.org" },
+    { property: "og:image", content: "https://www.nazmulcodes.org/favicon.svg" },
     { property: "og:image:alt", content: "NazmulCodes | Senior Shopify Expert & Full-Stack App Developer" },
     { property: "og:locale", content: "en_US" },
     // Twitter
@@ -247,12 +247,12 @@ export const meta: MetaFunction = () => {
       content:
         "Hire Senior Shopify Developer Nazmul Hawlader. Official Shopify Apps, custom Liquid themes, Flow automations, checkout troubleshooting & 301 SEO redirects.",
     },
-    { name: "twitter:image", content: "https://nazmulcodes.org/favicon.svg" },
+    { name: "twitter:image", content: "https://www.nazmulcodes.org/favicon.svg" },
   ];
 };
 
 export const links: LinksFunction = () => [
-  { rel: "canonical", href: "https://nazmulcodes.org" },
+  { rel: "canonical", href: "https://www.nazmulcodes.org" },
   { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
   { rel: "alternate icon", href: "/favicon.ico" },
   {
