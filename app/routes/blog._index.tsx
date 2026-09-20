@@ -29,7 +29,7 @@ export const meta: MetaFunction = ({ location }) => {
   const hasCategoryFilter = Boolean(category && category !== 'all');
 
   // মূল ব্লগ পেজের ক্যানোনিকাল URL (সবসময় ক্লিন রুট থাকবে)
-  const canonicalUrl = 'https://nazmulcodes.org/blog';
+  const canonicalUrl = 'https://www.nazmulcodes.org/blog';
 
   // ২. যদি ফিল্টারিং পেজ হয় (যেমন ?category=Shopify & E-Commerce)
   if (hasCategoryFilter) {
