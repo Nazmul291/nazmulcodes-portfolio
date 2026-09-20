@@ -36,7 +36,6 @@ export const meta: MetaFunction = ({ location }) => {
     return [
       { charSet: 'utf-8' },
       { title: `${formattedTitle} Articles | NazmulCodes Engineering Blog` },
-      { name: 'robots', content: 'noindex, follow' },
       { tagName: 'link', rel: 'canonical', href: canonicalUrl },
       { property: 'og:title', content: `${formattedTitle} Articles | NazmulCodes` },
       { property: 'og:type', content: 'website' },
