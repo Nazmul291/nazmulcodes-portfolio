@@ -2,7 +2,7 @@ export const siteConfig = {
   name: 'Nazmul Hawlader',
   brandName: 'NazmulCodes',
   domain: 'nazmulcodes.org',
-  siteUrl: 'https://nazmulcodes.org',
+  siteUrl: 'https://www.nazmulcodes.org',
   email: 'info@nazmulcodes.org',
   upworkUrl: 'https://www.upwork.com/freelancers/nazmul291',
   githubUrl: 'https://github.com/Nazmul291',

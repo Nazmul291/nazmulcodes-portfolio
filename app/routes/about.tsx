@@ -47,8 +47,8 @@ export const meta: MetaFunction = () => {
         'Read the comprehensive journey, architecture philosophies, and life lessons of Nazmul Hawlader — building published SaaS applications, client success stories, and high-performance e-commerce storefronts.',
     },
     { property: 'og:type', content: 'profile' },
-    { property: 'og:url', content: 'https://nazmulcodes.org/about' },
-    { property: 'og:image', content: 'https://nazmulcodes.org/assets/images/profile/nazmul-lg.webp' },
+    { property: 'og:url', content: 'https://www.nazmulcodes.org/about' },
+    { property: 'og:image', content: 'https://www.nazmulcodes.org/assets/images/profile/nazmul-lg.webp' },
   ];
 };
 
