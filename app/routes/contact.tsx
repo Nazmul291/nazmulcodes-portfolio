@@ -36,6 +36,8 @@ import {
 } from '~/components/BrandIcons';
 
 export const meta: MetaFunction = () => {
+  const canonicalUrl = 'https://www.nazmulcodes.org/contact';
+
   return [
     { charSet: 'utf-8' },
     { title: 'Contact & Connect with Nazmul Hawlader | Social Profiles, Phone & Office | NazmulCodes' },
@@ -50,6 +52,12 @@ export const meta: MetaFunction = () => {
         'Nazmul Hawlader contact, NazmulCodes social media, Nazmul Hawlader phone number, Nazmul Hawlader office Dhaka, hire Shopify developer Bangladesh, NazmulCodes WhatsApp, Nazmul Hawlader LinkedIn, Nazmul Hawlader Twitter',
     },
     { name: 'robots', content: 'index, follow' },
+    // ✅ সেলফ-ক্যানোনিকাল ট্যাগ যুক্ত করা হলো
+    {
+      tagName: 'link',
+      rel: 'canonical',
+      href: canonicalUrl,
+    },
     { property: 'og:title', content: 'Contact & Connect with Nazmul Hawlader | Social Profiles & Direct Channels' },
     {
       property: 'og:description',
@@ -57,8 +65,8 @@ export const meta: MetaFunction = () => {
         'Reach out directly without any forms. Phone, WhatsApp, Direct Email, Social Media Profiles, and Office Address in Dhaka, Bangladesh.',
     },
     { property: 'og:type', content: 'website' },
-    { property: 'og:url', content: 'https://nazmulcodes.org/contact' },
-    { property: 'og:image', content: 'https://nazmulcodes.org/assets/images/profile/nazmul-lg.webp' },
+    { property: 'og:url', content: canonicalUrl },
+    { property: 'og:image', content: 'https://www.nazmulcodes.org/assets/images/profile/nazmul-lg.webp' },
   ];
 };
 

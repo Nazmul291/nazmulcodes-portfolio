@@ -6,6 +6,8 @@ import { Footer } from "~/components/Footer";
 import { siteConfig } from "~/data/siteConfig";
 
 export const meta: MetaFunction = () => {
+  const canonicalUrl = 'https://www.nazmulcodes.org/privacy';
+
   return [
     { charSet: "utf-8" },
     { title: "Privacy Policy | NazmulCodes" },
@@ -15,6 +17,12 @@ export const meta: MetaFunction = () => {
         "Privacy policy and data protection practices for NazmulCodes (nazmulcodes.org), including cookie policies, newsletter subscriptions, and Google AdSense compliance disclosures.",
     },
     { name: "robots", content: "index, follow" },
+    // ✅ সেলফ-ক্যানোনিকাল ট্যাগ
+    {
+      tagName: "link",
+      rel: "canonical",
+      href: canonicalUrl,
+    },
     { property: "og:title", content: "Privacy Policy | NazmulCodes" },
     {
       property: "og:description",
@@ -22,7 +30,7 @@ export const meta: MetaFunction = () => {
         "Privacy policy and data protection practices for NazmulCodes (nazmulcodes.org), including cookie policies, newsletter subscriptions, and Google AdSense compliance disclosures.",
     },
     { property: "og:type", content: "website" },
-    { property: "og:url", content: "https://nazmulcodes.org/privacy" },
+    { property: "og:url", content: canonicalUrl },
   ];
 };
 

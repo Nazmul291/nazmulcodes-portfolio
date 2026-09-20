@@ -9,7 +9,7 @@ import { FeaturedBlogs } from '~/components/FeaturedBlogs';
 import { getPublishedPosts } from '~/models/blog.server';
 import { BlogCategoryDirectory } from '~/components/BlogCategoryDirectory';
 import { TechDigestStrip } from '~/components/TechDigestStrip';
-import type { ActionFunctionArgs } from '@remix-run/node';
+import type { ActionFunctionArgs, MetaFunction } from '@remix-run/node';
 import { createSubscriber } from '~/models/subscriber.server';
 
 export const loader = async () => {
@@ -44,7 +44,13 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 };
 
-
+export const meta: MetaFunction = () => {
+  return [
+    { title: 'NazmulCodes | Senior Shopify Expert & Full-Stack Engineer' },
+    { name: 'description', content: 'Bespoke Shopify Apps, Liquid Themes, and Performance Optimization.' },
+    { tagName: 'link', rel: 'canonical', href: 'https://www.nazmulcodes.org/' },
+  ];
+};
 
 export default function Index() {
   const { theme, toggleTheme } = useOutletContext<{ theme: 'dark' | 'light'; toggleTheme: () => void }>();
