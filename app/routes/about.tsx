@@ -24,16 +24,12 @@ import {
 import { Navbar } from '~/components/Navbar';
 import { Footer } from '~/components/Footer';
 import { AdSlot } from '~/components/AdSlot';
-import { siteConfig } from '~/data/siteConfig';
-import { UpworkIcon } from '~/components/UpworkIcon';
-import { GithubIcon } from '~/components/BrandIcons';
-import { HireSection } from '~/components/HireSection';
 import { AboutHero } from '~/components/Hero';
 
 export const meta: MetaFunction = () => {
   return [
     { charSet: 'utf-8' },
-    { title: 'About Nazmul Hawlader | My Story, Journey & Engineering Philosophy | NazmulCodes' },
+    { title: 'About NazmulCodes | Technical Journey & Philosophy' },
     {
       name: 'description',
       content:

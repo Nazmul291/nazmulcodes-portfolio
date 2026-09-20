@@ -10,7 +10,7 @@ export const meta: MetaFunction = () => {
 
   return [
     { charSet: "utf-8" },
-    { title: "Privacy Policy | NazmulCodes" },
+    { title: "Privacy Policy & Disclosures | NazmulCodes" },
     {
       name: "description",
       content:
