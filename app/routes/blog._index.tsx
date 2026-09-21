@@ -22,7 +22,8 @@ export const loader = async () => {
   return { posts };
 };
 
-export const meta: MetaFunction = ({ location }) => {
+export const meta: MetaFunction = ({ location, matches }) => {
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
   const searchParams = new URLSearchParams(location.search);
   const category = searchParams.get('category');
   const hasCategoryFilter = Boolean(category && category !== 'all');
@@ -34,7 +35,7 @@ export const meta: MetaFunction = ({ location }) => {
     const formattedTitle = category ? decodeURIComponent(category) : '';
 
     return [
-      { charSet: 'utf-8' },
+      ...parentMeta,
       { title: `${formattedTitle} Articles | NazmulCodes Engineering Blog` },
       { tagName: 'link', rel: 'canonical', href: canonicalUrl },
       { property: 'og:title', content: `${formattedTitle} Articles | NazmulCodes` },

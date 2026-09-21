@@ -50,9 +50,11 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   return { post, relatedPosts, adjacentPosts };
 };
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: MetaFunction<typeof loader> = ({ data, matches }) => {
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
   if (!data?.post) {
     return [
+      ...parentMeta,
       { title: 'Article Not Found — NazmulCodes' },
       { name: 'robots', content: 'noindex, nofollow' },
     ];
@@ -64,7 +66,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
   const fullTitle = post.title.length > 50 ? post.title : `${post.title} | NazmulCodes`;
 
   return [
-    { charSet: 'utf-8' },
+    ...parentMeta,
     { title: fullTitle },
     { name: 'description', content: post.excerpt },
     { name: 'keywords', content: keywords },

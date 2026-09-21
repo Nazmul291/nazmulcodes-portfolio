@@ -44,8 +44,10 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   }
 };
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({matches}) => {
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
   return [
+    ...parentMeta,
     { title: 'NazmulCodes | Engineering Guides & Shopify Insights' },
     { name: 'description', content: 'Bespoke Shopify Apps, Liquid Themes, and Performance Optimization.' },
     { tagName: 'link', rel: 'canonical', href: 'https://www.nazmulcodes.org/' },

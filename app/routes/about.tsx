@@ -26,9 +26,11 @@ import { Footer } from '~/components/Footer';
 import { AdSlot } from '~/components/AdSlot';
 import { AboutHero } from '~/components/Hero';
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({matches}) => {
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
   return [
-    { charSet: 'utf-8' },
+    ...parentMeta,
+    
     { title: 'About NazmulCodes | Technical Journey & Philosophy' },
     {
       name: 'description',
