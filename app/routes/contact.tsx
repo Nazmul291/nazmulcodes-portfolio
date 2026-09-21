@@ -35,11 +35,12 @@ import {
   ArcDevIcon,
 } from '~/components/BrandIcons';
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ matches }) => {
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
   const canonicalUrl = 'https://www.nazmulcodes.org/contact';
 
   return [
-    { charSet: 'utf-8' },
+    ...parentMeta,
     { title: 'Editorial Inquiries & Tech Consulting | NazmulCodes' },
     {
       name: 'description',

@@ -5,11 +5,12 @@ import { Navbar } from "~/components/Navbar";
 import { Footer } from "~/components/Footer";
 import { siteConfig } from "~/data/siteConfig";
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ matches }) => {
+  const parentMeta = matches.flatMap((match) => match.meta ?? []);
   const canonicalUrl = 'https://www.nazmulcodes.org/privacy';
 
   return [
-    { charSet: "utf-8" },
+    ...parentMeta,
     { title: "Privacy Policy & Disclosures | NazmulCodes" },
     {
       name: "description",
