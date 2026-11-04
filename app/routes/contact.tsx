@@ -699,7 +699,7 @@ export default function ContactPage() {
                     Check real-time estimates for Shopify apps, bespoke Liquid themes, speed overhauls, or checkout extensions.
                   </p>
                   <a
-                    href="/#estimator"
+                    href="/projects#estimator"
                     className="btn btn-secondary btn-sm"
                     style={{ display: 'inline-flex', alignItems: 'center', gap: '0.45rem', fontSize: '0.84rem' }}
                   >

@@ -28,12 +28,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   throw new Response('Not Found', { status: 404 });
 };
 
-// সাধারণ 404 UI পেজ
+// Keeps this a document route so the thrown 404 renders root's ErrorBoundary instead of plain text.
 export default function NotFoundPage() {
-  return (
-    <div style={{ textAlign: 'center', padding: '5rem 1rem' }}>
-      <h1>404 - Page Not Found</h1>
-      <p>The page you are looking for does not exist.</p>
-    </div>
-  );
+  return null;
 }

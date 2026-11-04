@@ -143,27 +143,27 @@ export const Navbar: React.FC<NavbarProps> = ({ theme, toggleTheme }) => {
           >
             About Me
           </Link>
-          <Link
-            to="/apps"
+          <a
+            href="/projects#apps"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Shopify App Store Apps
-          </Link>
-          <Link
-            to="/estimator"
+          </a>
+          <a
+            href="/projects#estimator"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Project Cost Estimator
-          </Link>
-          <Link
-            to="/reviews"
+          </a>
+          <a
+            href="/services#reviews"
             className="nav-link"
             onClick={() => setMobileMenuOpen(false)}
           >
             Client Reviews
-          </Link>
+          </a>
           <Link
             to="/privacy"
             className="nav-link"
