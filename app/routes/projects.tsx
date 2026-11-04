@@ -4,6 +4,7 @@ import { Navbar } from '~/components/Navbar';
 import type { MetaFunction } from '@remix-run/node';
 import { StocklySpotlight } from '~/components/StocklySpotlight';
 import { ProjectShowcase } from '~/components/ProjectShowcase';
+import { FeaturedApps } from '~/components/FeaturedApps';
 import { Footer } from '~/components/Footer';
 import { projectsData } from '~/data/projects';
 import { ProjectItem } from '~/types/project';
@@ -43,6 +44,7 @@ export default function Index() {
       {/* Main Content Sections */}
       <main style={{ flex: 1 }}>
         <ProjectShowcase projects={projectsData} onSelectProject={setSelectedProject} />
+        <FeaturedApps projects={projectsData} onSelectProject={setSelectedProject} />
         <StocklySpotlight project={stocklyProject} onSelectProject={setSelectedProject} />
         <React.Suspense fallback={<div style={{ minHeight: '400px' }} />}>
           <ProjectEstimator />

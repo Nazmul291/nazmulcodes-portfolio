@@ -1,13 +1,16 @@
 import {
+  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
   useNavigation,
+  useRouteError,
 } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { useEffect, useState } from "react";
+import { ErrorPage } from "~/components/ErrorPage";
 
 import "~/styles/variables.css";
 import "~/styles/base.css";
@@ -203,7 +206,19 @@ const schemaGraph = {
   ],
 };
 
-export const meta: MetaFunction = () => {
+export const meta: MetaFunction = ({ error }) => {
+  if (error) {
+    const notFound = isRouteErrorResponse(error) && error.status === 404;
+    return [
+      { charSet: "utf-8" },
+      { title: notFound ? "Page Not Found | NazmulCodes" : "Something Went Wrong | NazmulCodes" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "robots", content: "noindex, follow" },
+      { name: "google-adsense-account", content: "ca-pub-3337739847756959" },
+      { name: "theme-color", content: "#080c14" },
+    ];
+  }
+
   return [
     { charSet: "utf-8" },
     { title: "NazmulCodes | Senior Shopify Expert, App Developer & Custom Theme Architect" },
@@ -292,6 +307,32 @@ export const links: LinksFunction = () => [
   },
 ];
 
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const status = isRouteErrorResponse(error) ? error.status : 500;
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    localStorage.setItem("theme", nextTheme);
+    document.documentElement.setAttribute("data-theme", nextTheme);
+  };
+
+  return (
+    <html lang="en" data-theme={theme} suppressHydrationWarning>
+      <head suppressHydrationWarning>
+        <Meta />
+        <Links />
+      </head>
+      <body>
+        <ErrorPage status={status} theme={theme} toggleTheme={toggleTheme} />
+        <Scripts />
+      </body>
+    </html>
+  );
+}
 
 function NavigationLoadingOverlay() {
   return (
