@@ -1,6 +1,8 @@
+import type { Prisma } from '@prisma/client';
 import { prisma } from '~/db.server';
 import { cachedDbQuery, invalidateCacheKeys, invalidateAllBlogCache, DEFAULT_CACHE_TTL } from '~/redis.server';
 import type { ContentBlock, DbBlogPost, DbBlogPostListItem } from '~/types/blog';
+import { countBlockWords } from '~/utils/wordCount';
 
 /**
  * Blog Post Data Access Layer
@@ -284,6 +286,62 @@ export async function getAllPosts(): Promise<DbBlogPostListItem[]> {
     createdAt: p.createdAt.toISOString(),
     updatedAt: p.updatedAt.toISOString(),
   }));
+}
+
+export type AdminPostListItem = DbBlogPostListItem & { wordCount: number };
+
+export interface AdminPostFilters {
+  q?: string;
+  status?: 'published' | 'draft';
+  category?: string;
+}
+
+/** Admin list filtered in Postgres; word counts are computed from content blocks, which are not returned. */
+export async function getAdminPostList({ q, status, category }: AdminPostFilters): Promise<AdminPostListItem[]> {
+  const where: Prisma.BlogPostWhereInput = {};
+  if (q) {
+    where.OR = [
+      { title: { contains: q, mode: 'insensitive' } },
+      { slug: { contains: q, mode: 'insensitive' } },
+    ];
+  }
+  if (status) where.isPublished = status === 'published';
+  if (category) where.category = category;
+
+  const posts = await prisma.blogPost.findMany({
+    where,
+    orderBy: { updatedAt: 'desc' },
+    select: {
+      id: true,
+      slug: true,
+      title: true,
+      excerpt: true,
+      coverImage: true,
+      category: true,
+      tags: true,
+      readTime: true,
+      isPublished: true,
+      contentBlocks: true,
+      createdAt: true,
+      updatedAt: true,
+    },
+  });
+
+  return posts.map(({ contentBlocks, ...p }) => ({
+    ...p,
+    wordCount: countBlockWords(contentBlocks as unknown as ContentBlock[]),
+    createdAt: p.createdAt.toISOString(),
+    updatedAt: p.updatedAt.toISOString(),
+  }));
+}
+
+export async function getBlogCategories(): Promise<string[]> {
+  const rows = await prisma.blogPost.findMany({
+    distinct: ['category'],
+    select: { category: true },
+    orderBy: { category: 'asc' },
+  });
+  return rows.map((r) => r.category);
 }
 
 /** Minimal shape for admin Prev / Next post navigation. */
