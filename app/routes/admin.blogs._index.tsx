@@ -216,8 +216,8 @@ export default function AdminBlogsList() {
               ref={search.inputRef}
               type="search"
               className="admin-input"
-              placeholder="Search by title or slug…"
-              aria-label="Search posts by title or slug"
+              placeholder="Search by title, slug or paste a URL…"
+              aria-label="Search posts by title or slug, or paste a post URL"
               value={search.value}
               onChange={(e) => search.change(e.target.value)}
             />

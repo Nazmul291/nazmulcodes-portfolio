@@ -296,14 +296,46 @@ export interface AdminPostFilters {
   category?: string;
 }
 
+const URL_LIKE = /^(https?:\/\/|www\.|\/)|nazmulcodes\.org/i;
+
+function safeDecode(segment: string): string {
+  try {
+    return decodeURIComponent(segment);
+  } catch {
+    return segment;
+  }
+}
+
+// A pasted post URL (/blog/<slug>) or admin edit URL (/admin/blogs/<id>/edit) targets exactly one post.
+function postFromUrl(url: string): Prisma.BlogPostWhereInput {
+  const segments = url
+    .replace(/^https?:\/\/[^/?#]*/i, '')
+    .replace(/^[^/]*\.[^/]*(?=\/|$)/, '')
+    .split(/[?#]/)[0]
+    .split('/')
+    .filter(Boolean)
+    .map(safeDecode);
+
+  if (segments[0] === 'admin' && segments[1] === 'blogs' && segments[2]) return { id: segments[2] };
+  return { slug: { equals: segments.at(-1) ?? '', mode: 'insensitive' } };
+}
+
 /** Admin list filtered in Postgres; word counts are computed from content blocks, which are not returned. */
 export async function getAdminPostList({ q, status, category }: AdminPostFilters): Promise<AdminPostListItem[]> {
   const where: Prisma.BlogPostWhereInput = {};
-  if (q) {
-    where.OR = [
-      { title: { contains: q, mode: 'insensitive' } },
-      { slug: { contains: q, mode: 'insensitive' } },
-    ];
+  if (q && URL_LIKE.test(q)) {
+    Object.assign(where, postFromUrl(q));
+  } else if (q) {
+    const exactSlug: Prisma.BlogPostWhereInput = { slug: { equals: q, mode: 'insensitive' } };
+    const isExactSlug = !/\s/.test(q) && (await prisma.blogPost.count({ where: exactSlug })) > 0;
+    if (isExactSlug) {
+      Object.assign(where, exactSlug);
+    } else {
+      where.OR = [
+        { title: { contains: q, mode: 'insensitive' } },
+        { slug: { contains: q, mode: 'insensitive' } },
+      ];
+    }
   }
   if (status) where.isPublished = status === 'published';
   if (category) where.category = category;
